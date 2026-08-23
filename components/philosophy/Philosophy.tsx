@@ -28,13 +28,13 @@ export default function Philosophy() {
               {String(i + 1).padStart(2, "0")} /{" "}
               {String(philosophyContent.length).padStart(2, "0")}
             </span>
-            <h3 className="mt-4 font-serif text-[clamp(2.25rem,7.5vw,6.5rem)] leading-[0.95] text-primary">
+            <h2 className="mt-4 font-serif text-[clamp(2.25rem,7.5vw,6.5rem)] leading-[0.95] text-primary">
               {item.statement.map((line) => (
                 <span key={line} className="block">
                   {line}
                 </span>
               ))}
-            </h3>
+            </h2>
             <p className="mt-6 max-w-xl text-pretty font-sans text-secondary md:text-lg">
               {preventOrphan(item.support)}
             </p>

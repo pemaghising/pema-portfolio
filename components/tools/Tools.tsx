@@ -4,6 +4,7 @@ import { useRef } from "react";
 import {
   motion,
   useAnimationFrame,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -25,7 +26,7 @@ function wrap(min: number, max: number, value: number) {
   return mod + min;
 }
 
-function useMarqueeX() {
+function useMarqueeX(isInView: boolean) {
   const reduceMotion = useReducedMotion();
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
@@ -42,7 +43,7 @@ function useMarqueeX() {
   const directionFactor = useRef(1);
 
   useAnimationFrame((_, delta) => {
-    if (reduceMotion) return;
+    if (reduceMotion || !isInView) return;
 
     let moveBy = directionFactor.current * BASE_VELOCITY * (delta / 1000);
     const factor = velocityFactor.get();
@@ -59,10 +60,15 @@ function useMarqueeX() {
 
 export default function Tools() {
   const track = [...toolsContent.items, ...toolsContent.items];
-  const x = useMarqueeX();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { margin: "200px" });
+  const x = useMarqueeX(isInView);
 
   return (
-    <section className="relative overflow-hidden px-6 py-32 md:px-10">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden px-6 py-32 md:px-10"
+    >
       <div className="grid grid-cols-editorial gap-x-4 gap-y-10">
         <motion.div
           className="col-span-12 md:col-span-6"

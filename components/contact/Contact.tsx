@@ -8,7 +8,7 @@ import { preventOrphan } from "@/lib/typography";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const LINK_CLASS =
-  "font-sans text-xs uppercase tracking-[0.2em] text-primary transition-colors duration-200 hover:text-accent focus-visible:text-accent";
+  "relative font-sans text-xs uppercase tracking-[0.2em] text-primary transition-colors duration-200 before:absolute before:inset-[-8px] before:content-[''] hover:text-accent focus-visible:text-accent";
 
 export default function Contact() {
   return (
@@ -39,7 +39,7 @@ export default function Contact() {
 
           <a
             href={`mailto:${contactContent.email}`}
-            className="group inline-flex w-fit items-center gap-3 font-sans text-sm uppercase tracking-[0.15em] text-primary transition-colors duration-300 hover:text-accent focus-visible:text-accent"
+            className="group relative inline-flex w-fit items-center gap-3 font-sans text-sm uppercase tracking-[0.15em] text-primary transition-colors duration-300 before:absolute before:inset-[-12px] before:content-[''] hover:text-accent focus-visible:text-accent"
           >
             {contactContent.cta}
             <span
@@ -57,13 +57,27 @@ export default function Contact() {
           </a>
           {contactContent.socialLinks.map((link) => {
             const isPlaceholder = link.href === "#";
+
+            if (isPlaceholder) {
+              return (
+                <span
+                  key={link.label}
+                  aria-disabled="true"
+                  title={`${link.label} — coming soon`}
+                  className="relative cursor-not-allowed font-sans text-xs uppercase tracking-[0.2em] text-secondary/50 before:absolute before:inset-[-8px] before:content-['']"
+                >
+                  {link.label}
+                  <span className="ml-1.5 normal-case tracking-normal">(soon)</span>
+                </span>
+              );
+            }
+
             return (
               <a
                 key={link.label}
                 href={link.href}
-                target={isPlaceholder ? undefined : "_blank"}
-                rel={isPlaceholder ? undefined : "noopener noreferrer"}
-                onClick={isPlaceholder ? (e) => e.preventDefault() : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={LINK_CLASS}
               >
                 {link.label}

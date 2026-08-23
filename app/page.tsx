@@ -12,7 +12,7 @@ import Contact from "@/components/contact/Contact";
 
 export default function Home() {
   return (
-    <main>
+    <main id="main-content">
       <Hero />
       <Bio />
       <WhatIDo />

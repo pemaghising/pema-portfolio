@@ -7,7 +7,7 @@ export default function Navigation() {
       <a
         href="#top"
         aria-label={`${siteMeta.name} — ${siteMeta.role}. Back to top.`}
-        className="group rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="group relative rounded-sm outline-none before:absolute before:inset-[-14px] before:content-[''] focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         <PGMark variant="compact" />
       </a>

@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-24T00:00:00.000Z",
+  "title": "Design System: Pema Ghising Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "ink-black": {
+        "role": "neutral",
+        "displayName": "Ink Black",
+        "canonical": "#121212",
+        "tonalRamp": ["#0a0a0a", "#121212", "#181818", "#242424", "#3d3d3d", "#5c5c5c", "#8a8a8a", "#c4c4c4"]
+      },
+      "drafting-surface": {
+        "role": "neutral",
+        "displayName": "Drafting Surface",
+        "canonical": "#181818",
+        "tonalRamp": ["#0a0a0a", "#121212", "#181818", "#242424", "#3d3d3d", "#5c5c5c", "#8a8a8a", "#c4c4c4"]
+      },
+      "primary-paper": {
+        "role": "primary",
+        "displayName": "Primary Paper",
+        "canonical": "#f5f5f5",
+        "tonalRamp": ["#1a1a1a", "#333333", "#4d4d4d", "#666666", "#999999", "#cccccc", "#e6e6e6", "#f5f5f5"]
+      },
+      "secondary-graphite": {
+        "role": "neutral",
+        "displayName": "Secondary Graphite",
+        "canonical": "#a3a3a3",
+        "tonalRamp": ["#1a1a1a", "#333333", "#4d4d4d", "#666666", "#808080", "#a3a3a3", "#c2c2c2", "#e0e0e0"]
+      },
+      "blueprint-violet": {
+        "role": "secondary",
+        "displayName": "Blueprint Violet",
+        "canonical": "#a855f7",
+        "tonalRamp": ["#2e0f52", "#4c1d8a", "#6b21c4", "#8629e0", "#a855f7", "#c084fc", "#d8b4fe", "#f0e0fe"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero identity mark and hero statement lines only." },
+      "headline": { "displayName": "Headline", "purpose": "Each section's opening line." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy, width-capped, in Secondary Graphite." },
+      "label": { "displayName": "Label", "purpose": "Section index tags, nav/CTA links, tags — always uppercase, wide-tracked." },
+      "micro": { "displayName": "Micro", "purpose": "Smallest annotation step for compact fixed-size contexts only — hero scroll cue, Currently index-badge pill." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default easing for every reveal, hover, and staged-animation transition across the site." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Link / CTA",
+      "kind": "custom",
+      "refersTo": "link-cta",
+      "description": "Plain-text uppercase link used for nav, contact CTA, and social links.",
+      "html": "<a href=\"#\" class=\"ds-link-cta\">GET IN TOUCH<span class=\"ds-link-cta__arrow\">&#8594;</span></a>",
+      "css": ".ds-link-cta { display: inline-flex; align-items: center; gap: 12px; font-family: Inter, system-ui, sans-serif; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.15em; color: #f5f5f5; text-decoration: none; transition: color 0.3s ease; } .ds-link-cta:hover, .ds-link-cta:focus-visible { color: #a855f7; } .ds-link-cta__arrow { display: inline-block; transition: transform 0.3s ease; } .ds-link-cta:hover .ds-link-cta__arrow { transform: translateX(4px); }"
+    },
+    {
+      "name": "Grid Cell",
+      "kind": "card",
+      "refersTo": "grid-cell",
+      "description": "The system's signature card: flat, hairline-bordered panel used across What I Do, Currently, and Beyond Design sections.",
+      "html": "<div class=\"ds-grid-cell\"><span class=\"ds-grid-cell__index\">001</span><h3 class=\"ds-grid-cell__title\">GRAPHIC DESIGN</h3><p class=\"ds-grid-cell__desc\">Visual communication, campaigns, and editorial layouts.</p></div>",
+      "css": ".ds-grid-cell { background: #181818; border: 1px solid rgba(245,245,245,0.1); border-radius: 0; padding: 32px; transition: background-color 0.3s ease; } .ds-grid-cell:hover { background: rgba(168,85,247,0.05); } .ds-grid-cell:hover .ds-grid-cell__title { color: #a855f7; } .ds-grid-cell__index { display: block; font-family: Inter, system-ui, sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: #a855f7; margin-bottom: 24px; } .ds-grid-cell__title { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.5rem; color: #f5f5f5; margin: 0 0 12px; transition: color 0.3s ease; } .ds-grid-cell__desc { font-family: Inter, system-ui, sans-serif; font-size: 0.875rem; color: #a3a3a3; margin: 0; }"
+    },
+    {
+      "name": "Index Badge",
+      "kind": "chip",
+      "refersTo": "index-badge",
+      "description": "Small pill-shaped numeric marker used inside Currently cards — the system's one rounded-full exception.",
+      "html": "<span class=\"ds-index-badge\">01</span>",
+      "css": ".ds-index-badge { display: inline-flex; align-items: center; border-radius: 9999px; border: 1px solid rgba(168,85,247,0.3); padding: 4px 10px; font-family: Inter, system-ui, sans-serif; font-size: 0.625rem; letter-spacing: 0.15em; text-transform: uppercase; color: #a855f7; }"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Fixed, blurred header holding the compact PG monogram that expands to the full name on hover.",
+      "html": "<header class=\"ds-nav\"><a href=\"#top\" class=\"ds-nav__mark\">P<span class=\"ds-nav__reveal\">EMA&nbsp;</span>G<span class=\"ds-nav__reveal\">HISING</span></a></header>",
+      "css": ".ds-nav { position: fixed; inset-inline: 0; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; background: rgba(18,18,18,0.9); backdrop-filter: blur(12px); padding: 24px 32px; } .ds-nav__mark { display: inline-flex; align-items: baseline; font-family: 'Instrument Serif', Georgia, serif; font-size: 1.25rem; color: #f5f5f5; text-decoration: none; transition: color 0.5s ease; } .ds-nav__mark:hover, .ds-nav__mark:focus-visible { color: #a855f7; } .ds-nav__reveal { display: inline-grid; grid-template-columns: 0fr; overflow: hidden; white-space: nowrap; transition: grid-template-columns 0.5s cubic-bezier(0.16,1,0.3,1); } .ds-nav__mark:hover .ds-nav__reveal, .ds-nav__mark:focus-visible .ds-nav__reveal { grid-template-columns: 1fr; }"
+    },
+    {
+      "name": "Divider",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Full-width hairline rule that reveals left-to-right on scroll into view.",
+      "html": "<div class=\"ds-divider\"></div>",
+      "css": ".ds-divider { height: 1px; width: 100%; background: rgba(245,245,245,0.1); transform-origin: left; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Architect's Blueprint",
+    "overview": "The site reads as a technical drawing brought to life: a near-black drafting surface, a barely-visible 12-column grid printed under everything, hairline rules instead of boxes, and a single violet \"ink\" reserved for the marks that matter — icons, hovers, index numbers, one dot per marquee loop. Type does the loudest work in the system: oversized Instrument Serif display lines carry the emotional weight, while small, wide-tracked uppercase Inter labels (\"PG / 03\", \"GET IN TOUCH\") behave like drafting annotations — precise, restrained, never decorative for its own sake.\n\nMotion is mechanical and kinetic rather than ornamental: the \"PG\" monogram assembles itself letter-by-letter on load like a machine calibrating, section headlines and grid cells rise into place on scroll with a consistent easing curve, and the tools marquee reacts to scroll velocity like something with real inertia. Nothing glows, bounces, or plays for attention — precision is the personality. The system explicitly rejects the bright, multi-color, rounded-bubble \"friendly SaaS\" look and the glossy, shadow-heavy corporate-agency look; both would break the blueprint illusion.",
+    "keyCharacteristics": [
+      "Near-black surface with a faint printed grid and film-grain noise as the base texture",
+      "One accent color (Blueprint Violet) used sparingly and consistently — never as a fill, almost always as ink",
+      "Oversized serif display type paired with small, wide-tracked uppercase sans labels",
+      "Flat by default: depth comes from hairline borders and surface/opacity shifts, not shadows",
+      "Square, sharp-edged geometry everywhere except the small pill-shaped index badges"
+    ],
+    "rules": [
+      { "name": "The Single Accent Rule", "body": "Blueprint Violet appears only as ink (text, icon strokes/nodes, borders, dots) — never as a background fill on a UI element of consequence. Its rarity is what makes it register as a signal.", "section": "colors" },
+      { "name": "The Hairline Border Rule", "body": "Structure is drawn with 1px borders at 10% primary-paper opacity, not with cards, shadows, or heavier strokes. This is the system's substitute for elevation.", "section": "colors" },
+      { "name": "The Uppercase Label Rule", "body": "Every non-prose piece of type — section labels, index numbers, nav links, CTAs, tag lists — is small, uppercase Inter with 0.15–0.2em letter-spacing. It never competes with the serif display type; it annotates it.", "section": "typography" }
+    ],
+    "dos": [
+      "Do keep Blueprint Violet to ink-only usage — text, strokes, borders, dots, badges — never a large fill.",
+      "Do pair every non-prose label (index tags, CTAs, tags, nav) with uppercase Inter and 0.15–0.2em tracking.",
+      "Do build depth with hairline borders and the Ink Black → Drafting Surface step, not shadows, as the default.",
+      "Do keep grid cells rounded-none; reserve rounded-full for small stamped badges only.",
+      "Do respect prefers-reduced-motion on every custom animation (monogram, marquee, reveals) the way the existing components already do."
+    ],
+    "donts": [
+      "Don't introduce a second accent color — the system's power comes from having exactly one.",
+      "Don't reach for box-shadow as a default styling choice; treat it as an exception that needs justification.",
+      "Don't center content symmetrically within the 12-column grid — the asymmetric, drafting-table composition (headline left/wide, support right/narrow) is the system's layout signature.",
+      "Don't pull this toward a bright, rounded, multi-color \"friendly SaaS\" look or a glossy, shadow-heavy \"corporate agency\" look — both were explicitly rejected as anti-references."
+    ]
+  }
+}

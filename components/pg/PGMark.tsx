@@ -15,23 +15,20 @@ interface PGMarkProps {
   variant?: "hero" | "compact";
   className?: string;
   onSettled?: () => void;
-  /** When false, renders the resolved "PEMA / GHISING" state immediately instead of playing the convergence sequence. */
-  autoPlay?: boolean;
 }
 
 export default function PGMark({
   variant = "compact",
   className = "",
   onSettled,
-  autoPlay = true,
 }: PGMarkProps) {
   const reduceMotion = useReducedMotion();
   const [stage, setStage] = useState(
-    variant === "hero" && !reduceMotion && autoPlay ? 0 : 5
+    variant === "hero" && !reduceMotion ? 0 : 5
   );
 
   useEffect(() => {
-    if (variant !== "hero" || reduceMotion || !autoPlay) {
+    if (variant !== "hero" || reduceMotion) {
       onSettled?.();
       return;
     }
@@ -49,7 +46,7 @@ export default function PGMark({
       clearTimeout(settleTimer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variant, reduceMotion, autoPlay]);
+  }, [variant, reduceMotion]);
 
   if (variant === "compact") {
     return <CompactMark className={className} />;

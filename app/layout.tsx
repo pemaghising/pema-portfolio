@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Inter } from "next/font/google";
 import Navigation from "@/components/layout/Navigation";
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import { ArchitecturalGrid, NoiseOverlay } from "@/components/ui/PageTexture";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -27,11 +28,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${instrumentSerif.variable} ${inter.variable}`}
     >
-      <body className="bg-background text-primary antialiased">
-        <SmoothScroll>
-          <Navigation />
-          {children}
-        </SmoothScroll>
+      <body className="relative bg-background text-primary antialiased">
+        <NoiseOverlay />
+        <ArchitecturalGrid />
+        <div className="relative z-10">
+          <SmoothScroll>
+            <Navigation />
+            {children}
+          </SmoothScroll>
+        </div>
       </body>
     </html>
   );

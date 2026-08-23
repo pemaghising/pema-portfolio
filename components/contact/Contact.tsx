@@ -8,7 +8,7 @@ import { preventOrphan } from "@/lib/typography";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const LINK_CLASS =
-  "font-sans text-xs uppercase tracking-[0.2em] text-secondary transition-colors duration-300 hover:text-accent focus-visible:text-accent";
+  "font-sans text-xs uppercase tracking-[0.2em] text-primary transition-colors duration-200 hover:text-accent focus-visible:text-accent";
 
 export default function Contact() {
   return (
@@ -55,16 +55,21 @@ export default function Contact() {
           <a href={`mailto:${contactContent.email}`} className={LINK_CLASS}>
             EMAIL
           </a>
-          {contactContent.socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => e.preventDefault()}
-              className={LINK_CLASS}
-            >
-              {link.label}
-            </a>
-          ))}
+          {contactContent.socialLinks.map((link) => {
+            const isPlaceholder = link.href === "#";
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target={isPlaceholder ? undefined : "_blank"}
+                rel={isPlaceholder ? undefined : "noopener noreferrer"}
+                onClick={isPlaceholder ? (e) => e.preventDefault() : undefined}
+                className={LINK_CLASS}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>

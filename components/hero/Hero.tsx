@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import PGMark from "@/components/pg/PGMark";
 import RevealText from "@/components/ui/RevealText";
 import { heroContent } from "@/data/content";
@@ -10,21 +10,10 @@ import { preventOrphan } from "@/lib/typography";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
   const [identityResolved, setIdentityResolved] = useState(false);
-  const reduceMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const linesY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -80]);
 
   return (
-    <section id="top" ref={sectionRef} className="relative overflow-hidden">
-      <motion.div style={{ y: linesY }} className="pointer-events-none absolute inset-0">
-        <GridLines />
-      </motion.div>
+    <section id="top" className="relative overflow-hidden">
       <CropMarks />
 
       <h1 className="sr-only">{heroContent.srHeading}</h1>
@@ -149,19 +138,6 @@ function FrameSequence() {
         <span>FRAME SEQUENCE</span>
         <span>05 / 05</span>
       </div>
-    </div>
-  );
-}
-
-function GridLines() {
-  return (
-    <div
-      aria-hidden
-      className="absolute inset-0 grid grid-cols-editorial gap-x-4 px-6 md:px-10"
-    >
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div key={i} className="h-full border-l border-primary/[0.06]" />
-      ))}
     </div>
   );
 }

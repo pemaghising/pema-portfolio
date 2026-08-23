@@ -22,34 +22,28 @@ export const bioContent = {
 
 export const whatIDoContent = [
   {
+    index: "001",
     title: "GRAPHIC DESIGN",
     description:
       "Visual communication, campaigns, presentations, editorial layouts, and everything in between.",
   },
   {
+    index: "002",
     title: "MOTION DESIGN",
     description:
       "Bringing ideas to life through movement, timing, transitions, and visual storytelling.",
   },
   {
+    index: "003",
     title: "BRAND IDENTITY",
     description:
       "Building visual languages that make brands recognizable, consistent, and memorable.",
   },
   {
+    index: "004",
     title: "VISUAL SYSTEMS",
     description:
       "Creating flexible design systems that bring consistency across different formats and experiences.",
-  },
-  {
-    title: "DIGITAL DESIGN",
-    description:
-      "Designing digital experiences with a focus on clarity, hierarchy, and interaction.",
-  },
-  {
-    title: "VISUAL STORYTELLING",
-    description:
-      "Turning complex ideas into simple visual narratives that people can understand and remember.",
   },
 ];
 
@@ -85,26 +79,6 @@ export const philosophyContent = [
     statement: ["CLARITY OVER", "DECORATION."],
     support: "Good design doesn't need to shout to be noticed.",
   },
-  {
-    statement: ["MOTION WITH", "PURPOSE."],
-    support:
-      "Movement should guide attention, communicate meaning, or create emotion — never just exist for the sake of movement.",
-  },
-  {
-    statement: ["SYSTEMS CREATE", "FREEDOM."],
-    support:
-      "A strong system creates consistency while leaving enough room to explore.",
-  },
-  {
-    statement: ["MAKE IT SIMPLE.", "MAKE IT MEMORABLE."],
-    support:
-      "The best visual solutions often come from knowing what to remove.",
-  },
-  {
-    statement: ["DESIGN IS MORE", "THAN AESTHETICS."],
-    support:
-      "A beautiful solution is only successful when it also communicates, solves, and works.",
-  },
 ];
 
 export const experienceContent = {
@@ -113,7 +87,7 @@ export const experienceContent = {
     "Over the years, I've had the opportunity to work across different teams, industries, formats, and design problems — from brand and marketing communication to motion, presentations, digital products, and emerging technology.",
   roles: [
     {
-      period: "CURRENT",
+      period: "2021 — PRESENT",
       title: "LEAD GRAPHIC DESIGNER",
       company: "LEAPFROG TECHNOLOGY",
       disciplines: ["GRAPHIC", "MOTION", "BRAND", "DIGITAL"],
@@ -195,13 +169,8 @@ export const contactContent = {
   cta: "GET IN TOUCH",
   email: "pema.ghising133@gmail.com",
   socialLinks: [
-    { label: "LINKEDIN", href: "#" },
+    { label: "LINKEDIN", href: "https://www.linkedin.com/in/pema-ghising-91a966103/" },
     { label: "BEHANCE", href: "#" },
-    { label: "INSTAGRAM", href: "#" },
+    { label: "INSTAGRAM", href: "https://www.instagram.com/pema_ghising/" },
   ],
-};
-
-export const footerContent = {
-  copyright: "© 2026 PEMA GHISING",
-  closingLine: "BUILT WITH CURIOSITY.",
 };

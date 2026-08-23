@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Divider from "@/components/ui/Divider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { experienceContent } from "@/data/content";
 import { preventOrphan } from "@/lib/typography";
@@ -27,43 +28,51 @@ export default function Experience() {
         </p>
       </div>
 
-      <div className="mt-20 border-t border-primary/15">
+      <div className="mt-20">
+        <Divider />
         {experienceContent.roles.map((role, i) => (
           <motion.div
             key={role.title}
-            className="grid grid-cols-editorial gap-x-4 gap-y-6 border-b border-primary/15 py-10"
+            className="grid grid-cols-1 items-start gap-8 border-b border-accent/15 py-12 md:grid-cols-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
           >
-            <span className="col-span-12 font-sans text-xs uppercase tracking-[0.2em] text-accent md:col-span-2">
-              {role.period}
-            </span>
-
-            <div className="col-span-12 md:col-span-5">
-              <h3 className="text-pretty font-serif text-[clamp(1.5rem,3.5vw,2.5rem)] leading-tight text-primary">
-                {role.title}
-              </h3>
+            {/* Date & company */}
+            <div className="md:col-span-3 md:border-r md:border-accent/15 md:pr-6">
+              <div className="flex items-center gap-2">
+                <span aria-hidden className="h-2 w-2 rounded-full bg-accent" />
+                <span className="font-mono text-xs tracking-[0.1em] text-primary">
+                  {role.period}
+                </span>
+              </div>
               <p className="mt-2 font-sans text-sm uppercase tracking-[0.15em] text-secondary">
                 {role.company}
               </p>
             </div>
 
-            <div className="col-span-12 flex flex-wrap gap-x-4 gap-y-2 md:col-span-2">
+            {/* Role & narrative */}
+            <div className="md:col-span-5 md:border-r md:border-accent/15 md:px-6">
+              <h3 className="mb-4 font-serif text-2xl text-primary md:text-3xl">
+                {role.title}
+              </h3>
+              <p className="max-w-md text-pretty font-sans text-secondary">
+                {preventOrphan(role.description)}
+              </p>
+            </div>
+
+            {/* Disciplines */}
+            <div className="flex flex-wrap gap-2 md:col-span-4 md:justify-end md:pl-6">
               {role.disciplines.map((discipline) => (
                 <span
                   key={discipline}
-                  className="font-sans text-xs uppercase tracking-[0.15em] text-secondary"
+                  className="rounded-full border border-accent/20 px-3 py-1 font-mono text-xs uppercase tracking-[0.1em] text-secondary"
                 >
                   {discipline}
                 </span>
               ))}
             </div>
-
-            <p className="col-span-12 max-w-sm text-pretty font-sans text-secondary md:col-span-3">
-              {preventOrphan(role.description)}
-            </p>
           </motion.div>
         ))}
       </div>

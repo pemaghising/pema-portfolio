@@ -1,14 +1,6 @@
 @import "tailwindcss";
-
-@theme {
-  --color-background: #f5f4f0;
-  --color-primary: #111111;
-  --color-secondary: #777773;
-  --color-accent: #5b21b6;
-  --color-white: #ffffff;
-
-  --grid-template-columns-editorial: repeat(12, minmax(0, 1fr));
-}
+@import "./themes/purple.css";
+/* To switch palettes, swap the import above for "./themes/warm.css" */
 
 @theme inline {
   --font-serif: var(--font-instrument-serif);

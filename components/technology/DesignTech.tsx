@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import PGMark from "@/components/pg/PGMark";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { designTechContent } from "@/data/content";
 import { preventOrphan } from "@/lib/typography";
@@ -11,26 +10,6 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export default function DesignTech() {
   return (
     <section className="relative overflow-hidden px-6 py-32 md:px-10">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 grid grid-cols-editorial gap-x-4 px-6 md:px-10"
-      >
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div key={i} className="h-full border-l border-primary/[0.06]" />
-        ))}
-      </div>
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-6 top-1/2 hidden -translate-y-1/2 opacity-[0.04] md:block"
-      >
-        <PGMark
-          variant="hero"
-          autoPlay={false}
-          className="text-[16vw] leading-[0.82]"
-        />
-      </div>
-
       <div className="relative grid grid-cols-editorial gap-x-4 gap-y-10">
         <div className="col-span-12">
           <SectionLabel index="07" />

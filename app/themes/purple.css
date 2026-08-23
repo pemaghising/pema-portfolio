@@ -1,0 +1,9 @@
+@theme {
+  --color-background: #f5f4f0;
+  --color-primary: #111111;
+  --color-secondary: #333333;
+  --color-accent: #5b21b6;
+  --color-white: #ffffff;
+
+  --grid-template-columns-editorial: repeat(12, minmax(0, 1fr));
+}

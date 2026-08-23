@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Divider from "@/components/ui/Divider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { lookingForwardContent } from "@/data/content";
 import { preventOrphan } from "@/lib/typography";
@@ -32,15 +33,19 @@ export default function LookingForward() {
           {preventOrphan(lookingForwardContent.copy)}
         </motion.p>
 
-        <div className="col-span-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-primary/15 pt-8">
-          {lookingForwardContent.tags.map((tag) => (
-            <span
-              key={tag}
-              className="font-sans text-xs uppercase tracking-[0.2em] text-secondary"
-            >
-              {tag}
-            </span>
-          ))}
+        <div className="col-span-12">
+          <Divider />
+          <div className="flex flex-wrap gap-x-8 gap-y-3 pt-8">
+            {lookingForwardContent.tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1.5 font-sans text-xs uppercase tracking-[0.2em] text-secondary"
+              >
+                <span aria-hidden className="h-1 w-1 rounded-full bg-accent" />
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

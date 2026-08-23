@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { designTechContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -22,7 +22,7 @@ export default function DesignTech() {
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: 1, ease: EASE }}
         >
-          {preventOrphan(designTechContent.statement)}
+          {accentPeriod(preventOrphan(designTechContent.statement))}
         </motion.h2>
 
         <motion.p

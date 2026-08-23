@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-24T00:00:00.000Z",
+  "generatedAt": "2026-08-24T02:00:00.000Z",
   "title": "Design System: Pema Ghising Portfolio",
   "extensions": {
     "colorMeta": {
@@ -98,18 +98,20 @@
     "overview": "The site reads as a technical drawing brought to life: a near-black drafting surface, a barely-visible 12-column grid printed under everything, hairline rules instead of boxes, and a single violet \"ink\" reserved for the marks that matter — icons, hovers, index numbers, one dot per marquee loop. Type does the loudest work in the system: oversized Instrument Serif display lines carry the emotional weight, while small, wide-tracked uppercase Inter labels (\"PG / 03\", \"GET IN TOUCH\") behave like drafting annotations — precise, restrained, never decorative for its own sake.\n\nMotion is mechanical and kinetic rather than ornamental: the \"PG\" monogram assembles itself letter-by-letter on load like a machine calibrating, section headlines and grid cells rise into place on scroll with a consistent easing curve, and the tools marquee reacts to scroll velocity like something with real inertia. Nothing glows, bounces, or plays for attention — precision is the personality. The system explicitly rejects the bright, multi-color, rounded-bubble \"friendly SaaS\" look and the glossy, shadow-heavy corporate-agency look; both would break the blueprint illusion.",
     "keyCharacteristics": [
       "Near-black surface with a faint printed grid and film-grain noise as the base texture",
-      "One accent color (Blueprint Violet) used sparingly and consistently — never as a fill, almost always as ink",
+      "One accent color (Blueprint Violet) used sparingly and consistently — never as a fill, almost always as ink, with one deliberate exception at display scale: the terminal period of every major headline",
       "Oversized serif display type paired with small, wide-tracked uppercase sans labels",
       "Flat by default: depth comes from hairline borders and surface/opacity shifts, not shadows",
       "Square, sharp-edged geometry everywhere except the small pill-shaped index badges"
     ],
     "rules": [
       { "name": "The Single Accent Rule", "body": "Blueprint Violet appears only as ink (text, icon strokes/nodes, borders, dots) — never as a background fill on a UI element of consequence. Its rarity is what makes it register as a signal.", "section": "colors" },
+      { "name": "The Full Stop Rule", "body": "Almost every major headline on the site ends in a period (\"CURRENTLY.\", \"I'M PEMA.\", \"SOMETHING MOVE.\"). That terminal period is always set in Blueprint Violet, colored via a shared accentPeriod() helper — never any other punctuation, never mid-sentence, never in body copy. It's the single deliberate place the accent is allowed to appear at display scale, extending the system's existing \"dot\" vocabulary (the marquee separator, tag bullets, badge borders) up to the biggest type on the page without adding a second color or turning violet into a fill.", "section": "colors" },
       { "name": "The Hairline Border Rule", "body": "Structure is drawn with 1px borders at 10% primary-paper opacity, not with cards, shadows, or heavier strokes. This is the system's substitute for elevation.", "section": "colors" },
       { "name": "The Uppercase Label Rule", "body": "Every non-prose piece of type — section labels, index numbers, nav links, CTAs, tag lists — is small, uppercase Inter with 0.15–0.2em letter-spacing. It never competes with the serif display type; it annotates it.", "section": "typography" }
     ],
     "dos": [
       "Do keep Blueprint Violet to ink-only usage — text, strokes, borders, dots, badges — never a large fill.",
+      "Do color every major headline's terminal period in Blueprint Violet via accentPeriod() — never other punctuation, never body text.",
       "Do pair every non-prose label (index tags, CTAs, tags, nav) with uppercase Inter and 0.15–0.2em tracking.",
       "Do build depth with hairline borders and the Ink Black → Drafting Surface step, not shadows, as the default.",
       "Do keep grid cells rounded-none; reserve rounded-full for small stamped badges only.",

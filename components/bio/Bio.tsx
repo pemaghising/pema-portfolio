@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { bioContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -22,7 +22,7 @@ export default function Bio() {
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: 1, ease: EASE }}
         >
-          {bioContent.heading}
+          {accentPeriod(bioContent.heading)}
         </motion.h2>
 
         <div className="col-span-12 flex max-w-xl flex-col gap-8 md:col-span-5 md:col-start-8">

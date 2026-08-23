@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ElementType } from "react";
+import { accentPeriod } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -53,7 +54,7 @@ export default function RevealText({
             animate={start ? "visible" : "hidden"}
             variants={variants}
           >
-            {line}
+            {accentPeriod(line)}
           </motion.span>
         </span>
       ))}

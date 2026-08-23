@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Divider from "@/components/ui/Divider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { currentlyContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -32,7 +32,7 @@ export default function Currently() {
         >
           <SectionLabel index="03" />
           <h2 className="mt-3 font-serif text-[clamp(2.75rem,8vw,6rem)] leading-[0.9] text-primary">
-            {currentlyContent.heading}
+            {accentPeriod(currentlyContent.heading)}
           </h2>
         </motion.div>
         <p className="col-span-12 max-w-sm text-pretty font-sans text-base text-secondary md:col-span-4 md:col-start-9 md:text-lg">

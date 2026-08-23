@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { contactContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -27,7 +27,7 @@ export default function Contact() {
         >
           {contactContent.heading.map((line) => (
             <span key={line} className="block">
-              {line}
+              {accentPeriod(line)}
             </span>
           ))}
         </motion.h2>

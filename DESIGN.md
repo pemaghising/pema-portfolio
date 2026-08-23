@@ -79,7 +79,7 @@ Motion is mechanical and kinetic rather than ornamental: the "PG" monogram assem
 
 **Key Characteristics:**
 - Near-black surface with a faint printed grid and film-grain noise as the base texture
-- One accent color (Blueprint Violet) used sparingly and consistently — never as a fill, almost always as ink
+- One accent color (Blueprint Violet) used sparingly and consistently — never as a fill, almost always as ink, with one deliberate exception at display scale: the terminal period of every major headline
 - Oversized serif display type paired with small, wide-tracked uppercase sans labels
 - Flat by default: depth comes from hairline borders and surface/opacity shifts, not shadows
 - Square, sharp-edged geometry everywhere except the small pill-shaped index badges
@@ -92,7 +92,7 @@ A two-tone dark palette (ink black + off-white paper) with exactly one saturated
 - **Primary Paper** (#f5f5f5): Main text color for headlines, body copy, and the PG monogram. Reads as ink/paper against the dark ground.
 
 ### Secondary
-- **Blueprint Violet** (#a855f7): The system's only accent. Used for section-index labels, icon accents (a single node/line per icon), link/nav hover states, the marquee's separator dot, and focus rings. Never used as a large fill.
+- **Blueprint Violet** (#a855f7): The system's only accent. Used for section-index labels, icon accents (a single node/line per icon), link/nav hover states, the marquee's separator dot, focus rings, and the terminal period of every major headline (see The Full Stop Rule). Never used as a large fill.
 
 ### Neutral
 - **Ink Black** (#121212): Page background — the "drafting surface" the whole system sits on.
@@ -101,6 +101,8 @@ A two-tone dark palette (ink black + off-white paper) with exactly one saturated
 
 ### Named Rules
 **The Single Accent Rule.** Blueprint Violet appears only as ink (text, icon strokes/nodes, borders, dots) — never as a background fill on a UI element of consequence. Its rarity is what makes it register as a signal.
+
+**The Full Stop Rule.** Almost every major headline on the site ends in a period ("CURRENTLY.", "I'M PEMA.", "SOMETHING MOVE."). That terminal period is always set in Blueprint Violet, colored via a shared `accentPeriod()` helper — never any other punctuation, never mid-sentence, never in body copy. It's the single deliberate place the accent is allowed to appear at display scale, extending the system's existing "dot" vocabulary (the marquee separator, tag bullets, badge borders) up to the biggest type on the page without adding a second color or turning violet into a fill.
 
 **The Hairline Border Rule.** Structure is drawn with 1px borders at 10% primary-paper opacity (`border-primary/10`), not with cards, shadows, or heavier strokes. This is the system's substitute for elevation.
 

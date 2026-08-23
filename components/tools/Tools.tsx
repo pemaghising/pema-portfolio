@@ -15,7 +15,7 @@ import {
 import Divider from "@/components/ui/Divider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { toolsContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const BASE_VELOCITY = 2;
@@ -81,7 +81,7 @@ export default function Tools() {
           <h2 className="mt-3 text-pretty font-serif text-[clamp(2.75rem,8vw,6rem)] leading-[0.9] text-primary">
             {toolsContent.heading.map((line) => (
               <span key={line} className="block">
-                {line}
+                {accentPeriod(line)}
               </span>
             ))}
           </h2>

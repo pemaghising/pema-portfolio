@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Divider from "@/components/ui/Divider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { beyondDesignContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -28,7 +28,7 @@ export default function BeyondDesign() {
           <h2 className="mt-3 text-pretty font-serif text-[clamp(2.75rem,8vw,6rem)] leading-[0.9] text-primary">
             {beyondDesignContent.heading.map((line) => (
               <span key={line} className="block">
-                {line}
+                {accentPeriod(line)}
               </span>
             ))}
           </h2>

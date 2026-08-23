@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Divider from "@/components/ui/Divider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { whatIDoContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -33,7 +33,7 @@ export default function WhatIDo() {
           <SectionLabel index="02" />
           <h2 className="mt-3 font-serif text-[clamp(2.75rem,8vw,6rem)] leading-[0.9] text-primary">
             <span className="block">WHAT I</span>
-            <span className="block">DO.</span>
+            <span className="block">{accentPeriod("DO.")}</span>
           </h2>
         </motion.div>
       </div>

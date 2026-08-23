@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { philosophyContent } from "@/data/content";
-import { preventOrphan } from "@/lib/typography";
+import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -31,7 +31,7 @@ export default function Philosophy() {
             <h2 className="mt-4 font-serif text-[clamp(2.25rem,7.5vw,6.5rem)] leading-[0.95] text-primary">
               {item.statement.map((line) => (
                 <span key={line} className="block">
-                  {line}
+                  {accentPeriod(line)}
                 </span>
               ))}
             </h2>

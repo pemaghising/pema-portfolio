@@ -39,13 +39,13 @@ export default function WhatIDo() {
       </div>
 
       <Divider />
-      <div className="grid grid-cols-1 gap-0 border-t border-b border-accent/20 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-0 border-t border-b border-primary/10 md:grid-cols-2 lg:grid-cols-4">
         {whatIDoContent.map((item, i) => {
           const Icon = ICONS[i];
           return (
             <motion.div
               key={item.title}
-              className={`group relative rounded-none border-accent/20 bg-background p-8 transition-colors duration-300 hover:bg-accent/5 ${CELL_BORDER[i]}`}
+              className={`group relative rounded-none border-primary/10 bg-surface p-8 transition-colors duration-300 hover:bg-accent/5 ${CELL_BORDER[i]}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10% 0px" }}

@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "./themes/purple.css";
-/* To switch palettes, swap the import above for "./themes/warm.css" */
+@import "./themes/dark.css";
+/* Other palettes: "./themes/purple.css", "./themes/warm.css" */
 
 @theme inline {
   --font-serif: var(--font-instrument-serif);

@@ -15,7 +15,7 @@ export default function Philosophy() {
       {philosophyContent.map((item, i) => (
         <div
           key={item.support}
-          className="grid min-h-[85vh] grid-cols-editorial items-center gap-x-4 border-t border-primary/15 first:border-t-0"
+          className="grid min-h-[85vh] grid-cols-editorial items-center gap-x-4 border-t border-primary/10 first:border-t-0"
         >
           <motion.div
             className="col-span-12 md:col-span-10"

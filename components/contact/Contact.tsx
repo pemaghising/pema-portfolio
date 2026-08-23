@@ -51,7 +51,7 @@ export default function Contact() {
           </a>
         </div>
 
-        <div className="col-span-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-primary/15 pt-8 md:col-span-6 md:col-start-7 md:justify-end md:border-t-0 md:pt-0">
+        <div className="col-span-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-primary/10 pt-8 md:col-span-6 md:col-start-7 md:justify-end md:border-t-0 md:pt-0">
           <a href={`mailto:${contactContent.email}`} className={LINK_CLASS}>
             EMAIL
           </a>

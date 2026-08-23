@@ -8,7 +8,7 @@ export default function Divider({ className = "" }: { className?: string }) {
   return (
     <motion.div
       aria-hidden
-      className={`h-px w-full origin-left bg-primary/15 ${className}`}
+      className={`h-px w-full origin-left bg-primary/10 ${className}`}
       initial={{ scaleX: 0 }}
       whileInView={{ scaleX: 1 }}
       viewport={{ once: true, margin: "-10% 0px" }}

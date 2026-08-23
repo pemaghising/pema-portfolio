@@ -10,7 +10,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Experience() {
   return (
-    <section className="relative px-6 py-32 md:px-10">
+    <section className="relative bg-transparent px-6 py-32 md:px-10">
       <div className="grid grid-cols-editorial gap-x-4 gap-y-10">
         <div className="col-span-12 md:col-span-7">
           <SectionLabel index="05" />
@@ -28,19 +28,21 @@ export default function Experience() {
         </p>
       </div>
 
-      <div className="mt-20">
-        <Divider />
+      <Divider className="mt-20" />
+      <div className="grid grid-cols-1 gap-0 border-t border-b border-primary/10 bg-surface">
         {experienceContent.roles.map((role, i) => (
           <motion.div
             key={role.title}
-            className="grid grid-cols-1 items-start gap-8 border-b border-accent/15 py-12 md:grid-cols-12"
+            className={`grid grid-cols-1 items-start gap-8 border-primary/10 p-8 md:grid-cols-12 ${
+              i !== experienceContent.roles.length - 1 ? "border-b" : ""
+            }`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
           >
             {/* Date & company */}
-            <div className="md:col-span-3 md:border-r md:border-accent/15 md:pr-6">
+            <div className="md:col-span-3 md:pr-6">
               <div className="flex items-center gap-2">
                 <span aria-hidden className="h-2 w-2 rounded-full bg-accent" />
                 <span className="font-mono text-xs tracking-[0.1em] text-primary">
@@ -53,7 +55,7 @@ export default function Experience() {
             </div>
 
             {/* Role & narrative */}
-            <div className="md:col-span-5 md:border-r md:border-accent/15 md:px-6">
+            <div className="md:col-span-5 md:px-6">
               <h3 className="mb-4 font-serif text-2xl text-primary md:text-3xl">
                 {role.title}
               </h3>
@@ -67,7 +69,7 @@ export default function Experience() {
               {role.disciplines.map((discipline) => (
                 <span
                   key={discipline}
-                  className="rounded-full border border-accent/20 px-3 py-1 font-mono text-xs uppercase tracking-[0.1em] text-secondary"
+                  className="rounded-full border border-accent/30 px-3 py-1 font-mono text-xs uppercase tracking-[0.1em] text-accent"
                 >
                   {discipline}
                 </span>

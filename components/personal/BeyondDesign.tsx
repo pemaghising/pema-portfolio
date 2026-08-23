@@ -8,9 +8,20 @@ import { preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+// Hairline cell borders for a 5-item, 3-column grid: bottom divider between
+// the two rows, right divider between columns within a row, none at the
+// trailing edges (last column of a row, or the final item overall).
+const CELL_BORDER = [
+  "border-b md:border-r",
+  "border-b md:border-r",
+  "border-b",
+  "border-b md:border-b-0 md:border-r",
+  "",
+];
+
 export default function BeyondDesign() {
   return (
-    <section className="relative px-6 py-32 md:px-10">
+    <section className="relative bg-transparent px-6 py-32 md:px-10">
       <div className="grid grid-cols-editorial gap-x-4 gap-y-10">
         <div className="col-span-12 md:col-span-6">
           <SectionLabel index="08" />
@@ -27,30 +38,28 @@ export default function BeyondDesign() {
         </p>
       </div>
 
-      <div className="mt-20">
-        <Divider />
-        <div className="grid grid-cols-1 gap-x-12 gap-y-16 pt-16 md:grid-cols-3">
-          {beyondDesignContent.items.map((item, i) => (
-            <motion.div
-              key={item.title}
-              className="space-y-3"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10% 0px" }}
-              transition={{ duration: 0.8, delay: (i % 3) * 0.1, ease: EASE }}
-            >
-              <h3 className="font-serif text-[clamp(1.75rem,4vw,2.75rem)] text-primary">
-                {item.title}
-              </h3>
-              <p className="text-pretty font-sans text-xs uppercase tracking-[0.15em] text-accent">
-                {item.tags}
-              </p>
-              <p className="max-w-sm text-pretty font-sans text-secondary">
-                {preventOrphan(item.description)}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+      <Divider className="mt-20" />
+      <div className="grid grid-cols-1 gap-0 border-t border-b border-primary/10 bg-surface md:grid-cols-3">
+        {beyondDesignContent.items.map((item, i) => (
+          <motion.div
+            key={item.title}
+            className={`space-y-3 border-primary/10 p-8 ${CELL_BORDER[i]}`}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ duration: 0.8, delay: (i % 3) * 0.1, ease: EASE }}
+          >
+            <h3 className="font-serif text-[clamp(1.75rem,4vw,2.75rem)] text-primary">
+              {item.title}
+            </h3>
+            <p className="text-pretty font-sans text-xs uppercase tracking-[0.15em] text-accent">
+              {item.tags}
+            </p>
+            <p className="max-w-sm text-pretty font-sans text-secondary">
+              {preventOrphan(item.description)}
+            </p>
+          </motion.div>
+        ))}
       </div>
     </section>
   );

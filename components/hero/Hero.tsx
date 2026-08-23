@@ -65,14 +65,6 @@ export default function Hero() {
           {preventOrphan(heroContent.supporting)}
         </motion.p>
 
-        <motion.div
-          className="col-span-12 self-end md:col-span-6 md:col-start-7"
-          initial={{ opacity: 0, y: 12 }}
-          animate={identityResolved ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
-        >
-          <FrameSequence />
-        </motion.div>
       </div>
     </section>
   );
@@ -96,49 +88,6 @@ function ScrollCue({ visible }: { visible: boolean }) {
         transition={{ duration: 0.8, delay: 0.5 }}
       />
     </motion.div>
-  );
-}
-
-function FrameSequence() {
-  const frames = ["01", "02", "03", "04", "05"];
-  const activeIndex = 2;
-
-  return (
-    <div className="border-t border-primary/15 pt-3">
-      <div className="grid grid-cols-5 gap-2">
-        {frames.map((frame, i) => {
-          const active = i === activeIndex;
-          return (
-            <div
-              key={frame}
-              className={`group relative aspect-[3/4] border transition-colors duration-300 ${
-                active
-                  ? "border-accent"
-                  : "border-primary/15 hover:border-primary/40"
-              }`}
-            >
-              <span
-                className={`absolute bottom-1.5 left-1.5 font-sans text-[10px] tracking-[0.15em] ${
-                  active ? "text-accent" : "text-secondary"
-                }`}
-              >
-                {frame}
-              </span>
-              <span
-                aria-hidden
-                className={`absolute top-1.5 right-1.5 h-1 w-1 rounded-full transition-colors duration-300 ${
-                  active ? "bg-accent" : "bg-primary/15"
-                }`}
-              />
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-2 flex justify-between font-sans text-[10px] tracking-[0.15em] text-secondary">
-        <span>FRAME SEQUENCE</span>
-        <span>05 / 05</span>
-      </div>
-    </div>
   );
 }
 

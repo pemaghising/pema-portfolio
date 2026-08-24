@@ -20,12 +20,12 @@ Sits at the intersection of graphic design, motion, storytelling, and technology
 
 ## Operating Context
 
-Single-page scrolling site (`app/page.tsx`) built with Next.js 16 (App Router), React 19, Tailwind CSS 4, and Framer Motion for scroll-driven reveal animations. Sections in order: Hero, Bio, What I Do, Currently, Philosophy, Experience, Tools, Design+Tech, Beyond Design, Looking Forward, Contact. Single active theme (`app/themes/dark.css`) — the earlier `purple.css`/`warm.css` alternates were unused dead code and were removed.
+Single-page scrolling site (`app/page.tsx`) built with Next.js 16 (App Router), React 19, Tailwind CSS 4, and Framer Motion for scroll-driven reveal animations. Sections in order: Hero, Bio, What I Do, Experience, Currently, Philosophy, Design+Tech, Tools, Beyond Design, Looking Forward, Contact — reordered from the original Bio→WhatIDo→Currently→Philosophy→Experience→Tools→DesignTech→BeyondDesign sequence to front-load proof (Experience moved up after What I Do) and close on the most human, specific content (Beyond Design moved just before Looking Forward/Contact). No sections were merged or cut in that pass. Single active theme (`app/themes/dark.css`) — the earlier `purple.css`/`warm.css` alternates were unused dead code and were removed.
 
 ## Capabilities and Constraints
 
 - No CMS or backend — all copy lives in `data/content.ts` as static structured content.
-- A "Work" section scaffold exists (`components/work/Work.tsx`, `workContent` in `data/content.ts`) but is **not imported into `app/page.tsx`** — deliberately built and left unpublished since no real case studies exist yet. Ships 3 honest "Case study coming soon" placeholder cells (project type only — no fabricated names/clients/metrics). When real project content exists, publish it by importing `Work` into `app/page.tsx` between Currently and Philosophy, and renumber the downstream sections' `SectionLabel` indices (Philosophy 04→05 through Contact 10→11).
+- A "Work" section scaffold exists (`components/work/Work.tsx`, `workContent` in `data/content.ts`) but is **not imported into `app/page.tsx`** — deliberately built and left unpublished since no real case studies exist yet. Ships 3 honest "Case study coming soon" placeholder cells (project type only — no fabricated names/clients/metrics). Currently and Philosophy are still adjacent in the current order, so when real project content exists, publish it by importing `Work` into `app/page.tsx` between Currently and Philosophy (its `SectionLabel index="04"` already matches Currently's), and renumber the downstream sections' indices (Philosophy 05→06, Design+Tech 06→07, Tools 07→08, Beyond Design 08→09, Looking Forward 09→10, Contact 10→11).
 - External proof currently routed through social links (LinkedIn, Instagram; Behance link is a placeholder `#` — not yet live).
 - Contact funnel: direct email (pema.ghising133@gmail.com) plus social links, no contact form currently.
 

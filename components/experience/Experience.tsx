@@ -13,7 +13,7 @@ export default function Experience() {
     <section className="relative bg-transparent px-6 py-32 md:px-10">
       <div className="grid grid-cols-editorial gap-x-4 gap-y-10">
         <div className="col-span-12 md:col-span-7">
-          <SectionLabel index="05" />
+          <SectionLabel index="03" />
           <h2 className="mt-3 text-pretty font-serif text-[clamp(2.75rem,8vw,6rem)] leading-[0.9] text-primary">
             {experienceContent.heading.map((line) => (
               <span key={line} className="block">

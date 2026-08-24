@@ -12,7 +12,7 @@ export default function DesignTech() {
     <section className="relative overflow-hidden px-6 py-32 md:px-10">
       <div className="relative grid grid-cols-editorial gap-x-4 gap-y-10">
         <div className="col-span-12">
-          <SectionLabel index="06" />
+          <SectionLabel index="05" />
         </div>
 
         <motion.h2

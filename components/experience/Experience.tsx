@@ -11,21 +11,39 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export default function Experience() {
   return (
     <section className="relative bg-transparent px-6 py-32 md:px-10">
-      <div className="grid grid-cols-editorial gap-x-4 gap-y-10">
-        <div className="col-span-12 md:col-span-7">
-          <SectionLabel index="03" />
-          <h2 className="mt-3 text-pretty font-serif text-[clamp(2.75rem,8vw,6rem)] leading-[0.9] text-primary">
-            {experienceContent.heading.map((line) => (
-              <span key={line} className="block">
-                {accentPeriod(line)}
-              </span>
-            ))}
-          </h2>
+      <div className="grid grid-cols-editorial gap-x-4 gap-y-16">
+        <div className="col-span-12">
+          <SectionLabel index="01" />
         </div>
 
-        <p className="col-span-12 self-end text-pretty font-sans text-base text-secondary md:col-span-4 md:col-start-9 md:text-lg">
-          {preventOrphan(experienceContent.intro)}
-        </p>
+        <motion.h2
+          className="col-span-12 font-serif text-[clamp(3rem,10vw,7.5rem)] leading-[0.9] text-primary md:col-span-8"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15% 0px" }}
+          transition={{ duration: 1, ease: EASE }}
+        >
+          {experienceContent.heading.map((line) => (
+            <span key={line} className="block">
+              {accentPeriod(line)}
+            </span>
+          ))}
+        </motion.h2>
+
+        <div className="col-span-12 flex max-w-xl flex-col gap-8 md:col-span-5 md:col-start-8">
+          {experienceContent.paragraphs.map((paragraph, i) => (
+            <motion.p
+              key={paragraph}
+              className="text-pretty font-sans text-base text-secondary md:text-lg"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
+            >
+              {preventOrphan(paragraph)}
+            </motion.p>
+          ))}
+        </div>
       </div>
 
       <Divider className="mt-20" />

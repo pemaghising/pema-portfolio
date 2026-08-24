@@ -10,7 +10,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export default function Philosophy() {
   return (
     <section className="relative px-6 py-32 md:px-10">
-      <SectionLabel index="05" className="mb-16 block" />
+      <SectionLabel index="04" className="mb-16 block" />
 
       {philosophyContent.map((item, i) => (
         <div

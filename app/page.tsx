@@ -1,7 +1,6 @@
 import Hero from "@/components/hero/Hero";
-import Bio from "@/components/bio/Bio";
-import WhatIDo from "@/components/services/WhatIDo";
 import Experience from "@/components/experience/Experience";
+import WhatIDo from "@/components/services/WhatIDo";
 import Currently from "@/components/currently/Currently";
 import Philosophy from "@/components/philosophy/Philosophy";
 import DesignTech from "@/components/technology/DesignTech";
@@ -14,9 +13,8 @@ export default function Home() {
   return (
     <main id="main-content">
       <Hero />
-      <Bio />
-      <WhatIDo />
       <Experience />
+      <WhatIDo />
       <Currently />
       <Philosophy />
       <DesignTech />

@@ -11,14 +11,6 @@ export const heroContent = {
     "I turn ideas into visual systems, stories, and experiences that communicate clearly and move people.",
 };
 
-export const bioContent = {
-  heading: "I'M PEMA.",
-  paragraphs: [
-    "I'm a graphic and motion designer with 7+ years in the business of making ideas visible.",
-    "I enjoy working where structure meets experimentation — taking complex ideas and turning them into visual systems that are clear, engaging, and memorable.",
-  ],
-};
-
 export const whatIDoContent = [
   {
     index: "001",
@@ -107,8 +99,10 @@ export const philosophyContent = [
 
 export const experienceContent = {
   heading: ["7+ YEARS OF", "MAKING THINGS."],
-  intro:
-    "7+ years, one team at a time — moving across disciplines because the best solutions rarely stay in one lane.",
+  paragraphs: [
+    "I'm a graphic and motion designer in the business of making ideas visible.",
+    "I enjoy working where structure meets experimentation — taking complex ideas and turning them into visual systems that are clear, engaging, and memorable.",
+  ],
   roles: [
     {
       period: "2021 — PRESENT",

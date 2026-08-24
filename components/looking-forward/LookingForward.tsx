@@ -13,7 +13,7 @@ export default function LookingForward() {
     <section className="relative px-6 py-32 md:px-10">
       <div className="grid grid-cols-editorial gap-x-4 gap-y-12">
         <div className="col-span-12">
-          <SectionLabel index="09" />
+          <SectionLabel index="08" />
           <h2 className="mt-3 text-pretty font-serif text-[clamp(2.75rem,9vw,6.5rem)] leading-[0.9] text-primary">
             {lookingForwardContent.heading.map((line) => (
               <span key={line} className="block">

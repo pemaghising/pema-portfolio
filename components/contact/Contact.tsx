@@ -15,7 +15,7 @@ export default function Contact() {
     <section id="contact" className="relative px-6 py-32 md:px-10">
       <div className="grid grid-cols-editorial gap-x-4 gap-y-16">
         <div className="col-span-12">
-          <SectionLabel index="10" />
+          <SectionLabel index="09" />
         </div>
 
         <motion.h2

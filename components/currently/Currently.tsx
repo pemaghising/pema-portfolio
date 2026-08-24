@@ -30,7 +30,7 @@ export default function Currently() {
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: 0.9, ease: EASE }}
         >
-          <SectionLabel index="04" />
+          <SectionLabel index="03" />
           <h2 className="mt-3 font-serif text-[clamp(2.75rem,8vw,6rem)] leading-[0.9] text-primary">
             {accentPeriod(currentlyContent.heading)}
           </h2>

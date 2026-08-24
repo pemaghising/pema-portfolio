@@ -14,9 +14,8 @@ export const heroContent = {
 export const bioContent = {
   heading: "I'M PEMA.",
   paragraphs: [
-    "I'm a graphic and motion designer with 7+ years of experience creating visual communication across branding, marketing, motion, presentations, and digital experiences.",
+    "I'm a graphic and motion designer with 7+ years in the business of making ideas visible.",
     "I enjoy working where structure meets experimentation — taking complex ideas and turning them into visual systems that are clear, engaging, and memorable.",
-    "My work sits somewhere between design, motion, storytelling, and technology.",
   ],
 };
 
@@ -54,7 +53,7 @@ export const currentlyContent = {
     {
       title: "DESIGNING",
       description:
-        "Building visual systems and experiences that bridge graphic design, motion, and digital.",
+        "The day-to-day: brand systems, motion pieces, and the connective tissue between them — often all in the same week.",
     },
     {
       title: "EXPLORING",
@@ -109,7 +108,7 @@ export const philosophyContent = [
 export const experienceContent = {
   heading: ["7+ YEARS OF", "MAKING THINGS."],
   intro:
-    "Over the years, I've had the opportunity to work across different teams, industries, formats, and design problems — from brand and marketing communication to motion, presentations, digital products, and emerging technology.",
+    "7+ years, one team at a time — moving across disciplines because the best solutions rarely stay in one lane.",
   roles: [
     {
       period: "2021 — PRESENT",
@@ -117,7 +116,7 @@ export const experienceContent = {
       company: "LEAPFROG TECHNOLOGY",
       disciplines: ["GRAPHIC", "MOTION", "BRAND", "DIGITAL"],
       description:
-        "Leading and creating visual communication across marketing, brand, motion, presentations, and digital initiatives while collaborating with multidisciplinary teams.",
+        "Leading visual communication at Leapfrog Technology — setting direction, keeping a consistent design language across teams, and turning strategy into things people actually see.",
     },
   ],
 };
@@ -174,7 +173,7 @@ export const beyondDesignContent = {
 
 export const lookingForwardContent = {
   heading: ["LOOKING", "FORWARD."],
-  copy: "I'm interested in working on meaningful visual problems with people who care about craft, clarity, experimentation, and making things better.",
+  copy: "I'm interested in projects where the brief still has room to move — collaborators who'd rather explore three directions than lock in the first one.",
   tags: [
     "COLLABORATIONS",
     "CREATIVE PROJECTS",

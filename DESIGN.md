@@ -34,7 +34,7 @@ typography:
     letterSpacing: "0.2em"
   micro:
     fontFamily: "Inter, system-ui, sans-serif"
-    fontSize: "0.625rem"
+    fontSize: "0.6875rem"
     fontWeight: 400
     lineHeight: 1.2
     letterSpacing: "0.15em"
@@ -52,6 +52,13 @@ components:
     textColor: "{colors.primary-paper}"
     typography: "{typography.label}"
   link-cta-hover:
+    textColor: "{colors.blueprint-violet}"
+  cta-primary:
+    textColor: "{colors.primary-paper}"
+    typography: "{typography.label}"
+    padding: "16px 32px"
+    rounded: "{rounded.none}"
+  cta-primary-hover:
     textColor: "{colors.blueprint-violet}"
   grid-cell:
     backgroundColor: "{colors.drafting-surface}"
@@ -119,7 +126,7 @@ A two-tone dark palette (ink black + off-white paper) with exactly one saturated
 - **Title** (400, `clamp(1.75rem, 4vw, 2.75rem)`, line-height 1.1): In-grid card titles (Beyond Design item titles, tool marquee entries).
 - **Body** (400, 1rem–1.125rem, line-height 1.5): Paragraph copy in Secondary Graphite, max-width capped (`max-w-md`/`max-w-sm`/`max-w-xl`) rather than full column width.
 - **Label** (400, 0.75rem, letter-spacing 0.2em, uppercase): Section index tags, nav/CTA links, tool-tag lines. Always uppercase, always wide-tracked.
-- **Micro** (400, 0.625rem, letter-spacing 0.15em, uppercase): The smallest annotation step, reserved for compact fixed-size contexts where a full Label would overpower the element — the hero scroll cue and the Currently index-badge pill. Not for general use.
+- **Micro** (400, 0.6875rem/11px, letter-spacing 0.15em, uppercase): The smallest annotation step, at the legibility floor rather than below it — reserved for compact fixed-size contexts where a full Label would overpower the element (the hero scroll cue, the Currently index-badge pill). Not for general use.
 
 ### Named Rules
 **The Uppercase Label Rule.** Every non-prose piece of type — section labels, index numbers, nav links, CTAs, tag lists — is small, uppercase Inter with 0.15–0.2em letter-spacing. It never competes with the serif display type; it annotates it.
@@ -142,10 +149,16 @@ Sharp and square by default (`rounded-none` on all grid cells and structural ele
 
 Interaction across the system is mechanical and kinetic: color/position changes are exact, timed, and driven by scroll or hover state rather than decorative easing for its own sake — the PG monogram assembly, scroll-linked marquee, and staged grid-cell reveals are the system's signature move, not a one-off flourish.
 
-### Links / CTAs
+### Links (secondary)
 - **Style:** Plain text, uppercase label typography, no background or border.
 - **Default:** Primary Paper text.
-- **Hover / Focus:** Color shifts to Blueprint Violet over 200–300ms; the Contact CTA additionally translates its arrow glyph `→` 4px on hover (`group-hover:translate-x-1`).
+- **Hover / Focus:** Color shifts to Blueprint Violet over 200–300ms.
+- **Use:** Nav, social/utility links (Contact's LinkedIn/Behance/Instagram row).
+
+### Primary CTA (signature)
+- **Style:** The one bordered link on the site — hairline `border-primary/15`, `px-8 py-4` padding, still uppercase label typography (no fill/pill, no second color). The border and padding alone are what separate it from a Secondary Link; nothing else on the page looks like this.
+- **Use:** Exactly one instance — Contact's "GET IN TOUCH". Never apply this treatment to a second element; its singularity is what makes it read as *the* action.
+- **Hover / Focus:** Border and background wash to `accent/40` / `accent/5`, text shifts to Blueprint Violet, and the arrow glyph `→` translates 4px (`group-hover:translate-x-1`), inheriting the link's current color via `currentColor`.
 
 ### Grid Cells (signature component)
 - **Corner Style:** `rounded-none`.
@@ -160,12 +173,13 @@ Interaction across the system is mechanical and kinetic: color/position changes 
 - **Use:** Numeric markers inside Currently cards only.
 
 ### Navigation
-- **Style:** Fixed header, `bg-background/90` with `backdrop-blur-md`, full-bleed `inset-x-0`.
-- **Mark:** Compact "PG" monogram; on hover/focus, hidden letters ("EMA", "HISING") reveal via an animated `grid-template-columns: 0fr → 1fr` transition, and the mark's color shifts Primary Paper → Blueprint Violet.
-- **Focus:** `focus-visible:ring-2 ring-accent` with offset, on the logo link.
+- **Style:** Fixed header, `bg-background/90` with `backdrop-blur-md`, full-bleed `inset-x-0`, `justify-between`.
+- **Mark:** Compact "PG" monogram (left); on hover/focus, hidden letters ("EMA", "HISING") reveal via an animated `grid-template-columns: 0fr → 1fr` transition, and the mark's color shifts Primary Paper → Blueprint Violet.
+- **Contact link (right):** A plain Secondary Link (`#contact` anchor, not the bordered Primary CTA) — the persistent escape hatch to the conversion section from any scroll depth. Deliberately styled like every other secondary link, not like the bordered CTA, so the Primary CTA in the Contact section stays the only bordered element on the page.
+- **Focus:** `focus-visible:ring-2 ring-accent` with offset, on the logo link; the Contact link uses the browser's default focus outline, like every other secondary link.
 
 ### PG Monogram (signature component)
-- **Hero variant:** On load, assembles through five timed stages (max spacing → collapsed "PG" → stacked "P / G" → expanded "PEMA / GHISING"), using shared-layout animation (`layout` prop) so each stage physically settles rather than cross-fading. Respects `prefers-reduced-motion` by skipping straight to the final state.
+- **Hero variant:** On load, assembles through five timed stages (max spacing → collapsed "PG" → stacked "P / G" → expanded "PEMA / GHISING") over ~3.8s, using shared-layout animation (`layout` prop) so each stage physically settles rather than cross-fading. Respects `prefers-reduced-motion` by skipping straight to the final state. Plays in full once per browser session (`sessionStorage`); a repeat visit within the same session resolves directly to the final state via the same `layout` animation (~0.9s), so a returning visitor never re-pays the full sequence.
 - **Compact variant:** Static "PG", expands inline to the full name on hover/focus via the same grid-template-columns technique used in Navigation.
 
 ### Tools Marquee (signature component)
@@ -184,6 +198,7 @@ Interaction across the system is mechanical and kinetic: color/position changes 
 - **Do** build depth with hairline borders and the Ink Black → Drafting Surface step, not shadows, as the default.
 - **Do** keep grid cells `rounded-none`; reserve `rounded-full` for small stamped badges only.
 - **Do** respect `prefers-reduced-motion` on every custom animation (monogram, marquee, reveals) the way the existing components already do.
+- **Do** keep the bordered Primary CTA treatment to exactly one element (Contact's "GET IN TOUCH") — its rarity, not its color, is what makes it register as the one action that matters.
 
 ### Don't:
 - **Don't** introduce a second accent color — the system's power comes from having exactly one.

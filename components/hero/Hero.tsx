@@ -74,7 +74,7 @@ function ScrollCue({ visible }: { visible: boolean }) {
   return (
     <motion.div
       aria-hidden
-      className="mt-auto flex items-center gap-3 pt-10 font-sans text-[10px] uppercase tracking-[0.2em] text-secondary"
+      className="mt-auto flex items-center gap-3 pt-10 font-sans text-[11px] uppercase tracking-[0.2em] text-secondary"
       initial={{ opacity: 0 }}
       animate={visible ? { opacity: 1 } : {}}
       transition={{ duration: 0.8, delay: 0.4 }}

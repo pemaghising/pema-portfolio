@@ -39,7 +39,7 @@ export default function Contact() {
 
           <a
             href={`mailto:${contactContent.email}`}
-            className="group relative inline-flex w-fit items-center gap-3 font-sans text-sm uppercase tracking-[0.15em] text-primary transition-colors duration-300 before:absolute before:inset-[-12px] before:content-[''] hover:text-accent focus-visible:text-accent"
+            className="group relative inline-flex w-fit items-center gap-4 border border-primary/15 px-8 py-4 font-sans text-sm uppercase tracking-[0.15em] text-primary transition-colors duration-300 hover:border-accent/40 hover:bg-accent/5 hover:text-accent focus-visible:border-accent/40 focus-visible:bg-accent/5 focus-visible:text-accent"
           >
             {contactContent.cta}
             <span
@@ -52,9 +52,6 @@ export default function Contact() {
         </div>
 
         <div className="col-span-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-primary/10 pt-8 md:col-span-6 md:col-start-7 md:justify-end md:border-t-0 md:pt-0">
-          <a href={`mailto:${contactContent.email}`} className={LINK_CLASS}>
-            EMAIL
-          </a>
           {contactContent.socialLinks.map((link) => {
             const isPlaceholder = link.href === "#";
 

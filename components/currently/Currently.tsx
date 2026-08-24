@@ -54,7 +54,7 @@ export default function Currently() {
               transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
             >
               <div className="relative">
-                <span className="inline-flex items-center rounded-full border border-accent/30 px-2.5 py-1 font-sans text-[10px] uppercase tracking-[0.15em] text-accent">
+                <span className="inline-flex items-center rounded-full border border-accent/30 px-2.5 py-1 font-sans text-[11px] uppercase tracking-[0.15em] text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 

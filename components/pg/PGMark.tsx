@@ -10,6 +10,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 // 4 = stacked "P / G", 5 = expanded "PEMA / GHISING"
 const STAGE_GAPS = ["16vw", "6.5vw", "1.75vw", "0vw"];
 const STAGE_DELAYS_MS = [650, 1250, 1850, 2450, 3100];
+const SEEN_KEY = "pg-mark-seen";
 
 interface PGMarkProps {
   variant?: "hero" | "compact";
@@ -33,13 +34,21 @@ export default function PGMark({
       return;
     }
 
+    // Already played once this browser session (e.g. a recruiter reopening
+    // the tab) — resolve immediately instead of replaying the full sequence.
+    if (sessionStorage.getItem(SEEN_KEY)) {
+      const resolveTimer = setTimeout(() => setStage(5), 0);
+      onSettled?.();
+      return () => clearTimeout(resolveTimer);
+    }
+
     const timers = STAGE_DELAYS_MS.map((delay, i) =>
       setTimeout(() => setStage(i + 1), delay)
     );
-    const settleTimer = setTimeout(
-      () => onSettled?.(),
-      STAGE_DELAYS_MS[STAGE_DELAYS_MS.length - 1] + 700
-    );
+    const settleTimer = setTimeout(() => {
+      sessionStorage.setItem(SEEN_KEY, "1");
+      onSettled?.();
+    }, STAGE_DELAYS_MS[STAGE_DELAYS_MS.length - 1] + 700);
 
     return () => {
       timers.forEach(clearTimeout);

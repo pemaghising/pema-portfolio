@@ -74,6 +74,31 @@ export const currentlyContent = {
   ],
 };
 
+// Scaffold only — no real case studies exist yet. Keep placeholder items
+// generic (project type, not invented names/clients/metrics) until real
+// project content replaces them. Not yet imported into app/page.tsx.
+export const workContent = {
+  heading: ["SELECTED", "WORK."],
+  intro: "Case studies are on their way — here's what's coming.",
+  items: [
+    {
+      index: "001",
+      type: "BRAND IDENTITY",
+      status: "Case study coming soon.",
+    },
+    {
+      index: "002",
+      type: "MOTION & ANIMATION",
+      status: "Case study coming soon.",
+    },
+    {
+      index: "003",
+      type: "DIGITAL & VISUAL SYSTEMS",
+      status: "Case study coming soon.",
+    },
+  ],
+};
+
 export const philosophyContent = [
   {
     statement: ["CLARITY OVER", "DECORATION."],
@@ -139,15 +164,10 @@ export const beyondDesignContent = {
       description: "A healthy mix of competition, exploration, and questionable decisions.",
     },
     {
-      title: "WATCH",
-      tags: "FILMS · K-DRAMA",
+      title: "WATCH & READ",
+      tags: "FILMS · K-DRAMA · NOVELS",
       description:
-        "Stories, characters, visuals, and the occasional “one more episode.”",
-    },
-    {
-      title: "READ",
-      tags: "NOVELS",
-      description: "A slower way of getting lost in another world.",
+        "Stories in every format — the occasional “one more episode,” and the slower kind you get lost in on the page.",
     },
   ],
 };

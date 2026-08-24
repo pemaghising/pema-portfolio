@@ -25,7 +25,7 @@ Single-page scrolling site (`app/page.tsx`) built with Next.js 16 (App Router), 
 ## Capabilities and Constraints
 
 - No CMS or backend — all copy lives in `data/content.ts` as static structured content.
-- No "Work" / "Case Studies" / project-samples section exists yet. This is a **known, durable gap**: project work is planned but not yet built or supplied. Future work should design for a projects/case-studies section even before real case-study content exists (e.g., scaffolding, placeholder-aware layout) — do not treat the current sample-free structure as a deliberate final decision.
+- A "Work" section scaffold exists (`components/work/Work.tsx`, `workContent` in `data/content.ts`) but is **not imported into `app/page.tsx`** — deliberately built and left unpublished since no real case studies exist yet. Ships 3 honest "Case study coming soon" placeholder cells (project type only — no fabricated names/clients/metrics). When real project content exists, publish it by importing `Work` into `app/page.tsx` between Currently and Philosophy, and renumber the downstream sections' `SectionLabel` indices (Philosophy 04→05 through Contact 10→11).
 - External proof currently routed through social links (LinkedIn, Instagram; Behance link is a placeholder `#` — not yet live).
 - Contact funnel: direct email (pema.ghising133@gmail.com) plus social links, no contact form currently.
 

@@ -11,6 +11,13 @@ export default function Navigation() {
       >
         <PGMark variant="compact" />
       </a>
+
+      <a
+        href="#contact"
+        className="relative font-sans text-xs uppercase tracking-[0.2em] text-primary transition-colors duration-200 before:absolute before:inset-[-10px] before:content-[''] hover:text-accent focus-visible:text-accent"
+      >
+        Contact
+      </a>
     </header>
   );
 }

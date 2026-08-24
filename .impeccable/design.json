@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-24T02:00:00.000Z",
+  "generatedAt": "2026-08-24T05:00:00.000Z",
   "title": "Design System: Pema Ghising Portfolio",
   "extensions": {
     "colorMeta": {
@@ -53,12 +53,20 @@
   },
   "components": [
     {
-      "name": "Link / CTA",
+      "name": "Link (secondary)",
       "kind": "custom",
       "refersTo": "link-cta",
-      "description": "Plain-text uppercase link used for nav, contact CTA, and social links.",
-      "html": "<a href=\"#\" class=\"ds-link-cta\">GET IN TOUCH<span class=\"ds-link-cta__arrow\">&#8594;</span></a>",
-      "css": ".ds-link-cta { display: inline-flex; align-items: center; gap: 12px; font-family: Inter, system-ui, sans-serif; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.15em; color: #f5f5f5; text-decoration: none; transition: color 0.3s ease; } .ds-link-cta:hover, .ds-link-cta:focus-visible { color: #a855f7; } .ds-link-cta__arrow { display: inline-block; transition: transform 0.3s ease; } .ds-link-cta:hover .ds-link-cta__arrow { transform: translateX(4px); }"
+      "description": "Plain-text uppercase link used for nav and social/utility links.",
+      "html": "<a href=\"#\" class=\"ds-link\">LINKEDIN</a>",
+      "css": ".ds-link { font-family: Inter, system-ui, sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #f5f5f5; text-decoration: none; transition: color 0.2s ease; } .ds-link:hover, .ds-link:focus-visible { color: #a855f7; }"
+    },
+    {
+      "name": "Primary CTA",
+      "kind": "custom",
+      "refersTo": "cta-primary",
+      "description": "The one bordered link on the site. Exactly one instance (Contact's \"GET IN TOUCH\") — its rarity, not a second color, is what separates it from every other link.",
+      "html": "<a href=\"#\" class=\"ds-cta-primary\">GET IN TOUCH<span class=\"ds-cta-primary__arrow\">&#8594;</span></a>",
+      "css": ".ds-cta-primary { display: inline-flex; align-items: center; gap: 16px; border: 1px solid rgba(245,245,245,0.15); padding: 16px 32px; font-family: Inter, system-ui, sans-serif; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.15em; color: #f5f5f5; text-decoration: none; transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; } .ds-cta-primary:hover, .ds-cta-primary:focus-visible { color: #a855f7; border-color: rgba(168,85,247,0.4); background-color: rgba(168,85,247,0.05); } .ds-cta-primary__arrow { display: inline-block; transition: transform 0.3s ease; } .ds-cta-primary:hover .ds-cta-primary__arrow { transform: translateX(4px); }"
     },
     {
       "name": "Grid Cell",
@@ -80,9 +88,9 @@
       "name": "Navigation Bar",
       "kind": "nav",
       "refersTo": null,
-      "description": "Fixed, blurred header holding the compact PG monogram that expands to the full name on hover.",
-      "html": "<header class=\"ds-nav\"><a href=\"#top\" class=\"ds-nav__mark\">P<span class=\"ds-nav__reveal\">EMA&nbsp;</span>G<span class=\"ds-nav__reveal\">HISING</span></a></header>",
-      "css": ".ds-nav { position: fixed; inset-inline: 0; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; background: rgba(18,18,18,0.9); backdrop-filter: blur(12px); padding: 24px 32px; } .ds-nav__mark { display: inline-flex; align-items: baseline; font-family: 'Instrument Serif', Georgia, serif; font-size: 1.25rem; color: #f5f5f5; text-decoration: none; transition: color 0.5s ease; } .ds-nav__mark:hover, .ds-nav__mark:focus-visible { color: #a855f7; } .ds-nav__reveal { display: inline-grid; grid-template-columns: 0fr; overflow: hidden; white-space: nowrap; transition: grid-template-columns 0.5s cubic-bezier(0.16,1,0.3,1); } .ds-nav__mark:hover .ds-nav__reveal, .ds-nav__mark:focus-visible .ds-nav__reveal { grid-template-columns: 1fr; }"
+      "description": "Fixed, blurred header holding the compact PG monogram (left) that expands to the full name on hover, plus a persistent secondary-style Contact link (right) that jumps to the Contact section from any scroll depth.",
+      "html": "<header class=\"ds-nav\"><a href=\"#top\" class=\"ds-nav__mark\">P<span class=\"ds-nav__reveal\">EMA&nbsp;</span>G<span class=\"ds-nav__reveal\">HISING</span></a><a href=\"#contact\" class=\"ds-nav__contact\">Contact</a></header>",
+      "css": ".ds-nav { position: fixed; inset-inline: 0; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; background: rgba(18,18,18,0.9); backdrop-filter: blur(12px); padding: 24px 32px; } .ds-nav__mark { display: inline-flex; align-items: baseline; font-family: 'Instrument Serif', Georgia, serif; font-size: 1.25rem; color: #f5f5f5; text-decoration: none; transition: color 0.5s ease; } .ds-nav__mark:hover, .ds-nav__mark:focus-visible { color: #a855f7; } .ds-nav__reveal { display: inline-grid; grid-template-columns: 0fr; overflow: hidden; white-space: nowrap; transition: grid-template-columns 0.5s cubic-bezier(0.16,1,0.3,1); } .ds-nav__mark:hover .ds-nav__reveal, .ds-nav__mark:focus-visible .ds-nav__reveal { grid-template-columns: 1fr; } .ds-nav__contact { font-family: Inter, system-ui, sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #f5f5f5; text-decoration: none; transition: color 0.2s ease; } .ds-nav__contact:hover, .ds-nav__contact:focus-visible { color: #a855f7; }"
     },
     {
       "name": "Divider",
@@ -115,7 +123,8 @@
       "Do pair every non-prose label (index tags, CTAs, tags, nav) with uppercase Inter and 0.15–0.2em tracking.",
       "Do build depth with hairline borders and the Ink Black → Drafting Surface step, not shadows, as the default.",
       "Do keep grid cells rounded-none; reserve rounded-full for small stamped badges only.",
-      "Do respect prefers-reduced-motion on every custom animation (monogram, marquee, reveals) the way the existing components already do."
+      "Do respect prefers-reduced-motion on every custom animation (monogram, marquee, reveals) the way the existing components already do.",
+      "Do keep the bordered Primary CTA treatment to exactly one element (Contact's \"GET IN TOUCH\") — its rarity, not its color, is what makes it register as the one action that matters."
     ],
     "donts": [
       "Don't introduce a second accent color — the system's power comes from having exactly one.",

@@ -8,15 +8,13 @@ import { accentPeriod, preventOrphan } from "@/lib/typography";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Hairline cell borders for a 5-item, 3-column grid: bottom divider between
-// the two rows, right divider between columns within a row, none at the
-// trailing edges (last column of a row, or the final item overall).
+// Hairline cell borders: right divider absent from the last column in each
+// visual row, bottom divider absent once a breakpoint removes that row edge.
 const CELL_BORDER = [
-  "border-b md:border-r",
-  "border-b md:border-r",
-  "border-b",
-  "border-b md:border-b-0 md:border-r",
-  "",
+  "border-b border-r-0 md:border-b-0 md:border-r lg:border-r",
+  "border-b border-r-0 md:border-b-0 lg:border-r",
+  "border-b border-r-0 md:border-b-0 md:border-r lg:border-r",
+  "border-r-0",
 ];
 
 export default function BeyondDesign() {
@@ -39,7 +37,7 @@ export default function BeyondDesign() {
       </div>
 
       <Divider className="mt-20" />
-      <div className="grid grid-cols-1 gap-0 border-t border-b border-primary/10 bg-surface md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-0 border-t border-b border-primary/10 bg-surface md:grid-cols-2 lg:grid-cols-4">
         {beyondDesignContent.items.map((item, i) => (
           <motion.div
             key={item.title}
@@ -47,7 +45,7 @@ export default function BeyondDesign() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
-            transition={{ duration: 0.8, delay: (i % 3) * 0.1, ease: EASE }}
+            transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
           >
             <h3 className="font-serif text-[clamp(1.75rem,4vw,2.75rem)] text-primary">
               {item.title}

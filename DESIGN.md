@@ -181,6 +181,7 @@ Interaction across the system is mechanical and kinetic: color/position changes 
 ### PG Monogram (signature component)
 - **Hero variant:** On load, assembles through five timed stages (max spacing → collapsed "PG" → stacked "P / G" → expanded "PEMA / GHISING") over ~3.8s, using shared-layout animation (`layout` prop) so each stage physically settles rather than cross-fading. Respects `prefers-reduced-motion` by skipping straight to the final state. Plays in full once per browser session (`sessionStorage`); a repeat visit within the same session resolves directly to the final state via the same `layout` animation (~0.9s), so a returning visitor never re-pays the full sequence.
 - **Compact variant:** Static "PG", expands inline to the full name on hover/focus via the same grid-template-columns technique used in Navigation.
+- **Favicon variant:** "PG." set in Instrument Serif, Primary Paper on Ink Black, with the terminal period in Blueprint Violet — the same `accentPeriod()` full-stop treatment applied to the wordmark itself rather than a generic monogram badge (`app/icon.png`, `app/apple-icon.png`, `app/favicon.ico`).
 
 ### Tools Marquee (signature component)
 - **Style:** Continuous horizontal scroll of serif tool names separated by a single Blueprint Violet interpunct (`·`), bounded top and bottom by hairline `Divider` rules.

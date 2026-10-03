@@ -87,47 +87,51 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
         })
       : null;
 
+    // start downloading the 3D code right away, in parallel with the counter
+    const m3d = import("@/lib/mixtape3d");
+    const wait = (ms: number) => new Promise<null>((r) => setTimeout(() => r(null), ms));
+
     (async () => {
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([import("gsap"), import("gsap/ScrollTrigger")]);
       if (disposed) return;
       gsap.registerPlugin(ScrollTrigger);
 
-      // ---- reveal: the name comes up as soon as the counter is done; it never waits for 3D
+      // ---- reveal: the name comes up and the tape flies in together, right after the counter
       const boot = q<HTMLElement>(".boot");
-      let revealed: Promise<unknown> = Promise.resolve();
+      let revealed: Promise<unknown> | null = null;
+      const reveal = () =>
+        (revealed ??= gsap
+          .timeline({
+            onComplete: () => {
+              document.body.classList.remove("booting");
+              try {
+                sessionStorage.setItem(BOOTED, "1");
+              } catch {}
+            },
+          })
+          .to(q(".bootbox"), { y: -20, opacity: 0, duration: 0.3, ease: "power2.in", delay: 0.1 })
+          .to(boot, { autoAlpha: 0, duration: 0.2 }, "-=.1")
+          .to(el.querySelectorAll(".title .ch"), { yPercent: 0, duration: 0.7, ease: "expo.out", stagger: 0.028 }, "-=.15")
+          .to([...el.querySelectorAll(".foot, .kana, .cat"), document.querySelector(".bar")], { opacity: 1, duration: 0.4 }, "-=.55")
+          .then());
       if (!typed) boot.style.display = "none";
       else {
-        const chars = el.querySelectorAll(".title .ch");
-        const bar = document.querySelector(".bar");
-        gsap.set(chars, { yPercent: 110 });
-        gsap.set([...el.querySelectorAll(".foot, .kana, .cat"), bar], { opacity: 0 });
-        revealed = typed.then(() => {
-          if (disposed) return;
-          return gsap
-            .timeline({
-              onComplete: () => {
-                document.body.classList.remove("booting");
-                try {
-                  sessionStorage.setItem(BOOTED, "1");
-                } catch {}
-              },
-            })
-            .to(q(".bootbox"), { y: -20, opacity: 0, duration: 0.3, ease: "power2.in", delay: 0.1 })
-            .to(boot, { autoAlpha: 0, duration: 0.2 }, "-=.1")
-            .to(chars, { yPercent: 0, duration: 0.7, ease: "expo.out", stagger: 0.028 }, "-=.15")
-            .to([...el.querySelectorAll(".foot, .kana, .cat"), bar], { opacity: 1, duration: 0.4 }, "-=.55")
-            .then();
-        });
+        gsap.set(el.querySelectorAll(".title .ch"), { yPercent: 110 });
+        gsap.set([...el.querySelectorAll(".foot, .kana, .cat"), document.querySelector(".bar")], { opacity: 0 });
       }
 
-      // heavy 3D work waits until the name is up, so it never delays or stutters the reveal
-      await revealed;
+      // the 3D is built while the counter sits on 007; on a slow connection the name doesn't wait long
+      if (typed) await typed;
       if (disposed) return;
-      const m = await import("@/lib/mixtape3d");
+      let m = await (typed ? Promise.race([m3d, wait(700)]) : m3d);
+      if (!m) {
+        reveal();
+        m = await m3d;
+      }
       if (disposed) return;
 
       // fonts must be ready before the label is painted
-      await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 2500))]);
+      await Promise.race([document.fonts.ready, wait(2500)]);
       if (disposed) return;
       const labelCanvas = m.makeLabel({ name, role, years, kana, catalogue: "PG-001" });
 
@@ -200,6 +204,10 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
           cam.lookAt(0, S.lookY, 0);
           renderer.render(scene, cam);
         };
+        // compile shaders up front so the fly-in doesn't hitch on its first frames
+        if (renderer.extensions.has("KHR_parallel_shader_compile")) await Promise.race([renderer.compileAsync(scene, cam), wait(500)]).catch(() => {});
+        else renderer.compile(scene, cam);
+        if (disposed) return;
         renderer.setAnimationLoop(frame);
       }
 
@@ -228,7 +236,13 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
       };
 
       // ---- the tape flies in (once the counter is done), then scroll takes over
-      if (typed) await gsap.to(S, { ...REST, duration: 0.95, ease: "expo.out" }).then();
+      if (typed) {
+        const fresh = !revealed;
+        reveal();
+        // in step with the name when both are ready together, otherwise as soon as the tape is
+        await gsap.to(S, { ...REST, duration: 0.95, ease: "expo.out", delay: fresh ? 0.45 : 0 }).then();
+        await revealed;
+      }
       if (!disposed) startScroll();
     })();
 

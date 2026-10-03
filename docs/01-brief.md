@@ -2,7 +2,7 @@
 
 ## Overview
 
-A new portfolio for Pema Ghising, Graphic & Motion Designer with 7+ years of experience, Lead Graphic Designer at Leapfrog Technology. The site presents the work as a collection of retro game cartridges. It is built to be submitted to Awwwards (Site of the Day / Month) and shared as shots and clips on Behance and Dribbble.
+A new portfolio for Pema Ghising, Graphic & Motion Designer with 7+ years of experience, Lead Graphic Designer at Leapfrog Technology. The site presents the work as a mixtape: projects are cassettes in a tape rack. It is built to be submitted to Awwwards (Site of the Day / Month) and shared as shots and clips on Behance and Dribbble.
 
 - **Audience, in order:** product companies (in-house brand and design teams), freelance clients, award juries.
 - **What a visitor leaves with:** Pema's name, what Pema does, a feel for the craft, an easy way to get in touch.
@@ -10,28 +10,30 @@ A new portfolio for Pema Ghising, Graphic & Motion Designer with 7+ years of exp
 - **Assets:** some project visuals are ready, others still need work.
 - **Domain:** pemaghising.com.np. Repo branch for the rebuild: `fresh-start`.
 
-## Concept: retro tech, collected
+## Concept: Mixtape
 
-Each project is a game cartridge on a shelf, with its own label and catalogue number, like a Famicom collection. It draws on Pema's interests: retro games and devices, Game Boys, iPods, Walkmans, wired earphones, 80s tech, collecting music and films.
+The work is a mixtape. Each project is a cassette in a tape rack, with its own J-card, catalogue number and side. The hero loads Pema's tape into a portable cassette player and presses play. It draws on Pema's interests: Walkmans, cassettes, wired earphones, 80s tech, collecting music and films.
 
-- **Feel:** a clean photo studio with real objects in it. Matte plastic, soft light, grain, big confident type. Premium, never toy-like.
-- **Japanese detail:** Pema's name in katakana (ペマ・ギシン) and short katakana lines on labels.
-- **Mechanical motion:** things click, slide, insert and spin like real hardware.
-- **Avoid:** synthwave neon, sunset gradients, CRT scanlines everywhere, pixel-art kitsch, glossy skeuomorphism, real brand marks (no Nintendo, Sony or Apple logos).
+The earlier cartridge concept (Famicom) is kept as a backup: `prototypes/hero.html`.
+
+- **Feel:** a clean photo studio with real objects in it. Brushed aluminium, smoked plastic, paper labels, soft light, grain, big confident type. Premium, never kitsch.
+- **Japanese detail:** Pema's name in katakana (ペマ・ギシン), as on 80s Japanese tape packaging.
+- **Mechanical motion:** doors swing, keys press, reels spin, spines slide. Short and precise.
+- **Avoid:** synthwave neon, sunset gradients, VHS glitch overload, kitsch, glossy skeuomorphism, real brand marks (no Sony, Walkman, TDK or Maxell names or logos).
 
 ## Site map
 
 | Section | Concept | Shows |
 | --- | --- | --- |
-| Nav | Device strip | Red LED, name, Work / About / Experiments / Contact as hardware buttons. No timecode, no section label |
-| Hero | Boot screen + 3D cartridge | Name, role, statement, scroll to insert |
-| Work | The shelf | Projects as cartridges with their own label ink and number |
-| Case study | The label at full size | Project page; "In preparation" + noindex until it has content |
-| Motion | Tape deck | Reels as cassettes; "No tape loaded" until reels exist |
-| About | Liner notes | Bio, four disciplines on a synth-style panel, philosophy, tools |
+| Nav | Device strip | Orange LED, name, Work / About / Experiments / Contact as hardware buttons. No timecode, no section label |
+| Hero | Label maker + press play | Name, role, statement; the tape loads into the player on scroll |
+| Work | The tape rack | Projects as cassette spines with their own ink stripe, number and side |
+| Case study | The J-card unfolded | Project page; "In preparation" + noindex until it has content |
+| Motion | Tape deck | Reels play in a deck with spinning reels; "No tape loaded" until reels exist |
+| About | Liner notes | Bio, four disciplines, philosophy, tools |
 | Experience | Tracklist | Roles as tracks, newest first; Leapfrog "now playing" |
-| Experiments | B-sides | Empty slots until experiments exist; "on rotation" strip |
-| Contact | Plug in | Email, LinkedIn, Instagram, the 3D cable |
+| Experiments | B-sides | Empty slots until experiments exist; an "on rotation" strip |
+| Contact | Plug in | Email, LinkedIn, Instagram; orange-foam headphones whose cable plugs into the player |
 
 Roomie links to its existing standalone page at `/roomie` and is never redesigned or reused.
 

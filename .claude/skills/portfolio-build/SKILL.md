@@ -1,6 +1,6 @@
 ---
 name: portfolio-build
-description: The step-by-step process for designing and building Pema Ghising's portfolio (retro cartridge concept). Use whenever working on this site's design, sections, motion, 3D, content or launch, or when asked what step comes next.
+description: The step-by-step process for designing and building Pema Ghising's portfolio (Mixtape concept: Walkman and cassettes). Use whenever working on this site's design, sections, motion, 3D, content or launch, or when asked what step comes next.
 ---
 
 # Portfolio build process
@@ -15,7 +15,7 @@ This repo is Pema Ghising's portfolio. Before any design or build work, read `do
 - Signature moments, stack, timing, ViewTransition and performance rules: `docs/04-motion-3d.md`
 - Content rules and what Pema still has to supply: `docs/05-content.md`
 - Decision log: `docs/06-decisions.md`
-- Approved hero prototype (the quality bar): `docs/prototypes/hero.html`
+- Approved hero prototype (the quality bar): `docs/prototypes/mixtape.html`. Backup concept: `docs/prototypes/hero.html`
 - All site copy: `data/site.ts`
 
 ## How to work

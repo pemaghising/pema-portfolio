@@ -2,17 +2,17 @@
 
 /* Tokens: see docs/03-design-system.md */
 @theme {
-  --color-studio: #e3e2dd;
-  --color-studio-2: #d6d5cf;
-  --color-plastic: #e6e1d3;
-  --color-paper: #f4f0e6;
+  --color-studio: #e5e3de;
+  --color-studio-2: #d7d4cd;
+  --color-paper: #f2ecdf;
+  --color-alu: #c9cdd3;
+  --color-player: #2d3e78;
+  --color-shell: #26262a;
   --color-graphite: #1b1b1e;
-  --color-ink-2: #55544f;
-  --color-lcd: #b7bca8;
-  --color-famicom: #9e1b32;
-  --color-teal: #14a39e;
+  --color-ink-2: #55534d;
+  --color-foam: #f26a21;
   --color-mustard: #e9ae0b;
-  --color-cobalt: #3557e0;
+  --color-teal: #14a39e;
   --font-display: var(--font-display), "Arial Black", sans-serif;
   --font-pixel: var(--font-pixel), ui-monospace, monospace;
   --font-sans: var(--font-text), "Helvetica Neue", Arial, sans-serif;
@@ -40,12 +40,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-famicom);
-  color: var(--color-paper);
+  background: var(--color-foam);
+  color: var(--color-graphite);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-famicom);
+  outline: 2px solid var(--color-foam);
   outline-offset: 3px;
 }
 

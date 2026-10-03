@@ -2,9 +2,9 @@
 
 Three signature moments carry the site. Everything else moves quietly around them.
 
-1. **Boot and insert (hero):** the LCD scrambles in ペマ・ギシン, then PEMA GHISING, in about 2 seconds. A 3D cartridge tilts with the cursor. On scroll the name splits, a console rises, the cartridge drops into the slot and the power LED turns on.
-2. **Shelf and case study:** hover pulls a cartridge out and tilts it to the light. Click inserts it and its label expands into the case-study page (React ViewTransition).
-3. **Plug in (contact):** a 3D wired earphone cable with rope physics swings toward the cursor. The plug can be dragged into a jack, or the visitor clicks the email.
+1. **Press play (hero):** a tape counter rolls to 007 while a label maker punches out PEMA GHISING, in about 2 seconds. A 3D cassette tilts with the cursor. On scroll the name splits, the player rises, its door opens, the tape slides in, the door shuts, play presses down and the reels spin.
+2. **Rack and case study:** hover slides a spine out of the rack. Click pulls the tape out and its J-card unfolds into the case-study page (React ViewTransition).
+3. **Plug in (contact):** orange-foam headphones whose 3D cable, with rope physics, swings toward the cursor. The plug can be dragged into the player's jack, or the visitor clicks the email.
 
 ## Stack
 
@@ -24,7 +24,7 @@ Three signature moments carry the site. Everything else moves quietly around the
 
 ## ViewTransition rules
 
-- Never two mounted elements with the same transition name. Name the clicked cartridge only at click time.
+- Never two mounted elements with the same transition name. Name the clicked spine only at click time.
 - If view transitions are unsupported or aborted, fall back to plain navigation.
 
 ## Performance rules

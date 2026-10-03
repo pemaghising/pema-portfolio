@@ -1,22 +1,24 @@
 # Design system
 
-Neutrals carry the page. Famicom red is the main colour. Three label inks give each project cartridge its own colour.
+Neutrals and aluminium carry the page. Headphone-foam orange is the accent. Label inks give each cassette its own stripe.
 
 ## Colour
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| studio | #E3E2DD | Page background, the studio sweep |
-| plastic | #E6E1D3 | Cartridge and console shells |
-| paper | #F4F0E6 | Labels, light cards |
-| graphite | #1B1B1E | Type, dark sections, devices |
-| lcd | #B7BCA8 | Boot screen, readouts |
-| famicom | #9E1B32 | Main colour: label bands, links, live states, cursor |
+| studio | #E5E3DE | Page background, the studio sweep |
+| paper | #F2ECDF | Labels, J-cards, spines |
+| alu | #C9CDD3 | Player face, keys |
+| player | #2D3E78 | Player body, deep accent |
+| shell | #26262A | Cassette shell |
+| graphite | #1B1B1E | Type, dark sections |
+| foam | #F26A21 | Accent: play, links, live states, cursor |
+| mustard | #E9AE0B | Label ink |
 | teal | #14A39E | Label ink |
-| mustard | #E9AE0B | Label ink, stickers |
-| cobalt | #3557E0 | Label ink |
 
-Text on famicom red is paper, never graphite. Label inks are for objects, not for page backgrounds.
+Text on foam orange is graphite. Label inks are for objects, not page backgrounds.
+
+Backup (cartridge concept): Famicom red #9E1B32, plastic #E6E1D3, cobalt #3557E0.
 
 ## Type
 
@@ -30,8 +32,8 @@ All three are Japanese foundry faces with katakana.
 
 ## Materials and details
 
-- Matte plastic with a light clearcoat, paper labels with halftone print, grain over the whole page.
-- Grip ridges, an insert tab with gold contacts, catalogue numbers (PG-001), Side A / Side B, stickers, a red power LED.
+- Smoked cassette plastic, brushed aluminium, paper labels, grain over the whole page.
+- Screws, reel windows, label stripes, label-maker tape, a tape counter, catalogue numbers (PG-001), Side A / Side B, an orange LED.
 
 ## Layout
 

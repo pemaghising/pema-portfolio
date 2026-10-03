@@ -7,11 +7,11 @@ How a professional portfolio gets made, step by step. Each step ends with Pema's
 | 1 | Discovery | Goals, audience, lead projects (01-brief.md) | Done |
 | 2 | Curate the work | 4–6 strongest projects, each with a short story | In progress: Addy, Frogtoberfest |
 | 3 | Research and references | Mood board, reference sites | Done |
-| 4 | Concept | One idea that ties the site together | Done: retro tech, collected |
+| 4 | Concept | One idea that ties the site together | Done: Mixtape (cartridge concept kept as backup) |
 | 5 | Visual system | Colours, type, grid, materials (03-design-system.md) | Done |
 | 6 | Wireframes | Page structure, mobile and desktop | Covered by the site map |
 | 7 | Key screens | Hero, work index, one case study | Hero done as prototype |
-| 8 | Motion prototypes | Signature moments tested in a browser | Hero done (prototypes/hero.html) |
+| 8 | Motion prototypes | Signature moments tested in a browser | Hero done (prototypes/mixtape.html) |
 | 9 | Copy and assets | Case-study text, covers, reels, optimised images | Waiting on Pema |
 | 10 | Build | Foundation, then section by section | In progress: foundation done |
 | 11 | Polish | Micro-interactions, timing, sound, loading and empty states | Not started |
@@ -23,11 +23,11 @@ How a professional portfolio gets made, step by step. Each step ends with Pema's
 
 1. Foundation: tokens, fonts, grid, nav, libraries (done)
 2. Hero (from the prototype)
-3. Work shelf and case-study transition
+3. Tape rack and case-study transition
 4. Motion tape deck
 5. About and Experience
 6. Experiments
-7. Contact cable
+7. Contact headphones and cable
 8. Favicon, share image, SEO, testing, Lighthouse, pull request
 
 ## Definition of done for each section

@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Retro buttons everywhere: the rounded pill buttons (nav links, sound, Plug in, Reset order) become small silver hardware keys with a visible stem that press down; no pill shapes. Contact keys lose the arrow and scale their text to the key width so nothing overflows. The contact headline is sentence case, smaller and balanced so it reads easily | Pema's feedback: headline hard to read, pills not retro, text overflowing the keys |
 | 2026-10-03 | Removed the copy-address icon from the Email key; Email is a plain mailto link | Pema's request |
 | 2026-10-03 | Contact tiles redesigned as hardware keys (silver caps on a visible stem, orange for Email like the player's eject key, pressed down on click); the red arrow on the player is removed, the pulsing red ring round the jack stays as the only cue | Pema: tiles should fit the retro theme; remove the arrow |
 | 2026-10-03 | Contact: three large tiles (Email, LinkedIn, Instagram) with icons, no email address written out, a small copy-address icon on the Email tile; the intro paragraph and "open to" pills removed. The "plug here" cue is a small red arrow printed on the player under the jack plus a pulsing red ring round the jack (replaces the floating 3D arrow) | Pema's feedback |

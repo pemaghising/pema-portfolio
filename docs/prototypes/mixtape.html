@@ -31,17 +31,23 @@ a{color:inherit}
 .bar{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:16px;align-items:center;
   padding:calc(16px + env(safe-area-inset-top,0px)) 24px 16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
 .bar .id{display:flex;align-items:center;gap:10px}
+:root{--k1:#EEF0F3;--k2:#BCC0C7;--kst:#868A93}
+.bar nav a,.snd,.plug-btn,.reset{background:linear-gradient(180deg,var(--k1),var(--k2));border:0;border-radius:6px;color:var(--graphite);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 0 var(--kst),0 6px 8px -2px rgba(27,27,30,.28);transform:translateY(0);
+  transition:transform .12s cubic-bezier(.3,1.3,.5,1),box-shadow .12s,filter .15s}
+.bar nav a:hover,.snd:hover,.plug-btn:hover,.reset:hover{background:linear-gradient(180deg,var(--k1),var(--k2));color:var(--graphite);filter:brightness(1.04);transform:translateY(-1px)}
+.bar nav a:active,.snd:active,.plug-btn:active,.reset:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 0 0 var(--kst),0 1px 2px rgba(27,27,30,.3)}
+.bar nav{margin-bottom:3px}
 /* Nav: solid frosted bar so nothing shows through it; shrinks once the page scrolls */
 .bar{background:rgba(229,227,222,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(27,27,30,.1);
   transition:padding .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
 .bar .id,.bar nav a,.snd,.bar .muted{transition:font-size .3s,padding .3s,height .3s}
 body.scrolled .bar{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;box-shadow:0 1px 0 rgba(27,27,30,.18),0 8px 24px -12px rgba(27,27,30,.25)}
-body.scrolled .bar nav a{padding:5px 9px;font-size:10px}
+body.scrolled .bar nav a{padding:6px 10px;font-size:10px}
 body.scrolled .snd{height:24px}body.scrolled .snd:not([aria-pressed="true"]){width:28px}
 body.scrolled .bar .id{font-size:13px}
 .bar nav{display:flex;gap:6px}
-.bar nav a{text-decoration:none;padding:7px 10px;border:1.5px solid var(--graphite);border-radius:99px;line-height:1}
-.bar nav a:hover{background:var(--graphite);color:var(--studio)}
+.bar nav a{text-decoration:none;padding:8px 12px;line-height:1;display:block}
 .bar .muted{color:var(--ink-2)}
 
 #hero{position:relative;height:360vh}
@@ -88,8 +94,7 @@ body.scrolled .bar .id{font-size:13px}
 .wk-head p{margin:0;font-family:var(--pixel);font-size:14px;color:#A9A7A0}
   background:var(--paper);color:var(--graphite);box-shadow:0 2px 0 rgba(0,0,0,.35);transition:transform .45s cubic-bezier(.3,1.5,.5,1),opacity .3s}
 .wk-tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.reset{border:1.5px solid #8E8C85;background:transparent;color:#ECEAE4;border-radius:99px;padding:6px 12px;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
-.reset:hover{border-color:var(--foam);color:var(--foam)}
+.reset{padding:8px 12px;margin-bottom:3px;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* Tape library: front-facing cassette cases, cover slot 5:8 (J-card front) */
@@ -139,16 +144,15 @@ body.scrolled .bar .id{font-size:13px}
 #contact{position:relative;z-index:5;background:var(--studio);color:var(--graphite);border-radius:28px 28px 0 0;margin-top:-28px;padding:96px 24px 40px;
   background-image:radial-gradient(120% 70% at 50% 30%,#EFEDE9 0%,var(--studio) 60%,var(--studio-2) 100%)}
 .ct-k{margin:0 0 18px;font-family:var(--pixel);font-size:14px;letter-spacing:.2em;color:var(--ink-2)}
-.ct-h{margin:0;max-width:19ch;font-family:var(--display);font-weight:400;font-size:clamp(30px,5.2vw,84px);line-height:1;text-transform:uppercase;text-wrap:balance}
+.ct-h{margin:0;max-width:24ch;font-family:var(--display);font-weight:400;font-size:clamp(24px,3.3vw,50px);line-height:1.18;letter-spacing:0;text-transform:none;text-wrap:balance}
 .ct-stage{position:relative;height:clamp(420px,56vw,640px);margin:12px -24px 8px}
 #gl2{position:absolute;left:0;right:0;top:0;bottom:56px;width:100%;height:calc(100% - 56px);display:block;touch-action:pan-y;cursor:default}
 #gl2.over{cursor:grab}#gl2.drag{cursor:grabbing}
 .ct-hint{position:absolute;left:24px;bottom:14px;font-family:var(--pixel);font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}
 .ct-hint .dot{width:9px;height:9px;border-radius:50%;background:#B9B6AE;transition:background .3s,box-shadow .3s}
 .ct-stage.on .ct-hint .dot{background:var(--foam);box-shadow:0 0 0 4px rgba(242,106,33,.2)}
-.plug-btn{position:absolute;right:24px;bottom:8px;height:40px;padding:0 18px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;
+.plug-btn{position:absolute;right:24px;bottom:12px;height:40px;padding:0 18px;color:inherit;
   font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
-.plug-btn:hover{background:var(--graphite);color:var(--studio)}
 .ic2{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ic2.fill{fill:currentColor;stroke:none}
 .plug-btn{display:inline-flex;align-items:center;gap:8px}
@@ -156,7 +160,7 @@ body.scrolled .bar .id{font-size:13px}
 @media (max-width:760px){.ct-stage{height:660px}#gl2{bottom:112px;height:calc(100% - 112px)}.ct-hint{bottom:66px}.plug-btn{left:24px;right:auto;bottom:8px}}
 .ct-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding:34px 0 18px;border-top:1.5px solid var(--graphite)}
 /* Hardware keys, like the player's: chunky silver caps on a visible stem, pressed down when clicked */
-.tile{--cap1:#E8EAEE;--cap2:#B7BBC3;--stem:#7E828B;position:relative;display:flex;align-items:center;gap:16px;min-height:104px;padding:16px 20px 16px 16px;border-radius:16px;
+.tile{container-type:inline-size;--cap1:#E8EAEE;--cap2:#B7BBC3;--stem:#7E828B;position:relative;display:flex;align-items:center;gap:16px;min-height:104px;padding:16px 20px 16px 16px;border-radius:16px;
   color:var(--graphite);text-decoration:none;background:linear-gradient(180deg,var(--cap1),var(--cap2));
   box-shadow:inset 0 1.5px 0 rgba(255,255,255,.85),inset 0 -2px 0 rgba(0,0,0,.08),0 9px 0 var(--stem),0 18px 22px -6px rgba(27,27,30,.35);
   transform:translateY(0);transition:transform .14s cubic-bezier(.3,1.3,.5,1),box-shadow .14s}
@@ -168,18 +172,16 @@ body.scrolled .bar .id{font-size:13px}
 .tile .ti svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .tile .ti svg.fill{fill:currentColor;stroke:none}
 .tile .tx2{display:flex;flex-direction:column;gap:7px;min-width:0}
-.tile .tx2 b{font-family:var(--display);font-weight:400;font-size:clamp(19px,1.9vw,27px);line-height:1;text-transform:uppercase}
-.tile .tx2 small{font:700 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:rgba(27,27,30,.62)}
-.tile .go{margin-left:auto;flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+.tile .tx2 b{font-family:var(--display);font-weight:400;font-size:clamp(15px,5.4cqi,26px);line-height:1;text-transform:uppercase}
+.tile .tx2 small{white-space:nowrap;font:700 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:rgba(27,27,30,.62)}
   box-shadow:inset 0 1px 3px rgba(0,0,0,.6),0 1px 0 rgba(255,255,255,.5);transition:transform .12s}
 @media (max-width:860px){.ct-tiles{grid-template-columns:1fr}}
 /* Sound: nav control */
 .bar{grid-template-columns:1fr auto auto}
 .bar .id{text-decoration:none;font-family:var(--display);font-size:15px;letter-spacing:.04em;text-transform:none}
 .snd{width:34px;padding:0;justify-content:center;gap:5px}.snd:not([aria-pressed="true"]) .bars{display:none}.snd[aria-pressed="true"]{width:auto;padding:0 12px 0 10px}
-.snd{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 10px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;
+.snd{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 10px;margin-bottom:3px;color:inherit;
   font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
-.snd:hover{background:var(--graphite);color:var(--studio)}
 .snd .ic{width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
 .snd[aria-pressed="true"] .ic{width:8px;height:10px;border:0;background:linear-gradient(90deg,currentColor 0 3px,transparent 3px 5px,currentColor 5px)}
 .snd .bars{display:flex;align-items:flex-end;gap:2px;height:12px}
@@ -242,10 +244,10 @@ body.scrolled .bar .id{font-size:13px}
   </div>
   <div class="ct-tiles">
     <div class="etile">
-      <a class="tile hot" id="mail" href="mailto:pema.ghising133@gmail.com" aria-label="Send an email"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg></span><span class="tx2"><b>Email</b><small>Say hello</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <a class="tile hot" id="mail" href="mailto:pema.ghising133@gmail.com" aria-label="Send an email"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg></span><span class="tx2"><b>Email</b><small>Say hello</small></span></a>
     </div>
-    <a class="tile" href="https://www.linkedin.com/in/pema-ghising-91a966103/" target="_blank" rel="noopener"><span class="ti"><svg class="fill" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="4.8" r="2.2"/><path d="M10 9h3.8v1.7c.7-1.2 2-2 3.8-2 3.2 0 4.4 2 4.4 5.3V21h-4v-6.2c0-1.5-.5-2.5-1.9-2.5S14 13.3 14 14.8V21h-4z"/></svg></span><span class="tx2"><b>LinkedIn</b><small>Connect</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-    <a class="tile" href="https://www.instagram.com/pema_ghising/" target="_blank" rel="noopener"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg></span><span class="tx2"><b>Instagram</b><small>Follow</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    <a class="tile" href="https://www.linkedin.com/in/pema-ghising-91a966103/" target="_blank" rel="noopener"><span class="ti"><svg class="fill" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="4.8" r="2.2"/><path d="M10 9h3.8v1.7c.7-1.2 2-2 3.8-2 3.2 0 4.4 2 4.4 5.3V21h-4v-6.2c0-1.5-.5-2.5-1.9-2.5S14 13.3 14 14.8V21h-4z"/></svg></span><span class="tx2"><b>LinkedIn</b><small>Connect</small></span></a>
+    <a class="tile" href="https://www.instagram.com/pema_ghising/" target="_blank" rel="noopener"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg></span><span class="tx2"><b>Instagram</b><small>Follow</small></span></a>
   </div>
   <div class="ct-foot"><span>PEMA GHISING · GRAPHIC &amp; MOTION DESIGNER</span><span>ペマ・ギシン · PG-001 · SIDE B</span></div>
 </section>

@@ -39,6 +39,10 @@ Small print: the pixel face (DotGothic16) is for large readouts only. Anything s
 - Smoked cassette plastic, brushed aluminium, paper labels, grain over the whole page.
 - Screws, reel windows, label stripes, label-maker tape, a tape counter, catalogue numbers (PG-001), Side A / Side B, an orange LED.
 
+## Buttons
+
+No pills. Every button is a small silver hardware key (rounded 6px, light cap, darker stem underneath) that lifts slightly on hover and presses down on click. The primary contact action (Email) uses the orange key.
+
 ## Layout
 
 - Huge display type with 3D objects in front of it, then quiet space.

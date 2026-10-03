@@ -6,8 +6,7 @@ export function Nav() {
   const now = experience[0];
   return (
     <header className="label fixed inset-x-0 top-0 z-50 grid grid-cols-[1fr_auto] items-center gap-4 px-(--gutter) pt-[calc(16px+env(safe-area-inset-top,0px))] pb-4 md:grid-cols-[1.2fr_1fr_1fr_auto]">
-      <Link href="/" className="flex items-center gap-2.5 no-underline">
-        <span className="size-2 rounded-full bg-foam shadow-[0_0_0_3px_rgb(242_106_33/0.18)]" aria-hidden="true" />
+      <Link href="/" className="no-underline">
         {site.name}
       </Link>
       <span className="hidden text-ink-2 md:block">{site.role}</span>

@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Nav: frosted solid bar (nothing shows through), shrinks on scroll, no dot before the name; the giant name fully fades out once the tape is inserted | Pema's feedback: text overlapped the player, name still visible behind it |
 | 2026-10-03 | Back to the earlier player design (smoked dark cassette, aluminium-face landscape player, flat insert). The blue reference-style Walkman is kept as an alternative in `docs/prototypes/mixtape-blue-walkman.html` | Pema preferred the earlier look |
 | 2026-10-03 | Player turned landscape again: the cassette slides in flat through a door that flips down (Pema liked the earlier sideways insert); keeps the reference styling (blue body, silver strip, yellow key) | Pema's feedback |
 | 2026-10-03 | Player modelled on Pema's portable-player reference: portrait blue body, brushed-silver right strip, front door hinged left with a small upright reel window, yellow stop/eject + silver keys on top, volume wheel and jacks on the side. Cassette: cream shell, white label with red PG-001 print. No brand names; the door reads ペマ・ギシン and PG-1 | Pema's reference sheet |

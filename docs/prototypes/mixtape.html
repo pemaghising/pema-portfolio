@@ -31,7 +31,14 @@ a{color:inherit}
 .bar{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:16px;align-items:center;
   padding:calc(16px + env(safe-area-inset-top,0px)) 24px 16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
 .bar .id{display:flex;align-items:center;gap:10px}
-.led{width:8px;height:8px;border-radius:50%;background:var(--foam);box-shadow:0 0 0 3px rgba(242,106,33,.18)}
+/* Nav: solid frosted bar so nothing shows through it; shrinks once the page scrolls */
+.bar{background:rgba(229,227,222,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(27,27,30,.1);
+  transition:padding .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.bar .id,.bar nav a,.snd,.bar .muted{transition:font-size .3s,padding .3s,height .3s}
+body.scrolled .bar{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;box-shadow:0 1px 0 rgba(27,27,30,.18),0 8px 24px -12px rgba(27,27,30,.25)}
+body.scrolled .bar nav a{padding:5px 9px;font-size:10px}
+body.scrolled .snd{height:24px}
+body.scrolled .bar .id{font-size:10px}
 .bar nav{display:flex;gap:6px}
 .bar nav a{text-decoration:none;padding:7px 10px;border:1.5px solid var(--graphite);border-radius:99px;line-height:1}
 .bar nav a:hover{background:var(--graphite);color:var(--studio)}
@@ -153,7 +160,7 @@ a{color:inherit}
 <div class="cursor" aria-hidden="true"></div>
 
 <header class="bar">
-  <div class="id"><span class="led" aria-hidden="true"></span>Pema Ghising</div>
+  <div class="id">Pema Ghising</div>
   <div class="muted">Graphic &amp; Motion Designer</div>
   <div class="muted">7+ years · Leapfrog Technology</div>
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Play music"><span class="ic" aria-hidden="true"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tx">Sound off</span></button>
@@ -476,6 +483,9 @@ gsap.ticker.add(() => {
   A.level += (lv - A.level) * .2;
 });
 
+const setScrolled = () => document.body.classList.toggle('scrolled', scrollY > 24);
+addEventListener('scroll', setScrolled, { passive: true }); setScrolled();
+
 // ---------- Boot: counter rolls to 007 while the label maker punches the name (about 2s) ----------
 const REST = { rx: .1, ry: -.4, rz: .05, y: .15 };
 const dy = document.getElementById('dy');
@@ -499,7 +509,9 @@ function startScroll() {
   const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: .9 } });
   tl.to(S, { rx: 0, ry: 0, rz: 0, free: 0, y: .2, z: 1.4, s: .92, py: -.3, door: .95, camY: .9, lookY: -.2, play: 0, duration: .35, ease: 'power2.inOut' }, 0)
     .to('.w1', { xPercent: -60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)
+    .to('.w1', { opacity: 0, duration: .15, ease: 'none' }, .36)
     .to('.w2', { xPercent: 60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)
+    .to('.w2', { opacity: 0, duration: .15, ease: 'none' }, .36)
     .to('.foot, .kana, .cat', { opacity: 0, duration: .1 }, 0)
     .to(S, { y: -.33, z: .0, s: 1, duration: .2, ease: 'power2.inOut' }, .36)
     .to(S, { door: 0, duration: .1, ease: 'power3.in' }, .57)

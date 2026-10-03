@@ -172,12 +172,7 @@ body.scrolled .bar .id{font-size:13px}
 .tile .tx2 b{font-family:var(--display);font-weight:400;font-size:clamp(19px,1.9vw,27px);line-height:1;text-transform:uppercase}
 .tile .tx2 small{font:700 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:rgba(27,27,30,.62)}
 .tile .go{margin-left:auto;flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
-.tile-copy{position:absolute;right:12px;top:12px;z-index:2;width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:50%;background:#141416;color:#F4F2EC;cursor:pointer;
   box-shadow:inset 0 1px 3px rgba(0,0,0,.6),0 1px 0 rgba(255,255,255,.5);transition:transform .12s}
-.tile-copy svg{width:14px;height:14px}
-.tile-copy:hover{background:var(--foam);color:var(--graphite)}
-.tile-copy:active{transform:translateY(1px)}
-.etile{position:relative}
 @media (max-width:860px){.ct-tiles{grid-template-columns:1fr}}
 /* Sound: nav control */
 .bar{grid-template-columns:1fr auto auto}
@@ -250,8 +245,6 @@ body.scrolled .bar .id{font-size:13px}
   <div class="ct-tiles">
     <div class="etile">
       <a class="tile hot" id="mail" href="mailto:pema.ghising133@gmail.com" aria-label="Send an email"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg></span><span class="tx2"><b>Email</b><small>Say hello</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-      <button class="tile-copy" id="copy" type="button" aria-label="Copy email address" title="Copy email address"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg></button>
-      <span class="sr" id="copied" aria-live="polite"></span>
     </div>
     <a class="tile" href="https://www.linkedin.com/in/pema-ghising-91a966103/" target="_blank" rel="noopener"><span class="ti"><svg class="fill" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="4.8" r="2.2"/><path d="M10 9h3.8v1.7c.7-1.2 2-2 3.8-2 3.2 0 4.4 2 4.4 5.3V21h-4v-6.2c0-1.5-.5-2.5-1.9-2.5S14 13.3 14 14.8V21h-4z"/></svg></span><span class="tx2"><b>LinkedIn</b><small>Connect</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
     <a class="tile" href="https://www.instagram.com/pema_ghising/" target="_blank" rel="noopener"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg></span><span class="tx2"><b>Instagram</b><small>Follow</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
@@ -884,13 +877,5 @@ const ctIO = new IntersectionObserver(es => {
 }, { rootMargin: '200px 0px' });
 ctIO.observe(document.getElementById('contact'));
 
-const copyBtn = document.getElementById('copy'), copied = document.getElementById('copied'), COPY_I = copyBtn.innerHTML;
-copyBtn.addEventListener('click', async e => {
-  e.preventDefault(); e.stopPropagation();
-  const em = 'pema.ghising133@gmail.com';
-  try { await navigator.clipboard.writeText(em); copied.textContent = 'Email address copied.'; copyBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>`; }
-  catch (err) { copied.textContent = 'Could not copy. Use the Email button instead.'; }
-  setTimeout(() => { copyBtn.innerHTML = COPY_I; }, 1800);
-});
 </script>
 </body></html>

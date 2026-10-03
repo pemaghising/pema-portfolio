@@ -33,7 +33,7 @@ The earlier cartridge concept (Famicom) is kept as a backup: `prototypes/hero.ht
 | About | Liner notes | Bio, four disciplines, philosophy, tools |
 | Experience | Tracklist | Roles as tracks, newest first; Leapfrog "now playing" |
 | Experiments | B-sides | Empty slots until experiments exist; an "on rotation" strip |
-| Contact | Plug in | Email, LinkedIn, Instagram; orange-foam headphones whose cable plugs into the player |
+| Contact | Plug in | The invite line from data, email (copy button), LinkedIn, Instagram, what Pema is open to; headphones whose cable you drag into the player |
 
 Roomie links to its existing standalone page at `/roomie` and is never redesigned or reused.
 

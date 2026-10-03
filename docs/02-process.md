@@ -27,7 +27,7 @@ How a professional portfolio gets made, step by step. Each step ends with Pema's
 4. Motion tape deck
 5. About and Experience
 6. Experiments
-7. Contact headphones and cable
+7. Contact headphones and cable (prototyped in prototypes/mixtape.html)
 8. Favicon, share image, SEO, testing, Lighthouse, pull request
 
 ## Definition of done for each section

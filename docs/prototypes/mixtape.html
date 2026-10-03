@@ -136,6 +136,36 @@ body.scrolled .bar .id{font-size:13px}
 .v4 .ttl{margin-top:auto;color:var(--paper)}
 .v4 .bot{color:var(--paper)}
 .v4 .band{height:6%;background:var(--graphite);margin:0 -9%}
+/* Contact: headphones plug into the player */
+#contact{position:relative;z-index:5;background:var(--studio);color:var(--graphite);border-radius:28px 28px 0 0;margin-top:-28px;padding:96px 24px 40px;
+  background-image:radial-gradient(120% 70% at 50% 30%,#EFEDE9 0%,var(--studio) 60%,var(--studio-2) 100%)}
+.ct-k{margin:0 0 18px;font-family:var(--pixel);font-size:14px;letter-spacing:.2em;color:var(--ink-2)}
+.ct-h{margin:0;max-width:19ch;font-family:var(--display);font-weight:400;font-size:clamp(30px,5.2vw,84px);line-height:1;text-transform:uppercase;text-wrap:balance}
+.ct-stage{position:relative;height:clamp(420px,56vw,640px);margin:12px -24px 8px}
+#gl2{position:absolute;left:0;right:0;top:0;bottom:56px;width:100%;height:calc(100% - 56px);display:block;touch-action:pan-y;cursor:default}
+#gl2.over{cursor:grab}#gl2.drag{cursor:grabbing}
+.ct-hint{position:absolute;left:24px;bottom:14px;font-family:var(--pixel);font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.ct-hint .dot{width:9px;height:9px;border-radius:50%;background:#B9B6AE;transition:background .3s,box-shadow .3s}
+.ct-stage.on .ct-hint .dot{background:var(--foam);box-shadow:0 0 0 4px rgba(242,106,33,.2)}
+.plug-btn{position:absolute;right:24px;bottom:8px;height:40px;padding:0 18px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;
+  font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.plug-btn:hover{background:var(--graphite);color:var(--studio)}
+.ct-info{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:40px 56px;align-items:start;padding-top:28px;border-top:1.5px solid var(--graphite)}
+.ct-mail{display:inline-block;font-family:var(--display);font-size:clamp(17px,2.6vw,42px);line-height:1.1;color:var(--graphite);text-decoration:none;overflow-wrap:anywhere;
+  background:linear-gradient(var(--foam),var(--foam)) 0 100%/0 6px no-repeat;transition:background-size .5s cubic-bezier(.2,.8,.2,1)}
+.ct-mail:hover,.ct-mail:focus-visible,.ct-stage.on ~ .ct-info .ct-mail{background-size:100% 6px}
+.ct-copy{margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ct-copy button{height:34px;padding:0 14px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.ct-copy button:hover{background:var(--graphite);color:var(--studio)}
+.ct-side{display:flex;flex-direction:column;gap:22px}
+.ct-links{display:flex;gap:8px;flex-wrap:wrap}
+.ct-links a{padding:9px 16px;border:1.5px solid var(--graphite);border-radius:99px;text-decoration:none;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase}
+.ct-links a:hover{background:var(--graphite);color:var(--studio)}
+.ct-side p{margin:0;font-size:15px;line-height:1.55;max-width:44ch}
+.ct-open{display:flex;gap:6px 8px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.ct-open li{padding:6px 12px;border-radius:99px;background:var(--graphite);color:var(--paper);font:700 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase}
+.ct-foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;font-family:var(--pixel);font-size:13px;color:var(--ink-2)}
+@media (max-width:760px){.ct-info{grid-template-columns:1fr}.ct-stage{height:660px}#gl2{bottom:112px;height:calc(100% - 112px)}.ct-hint{bottom:66px}.plug-btn{left:24px;right:auto;bottom:8px}}
 /* Sound: nav control */
 .bar{grid-template-columns:1fr auto auto}
 .bar .id{text-decoration:none;font-family:var(--display);font-size:15px;letter-spacing:.04em;text-transform:none}
@@ -163,7 +193,7 @@ body.scrolled .bar .id{font-size:13px}
 <header class="bar">
   <a class="id" href="#" aria-label="Pema Ghising, home">PG</a>
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Play music"><span class="ic" aria-hidden="true"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
-  <nav aria-label="Primary"><a href="#work">Work</a><a href="#work">About</a><a href="#work">Contact</a></nav>
+  <nav aria-label="Primary"><a href="#work">Work</a><a href="#work">About</a><a href="#contact">Contact</a></nav>
 </header>
 
 <main>
@@ -194,6 +224,28 @@ body.scrolled .bar .id{font-size:13px}
   <p class="sr" id="live" aria-live="polite"></p>
   <ol class="lib" id="rack"></ol>
   <p class="note">PROTOTYPE: HERO + PRESS PLAY. CASE STUDY, TAPE DECK AND HEADPHONE CABLE COME NEXT.</p>
+</section>
+
+<section id="contact" aria-labelledby="ct">
+  <p class="ct-k">ペマ・ギシン · SIDE B · CONTACT</p>
+  <h2 class="ct-h" id="ct">Have an idea, project, collaboration, or simply want to say hello?</h2>
+  <div class="ct-stage" id="ctstage">
+    <canvas id="gl2" aria-hidden="true"></canvas>
+    <p class="ct-hint" id="cthint"><span class="dot" aria-hidden="true"></span><span id="ctmsg">Drag the plug into the player</span></p>
+    <button class="plug-btn" id="plug" type="button" aria-pressed="false">Plug in</button>
+  </div>
+  <div class="ct-info">
+    <div>
+      <a class="ct-mail" id="mail" href="mailto:pema.ghising133@gmail.com">pema.ghising133@gmail.com</a>
+      <div class="ct-copy"><button id="copy" type="button">Copy email</button><span class="sr" id="copied" aria-live="polite"></span></div>
+    </div>
+    <div class="ct-side">
+      <div class="ct-links"><a href="https://www.linkedin.com/in/pema-ghising-91a966103/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/pema_ghising/" target="_blank" rel="noopener">Instagram</a></div>
+      <p>I'm interested in projects where the brief still has room to move — collaborators who'd rather explore three directions than lock in the first one.</p>
+      <ul class="ct-open"><li>Collaborations</li><li>Creative projects</li><li>Design opportunities</li><li>Experiments</li></ul>
+    </div>
+  </div>
+  <div class="ct-foot"><span>PEMA GHISING · GRAPHIC &amp; MOTION DESIGNER</span><span>ペマ・ギシン · PG-001 · SIDE B</span></div>
 </section>
 </main>
 
@@ -627,6 +679,195 @@ rack.addEventListener('keydown', e => {
   Flip.from(state, { duration: reduce ? 0 : .35, ease: 'power3.out' });
   c.focus(); save();
   live.textContent = `${c.dataset.name} moved to position ${j + 1} of ${list.length}.`;
+});
+
+// ---------- Contact: orange-foam headphones, a cable with rope physics, a plug you drag into the player ----------
+const stage2 = document.getElementById('ctstage'), cvs2 = document.getElementById('gl2'), plugBtn = document.getElementById('plug'), ctmsg = document.getElementById('ctmsg');
+let CT = null, ctStarted = false;
+function setPlugged(on, silent) {
+  if (!CT || CT.plugged === on) return;
+  CT.plugged = on; CT.snap = on ? 0 : 1;
+  stage2.classList.toggle('on', on);
+  plugBtn.setAttribute('aria-pressed', String(on)); plugBtn.textContent = on ? 'Unplug' : 'Plug in';
+  ctmsg.textContent = on ? 'Connected. Say hello.' : 'Drag the plug into the player';
+}
+function initContact() {
+  if (ctStarted) return; ctStarted = true;
+  let r2; try { r2 = new THREE.WebGLRenderer({ canvas: cvs2, antialias: true, alpha: true }); } catch (e) { cvs2.remove(); return; }
+  r2.setPixelRatio(Math.min(devicePixelRatio, 2)); r2.outputColorSpace = THREE.SRGBColorSpace; r2.toneMapping = THREE.ACESFilmicToneMapping;
+  r2.shadowMap.enabled = true; r2.shadowMap.type = THREE.PCFSoftShadowMap;
+  const sc = new THREE.Scene(), pm = new THREE.PMREMGenerator(r2);
+  sc.environment = pm.fromScene(new RoomEnvironment(), .04).texture; sc.environmentIntensity = .75;
+  const cm = new THREE.PerspectiveCamera(26, 1, .1, 100);
+  const key = new THREE.DirectionalLight(0xffffff, 2.3); key.position.set(-4, 7, 6); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, { left: -7, right: 7, top: 7, bottom: -7, near: 1, far: 30 });
+  key.shadow.bias = -.0004; key.shadow.normalBias = .02; sc.add(key);
+  const rim = new THREE.DirectionalLight(0xfff1e6, 1.0); rim.position.set(6, 2, -4); sc.add(rim);
+
+  const GROUND = -1.5, PL = new THREE.Vector3(1.6, -.5, 0), HPp = new THREE.Vector3(-2.2, -1.1, 0), R = 1.05;
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: .16 }));
+  ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; sc.add(ground);
+  const dark = new THREE.MeshStandardMaterial({ color: 0x0c0c0e, roughness: .9 });
+  const silver = new THREE.MeshPhysicalMaterial({ color: 0xC9CCD1, roughness: .32, metalness: .85 });
+  const foamM = new THREE.MeshPhysicalMaterial({ color: 0xF26A21, roughness: .75, sheen: 1, sheenColor: 0xffb085 });
+  const shell = new THREE.MeshPhysicalMaterial({ color: 0x26262A, roughness: .35, clearcoat: .6 });
+
+  // headphones
+  const hp = new THREE.Group();
+  const band = new THREE.Mesh(new THREE.TorusGeometry(R, .075, 14, 64, Math.PI), shell); hp.add(band);
+  const pad = new THREE.Mesh(new THREE.TorusGeometry(R, .11, 14, 24, Math.PI * .5), foamM); pad.rotation.z = Math.PI * .25; pad.position.y = 0; hp.add(pad);
+  [-1, 1].forEach(sx => {
+    const cup = new THREE.Mesh(new THREE.CylinderGeometry(.46, .46, .3, 40), shell); cup.rotation.z = Math.PI / 2; cup.position.set(sx * (R + .02), -.1, 0); hp.add(cup);
+    const cush = new THREE.Mesh(new THREE.SphereGeometry(.44, 32, 20), foamM); cush.scale.set(.42, 1, 1); cush.position.set(sx * (R - .17), -.1, 0); hp.add(cush);
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(.3, .3, .04, 32), silver); cap.rotation.z = Math.PI / 2; cap.position.set(sx * (R + .18), -.1, 0); hp.add(cap);
+  });
+  hp.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  sc.add(hp);
+
+  // player (simplified): silver face, cassette in the window, keys, a jack on top
+  const pl = new THREE.Group();
+  const bl = new THREE.Mesh(new RoundedBoxGeometry(3.0, 2.0, .7, 6, .12), new THREE.MeshPhysicalMaterial({ color: 0x2D3E78, roughness: .45, metalness: .35, clearcoat: .3 })); bl.position.z = -.08; pl.add(bl);
+  const face = new THREE.Mesh(new RoundedBoxGeometry(2.96, 1.96, .3, 5, .1), silver); face.position.z = .2; pl.add(face);
+  const win = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 1.3), dark); win.position.set(0, -.1, .355); pl.add(win);
+  const ct = new THREE.CanvasTexture(labelCanvas); ct.colorSpace = THREE.SRGBColorSpace; ct.anisotropy = r2.capabilities.getMaxAnisotropy();
+  const lab = new THREE.Mesh(new THREE.PlaneGeometry(2.1, .92), new THREE.MeshStandardMaterial({ map: ct, transparent: true, alphaTest: .5, roughness: .55 })); lab.position.set(0, .0, .36); pl.add(lab);
+  const brown2 = new THREE.MeshStandardMaterial({ color: 0x3B2A20, roughness: .6 }), white2 = new THREE.MeshStandardMaterial({ color: 0xF4F1EA, roughness: .5 });
+  [[-.25, .13], [.25, .09]].forEach(([x, r]) => { const d = new THREE.Mesh(new THREE.CylinderGeometry(r, r, .01, 40), brown2); d.rotation.x = Math.PI / 2; d.position.set(x, -.065, .3585); pl.add(d);
+    const h = new THREE.Mesh(new THREE.CylinderGeometry(.045, .045, .012, 20), white2); h.rotation.x = Math.PI / 2; h.position.set(x, -.065, .3595); pl.add(h); });
+  const yel = new THREE.MeshPhysicalMaterial({ color: 0xF2A23A, roughness: .45, clearcoat: .3 });
+  const ek = new THREE.Mesh(new RoundedBoxGeometry(.42, .12, .3, 3, .035), yel); ek.position.set(-.35, 1.04, .1); pl.add(ek);
+  [.1, .45, .8].forEach(x => { const k = new THREE.Mesh(new RoundedBoxGeometry(.28, .1, .3, 3, .03), silver); k.position.set(x, 1.03, .1); pl.add(k); });
+  const jk = new THREE.Mesh(new THREE.CylinderGeometry(.11, .11, .06, 28), dark); jk.position.set(-1.1, 1.0, .1); pl.add(jk);
+  const jr = new THREE.Mesh(new THREE.TorusGeometry(.12, .025, 10, 28), silver); jr.rotation.x = Math.PI / 2; jr.position.set(-1.1, 1.02, .1); pl.add(jr);
+  const ledM = new THREE.MeshStandardMaterial({ color: 0x401505, emissive: 0xFF6A21, emissiveIntensity: 0 });
+  const ld = new THREE.Mesh(new THREE.SphereGeometry(.04, 16, 16), ledM); ld.position.set(1.28, .82, .37); pl.add(ld);
+  pl.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  sc.add(pl);
+
+  // cable: verlet rope, one end pinned at the left cup, the other free / dragged / plugged
+  const N = 28; let LEN = 5.5, SEG = LEN / (N - 1);
+  const P = [], Q = [];
+  const exit = new THREE.Vector3(), socket = new THREE.Vector3(), target = new THREE.Vector3();
+  const plugG = new THREE.Group();
+  const sleeve = new THREE.Mesh(new THREE.CylinderGeometry(.12, .1, .34, 24), dark); sleeve.position.y = -.17; plugG.add(sleeve);
+  const metal = new THREE.Mesh(new THREE.CylinderGeometry(.065, .065, .5, 20), silver); metal.position.y = -.59; plugG.add(metal);
+  const ring = new THREE.Mesh(new THREE.CylinderGeometry(.067, .067, .05, 20), dark); ring.position.y = -.5; plugG.add(ring);
+  const tipM = new THREE.Mesh(new THREE.SphereGeometry(.065, 16, 10), silver); tipM.position.y = -.84; plugG.add(tipM);
+  plugG.traverse(o => { if (o.isMesh) o.castShadow = true; }); sc.add(plugG);
+  const cableM = new THREE.MeshStandardMaterial({ color: 0x141416, roughness: .55 });
+  let cable = new THREE.Mesh(new THREE.BufferGeometry(), cableM); cable.castShadow = true; sc.add(cable);
+
+  CT = { plugged: false, snap: 1, drag: false, over: false };
+  let portrait = false, camZ = 10, camX = 0, camY = 0;
+  function layout() {
+    const w = cvs2.clientWidth || innerWidth, h = cvs2.clientHeight || 600, a = w / h;
+    r2.setSize(w, h, false); cm.aspect = a; cm.updateProjectionMatrix();
+    portrait = a < .95; LEN = portrait ? 2.3 : 5.5; SEG = LEN / (N - 1);
+    if (portrait) { hp.position.set(0, 1.0 + 1.1 * 0, 0); HPp.set(0, 1.55, -.7); PL.set(0, -1.45, 0); camZ = Math.max(11.5, 3.9 / (.4618 * a)); camX = 0; camY = .1; }
+    else { HPp.set(-2.2, -.95, -.7); PL.set(1.6, -.5, 0); camZ = Math.max(10, 7.4 / (.4618 * a)); camX = -.25; camY = 0; }
+    const gy = PL.y - 1.0; ground.position.y = gy;
+    hp.position.copy(HPp); pl.position.copy(PL);
+    exit.set(HPp.x - R - .1, HPp.y - .5, 0);
+    socket.set(PL.x - 1.1, PL.y + 1.0 + .5, .1);
+    CT.gy = gy; CT.hpGround = portrait ? null : gy;
+    P.length = 0; Q.length = 0;
+    for (let i = 0; i < N; i++) { const t = i / (N - 1), x = exit.x + t * 3.2, y = Math.max(gy + .05, exit.y - Math.sin(t * Math.PI) * 0.3 - t * 0.3); P.push(new THREE.Vector3(x, y, 0)); Q.push(P[i].clone()); }
+    if (CT.plugged) CT.snap = 0;
+    for (let k = 0; k < 140; k++) step(1 / 60);
+  }
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+  const ptr2 = { x: 0, y: 0, in: false, wx: 0, wy: 0, has: false };
+  function toWorld(e) {
+    const r = cvs2.getBoundingClientRect(); ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, cm); const out = new THREE.Vector3(); ray.ray.intersectPlane(plane, out); return out;
+  }
+  function step(dt) {
+    const pinEnd = CT.drag ? target : (CT.plugged ? socket : null);
+    for (let i = 1; i < N; i++) {
+      const p = P[i], q = Q[i], vx = (p.x - q.x) * .985, vy = (p.y - q.y) * .985;
+      q.copy(p); p.x += vx; p.y += vy - 22 * dt * dt;
+    }
+    // reach toward the cursor when nothing holds the end
+    if (!pinEnd && ptr2.has && !reduce) for (let i = N - 8; i < N; i++) { const w = (i - (N - 9)) / 8 * .014; P[i].x += (ptr2.wx - P[i].x) * w; P[i].y += (ptr2.wy - P[i].y) * w * .6; }
+    for (let it = 0; it < 14; it++) {
+      P[0].copy(exit); if (pinEnd) P[N - 1].set(pinEnd.x, pinEnd.y, 0);
+      for (let i = 0; i < N - 1; i++) {
+        const a = P[i], b = P[i + 1], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-5, diff = (d - SEG) / d;
+        const wa = i === 0 ? 0 : (pinEnd && i === N - 1 ? 0 : .5), wb = i + 1 === N - 1 && pinEnd ? 0 : .5, s = wa + wb || 1;
+        a.x += dx * diff * wa / s * 1; a.y += dy * diff * wa / s * 1; b.x -= dx * diff * wb / s * 1; b.y -= dy * diff * wb / s * 1;
+      }
+      for (let i = 1; i < N; i++) { if (P[i].y < CT.gy + .05) P[i].y = CT.gy + .05; }
+    }
+  }
+  function buildCable() {
+    const pts = P.map(p => p.clone()); pts[0].z = pts[N - 1].z = 0;
+    const g = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'catmullrom', .3), 90, .042, 8, false);
+    cable.geometry.dispose(); cable.geometry = g;
+  }
+  // interaction
+  const plugHit = new THREE.Mesh(new THREE.CylinderGeometry(.35, .35, 1.2, 8), new THREE.MeshBasicMaterial({ visible: false })); plugG.add(plugHit); plugHit.position.y = -.5;
+  cvs2.addEventListener('pointermove', e => {
+    const w = toWorld(e); ptr2.wx = w.x; ptr2.wy = w.y; ptr2.has = true;
+    if (CT.drag) { target.set(w.x, Math.max(CT.gy + .15, w.y), 0); return; }
+    ray.setFromCamera(ndc, cm); const over = ray.intersectObject(plugHit).length > 0;
+    if (over !== CT.over) { CT.over = over; cvs2.classList.toggle('over', over); }
+  });
+  cvs2.addEventListener('pointerleave', () => { ptr2.has = false; });
+  cvs2.addEventListener('pointerdown', e => {
+    toWorld(e); ray.setFromCamera(ndc, cm);
+    if (!ray.intersectObject(plugHit).length) return;
+    cvs2.setPointerCapture(e.pointerId); CT.drag = true; cvs2.classList.add('drag');
+    if (CT.plugged) setPlugged(false);
+    const w = toWorld(e); target.set(w.x, w.y, 0);
+  });
+  const endDrag2 = () => {
+    if (!CT.drag) return; CT.drag = false; cvs2.classList.remove('drag');
+    const tip = new THREE.Vector3(target.x, target.y, 0);
+    if (tip.distanceTo(socket) < 1.1) setPlugged(true);
+  };
+  cvs2.addEventListener('pointerup', endDrag2); cvs2.addEventListener('pointercancel', endDrag2);
+  plugBtn.addEventListener('click', () => setPlugged(!CT.plugged));
+  CT.layout = layout; CT.step = step;
+  layout(); addEventListener('resize', layout);
+  if (reduce) setPlugged(true);
+
+  const q = new THREE.Quaternion(), down = new THREE.Vector3(0, -1, 0), dir = new THREE.Vector3(), tgtV = new THREE.Vector3();
+  let sm = { x: 0, y: 0 }, last = 0;
+  CT.frame = t => {
+    const dt = Math.min(.033, (t - last) / 1000 || .016); last = t;
+    CT.snap += ((CT.plugged ? 0 : 1) - CT.snap) * Math.min(1, dt * 14);
+    // headphones tilt a touch toward the cursor
+    sm.x += (ptr.nx - sm.x) * .05; sm.y += (ptr.ny - sm.y) * .05;
+    if (!reduce) { hp.rotation.y = .3 + sm.x * .25; hp.rotation.x = sm.y * .06; pl.rotation.y = -.18 + sm.x * .08; }
+    else { hp.rotation.y = .3; pl.rotation.y = -.18; }
+    const steps = 2; for (let k = 0; k < steps; k++) step(dt / steps * 1.0);
+    // plug follows the last segment, or sits straight in the socket
+    const e = P[N - 1], pr = P[N - 2];
+    dir.set(e.x - pr.x, e.y - pr.y, 0).normalize();
+    if (CT.plugged && CT.snap < .05) { dir.set(0, -1, 0); }
+    q.setFromUnitVectors(down, dir); plugG.quaternion.slerp(q, 1 - Math.exp(-dt * 16)); plugG.position.copy(e);
+    buildCable();
+    ledM.emissiveIntensity += ((CT.plugged ? 4 : 0) - ledM.emissiveIntensity) * .15;
+    cm.position.set(camX, camY, camZ); cm.lookAt(camX, camY, 0);
+    r2.render(sc, cm);
+  };
+}
+let ctLoop = false;
+const ctIO = new IntersectionObserver(es => {
+  const vis = es[0].isIntersecting;
+  if (vis) initContact();
+  if (!CT || !CT.frame) return;
+  if (vis && !ctLoop) { ctLoop = true; (function loop(t) { if (!ctLoop) return; if (!document.hidden) CT.frame(t); requestAnimationFrame(loop); })(performance.now()); }
+  else if (!vis) ctLoop = false;
+}, { rootMargin: '200px 0px' });
+ctIO.observe(document.getElementById('contact'));
+
+const copyBtn = document.getElementById('copy'), copied = document.getElementById('copied');
+copyBtn.addEventListener('click', async () => {
+  const em = 'pema.ghising133@gmail.com';
+  try { await navigator.clipboard.writeText(em); copied.textContent = 'Email copied.'; copyBtn.textContent = 'Copied'; }
+  catch (e) { const r = document.createRange(); r.selectNodeContents(document.getElementById('mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copied.textContent = 'Email selected. Press copy.'; }
+  setTimeout(() => { copyBtn.textContent = 'Copy email'; }, 1800);
 });
 </script>
 </body></html>

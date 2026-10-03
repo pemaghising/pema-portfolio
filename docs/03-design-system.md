@@ -41,7 +41,7 @@ Small print: the pixel face (DotGothic16) is for large readouts only. Anything s
 
 ## Buttons
 
-No pills. Every button is a small silver hardware key (rounded 6px, light cap, darker stem underneath) that lifts slightly on hover and presses down on click. The primary contact action (Email) uses the orange key.
+Content buttons (Plug in, Reset order, the contact keys) are silver hardware keys (rounded 6px, light cap, darker stem underneath) that lift on hover and press down on click; the primary contact action (Email) is the orange key. The nav keeps slim outlined buttons that fill dark on hover.
 
 ## Layout
 

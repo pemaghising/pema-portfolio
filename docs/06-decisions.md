@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Nav links and the sound button go back to the slim outlined buttons; the hardware-key style stays only on content buttons (Plug in, Reset order, contact keys) | Pema preferred the earlier nav |
 | 2026-10-03 | Retro buttons everywhere: the rounded pill buttons (nav links, sound, Plug in, Reset order) become small silver hardware keys with a visible stem that press down; no pill shapes. Contact keys lose the arrow and scale their text to the key width so nothing overflows. The contact headline is sentence case, smaller and balanced so it reads easily | Pema's feedback: headline hard to read, pills not retro, text overflowing the keys |
 | 2026-10-03 | Removed the copy-address icon from the Email key; Email is a plain mailto link | Pema's request |
 | 2026-10-03 | Contact tiles redesigned as hardware keys (silver caps on a visible stem, orange for Email like the player's eject key, pressed down on click); the red arrow on the player is removed, the pulsing red ring round the jack stays as the only cue | Pema: tiles should fit the retro theme; remove the arrow |

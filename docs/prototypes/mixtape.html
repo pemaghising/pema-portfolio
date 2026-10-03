@@ -32,22 +32,22 @@ a{color:inherit}
   padding:calc(16px + env(safe-area-inset-top,0px)) 24px 16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
 .bar .id{display:flex;align-items:center;gap:10px}
 :root{--k1:#EEF0F3;--k2:#BCC0C7;--kst:#868A93}
-.bar nav a,.snd,.plug-btn,.reset{background:linear-gradient(180deg,var(--k1),var(--k2));border:0;border-radius:6px;color:var(--graphite);
+.plug-btn,.reset{background:linear-gradient(180deg,var(--k1),var(--k2));border:0;border-radius:6px;color:var(--graphite);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 0 var(--kst),0 6px 8px -2px rgba(27,27,30,.28);transform:translateY(0);
   transition:transform .12s cubic-bezier(.3,1.3,.5,1),box-shadow .12s,filter .15s}
-.bar nav a:hover,.snd:hover,.plug-btn:hover,.reset:hover{background:linear-gradient(180deg,var(--k1),var(--k2));color:var(--graphite);filter:brightness(1.04);transform:translateY(-1px)}
-.bar nav a:active,.snd:active,.plug-btn:active,.reset:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 0 0 var(--kst),0 1px 2px rgba(27,27,30,.3)}
-.bar nav{margin-bottom:3px}
+.plug-btn:hover,.reset:hover{background:linear-gradient(180deg,var(--k1),var(--k2));color:var(--graphite);filter:brightness(1.04);transform:translateY(-1px)}
+.plug-btn:active,.reset:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 0 0 var(--kst),0 1px 2px rgba(27,27,30,.3)}
 /* Nav: solid frosted bar so nothing shows through it; shrinks once the page scrolls */
 .bar{background:rgba(229,227,222,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(27,27,30,.1);
   transition:padding .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
 .bar .id,.bar nav a,.snd,.bar .muted{transition:font-size .3s,padding .3s,height .3s}
 body.scrolled .bar{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;box-shadow:0 1px 0 rgba(27,27,30,.18),0 8px 24px -12px rgba(27,27,30,.25)}
-body.scrolled .bar nav a{padding:6px 10px;font-size:10px}
+body.scrolled .bar nav a{padding:5px 9px;font-size:10px}
 body.scrolled .snd{height:24px}body.scrolled .snd:not([aria-pressed="true"]){width:28px}
 body.scrolled .bar .id{font-size:13px}
 .bar nav{display:flex;gap:6px}
-.bar nav a{text-decoration:none;padding:8px 12px;line-height:1;display:block}
+.bar nav a{text-decoration:none;padding:7px 10px;border:1.5px solid var(--graphite);border-radius:99px;line-height:1;display:block}
+.bar nav a:hover{background:var(--graphite);color:var(--studio)}
 .bar .muted{color:var(--ink-2)}
 
 #hero{position:relative;height:360vh}
@@ -180,7 +180,8 @@ body.scrolled .bar .id{font-size:13px}
 .bar{grid-template-columns:1fr auto auto}
 .bar .id{text-decoration:none;font-family:var(--display);font-size:15px;letter-spacing:.04em;text-transform:none}
 .snd{width:34px;padding:0;justify-content:center;gap:5px}.snd:not([aria-pressed="true"]) .bars{display:none}.snd[aria-pressed="true"]{width:auto;padding:0 12px 0 10px}
-.snd{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 10px;margin-bottom:3px;color:inherit;
+.snd{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 10px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;
+.snd:hover{background:var(--graphite);color:var(--studio)}
   font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
 .snd .ic{width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
 .snd[aria-pressed="true"] .ic{width:8px;height:10px;border:0;background:linear-gradient(90deg,currentColor 0 3px,transparent 3px 5px,currentColor 5px)}

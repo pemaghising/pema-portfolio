@@ -1,0 +1,407 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}</style></head><body><title>Pema Ghising Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* Layout: one pinned studio stage (type behind, 3D object in front), then the shelf index. Single light "studio" look. */
+:root{
+  --studio:#E3E2DD;      /* cool light grey, a photo-studio sweep */
+  --studio-2:#D6D5CF;
+  --graphite:#1B1B1E;
+  --ink-2:#55544F;
+  --famicom:#9E1B32;
+  --lcd:#B7BCA8;
+  --teal:#14A39E; --mustard:#E9AE0B; --cobalt:#3557E0;
+  --display:'Dela Gothic One', 'Arial Black', sans-serif;
+  --pixel:'DotGothic16', ui-monospace, monospace;
+  --text:'Zen Kaku Gothic New', 'Helvetica Neue', Arial, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:var(--studio)}
+body{background:var(--studio);color:var(--graphite);font-family:var(--text);font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.booting{overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--famicom);outline-offset:3px}
+
+.grain{position:fixed;inset:-50%;z-index:30;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:16px;align-items:center;
+  padding:calc(16px + env(safe-area-inset-top,0px)) 24px 16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.bar .id{display:flex;align-items:center;gap:10px}
+.led{width:8px;height:8px;border-radius:50%;background:var(--famicom);box-shadow:0 0 0 3px rgba(158,27,50,.15)}
+.bar nav{display:flex;gap:6px}
+.bar nav a{text-decoration:none;padding:7px 10px;border:1.5px solid var(--graphite);border-radius:6px;line-height:1}
+.bar nav a:hover{background:var(--graphite);color:var(--studio)}
+.bar .muted{color:var(--ink-2)}
+
+#hero{position:relative;height:340vh}
+#hero.static{height:100vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background:radial-gradient(120% 80% at 50% 38%, #EDECE8 0%, var(--studio) 55%, var(--studio-2) 100%)}
+.title{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);margin:0;padding:0 2.2vw;z-index:1;
+  font-family:var(--display);font-weight:400;font-size:clamp(48px,15.2vw,300px);line-height:.84;white-space:nowrap;letter-spacing:-.015em;display:flex;flex-direction:column;user-select:none}
+.title .w{display:block;overflow:hidden;padding-bottom:.06em;will-change:transform}
+.title .w2{text-align:right}
+.title .ch{display:inline-block;will-change:transform}
+#gl,.fallback{position:absolute;inset:0;width:100%;height:100%;z-index:2;display:block}
+.fallback{object-fit:contain;padding:18vh 18vw;pointer-events:none}
+.kana{position:absolute;right:24px;top:50%;transform:translateY(-50%);z-index:3;writing-mode:vertical-rl;font-family:var(--pixel);font-size:14px;letter-spacing:.3em;color:var(--ink-2)}
+.cat{position:absolute;left:24px;top:50%;transform:translateY(-50%);z-index:3;font-family:var(--pixel);font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px}
+.foot{position:absolute;left:24px;right:24px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.stmt{margin:0;max-width:34ch;font-size:16px;line-height:1.5;font-weight:500;text-wrap:balance}
+.cue{font-family:var(--pixel);font-size:14px;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.cue i{display:inline-block;width:10px;height:10px;background:var(--graphite);clip-path:polygon(0 0,100% 0,50% 100%);animation:bob 1.4s steps(4) infinite}
+@keyframes bob{50%{transform:translateY(4px)}}
+.sideA{position:absolute;left:0;right:0;top:14vh;z-index:3;text-align:center;opacity:0;pointer-events:none}
+.sideA .k{font-family:var(--pixel);font-size:14px;letter-spacing:.2em;color:var(--famicom)}
+.sideA h2{margin:.25em 0 0;font-family:var(--display);font-weight:400;font-size:clamp(34px,5.4vw,88px);line-height:.95;text-transform:uppercase}
+
+.boot{position:absolute;inset:0;z-index:8;display:grid;place-items:center;background:var(--studio)}
+.lcdp{width:min(360px,80vw);padding:14px;border-radius:14px 14px 34px 14px;background:#3A3A40;box-shadow:0 20px 40px rgba(0,0,0,.18)}
+.lcdp .top{display:flex;align-items:center;gap:8px;margin:0 0 10px 4px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#CFCDC6;font-weight:700}
+.lcds{height:116px;border-radius:4px;background-color:var(--lcd);background-image:radial-gradient(rgba(27,27,30,.09) 1px,transparent 1.2px);background-size:5px 5px;
+  display:grid;place-items:center;font-family:var(--pixel);font-size:34px;color:var(--graphite);letter-spacing:.04em}
+
+.cursor{position:fixed;left:0;top:0;z-index:40;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--famicom);pointer-events:none;transition:width .2s,height .2s,margin .2s}
+@media (hover:none){.cursor{display:none}}
+
+/* Shelf index (preview of the next section) */
+#work{position:relative;z-index:4;background:var(--graphite);color:#ECEAE4;padding:96px 24px 120px;border-radius:28px 28px 0 0;margin-top:-28px}
+.wk-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:48px}
+.wk-head h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(40px,7vw,110px);line-height:.9;text-transform:uppercase}
+.wk-head p{margin:0;font-family:var(--pixel);font-size:14px;color:#A9A7A0}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid #3A3A40}
+.row{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:20px;align-items:center;padding:20px 0;border-bottom:1px solid #3A3A40;position:relative}
+.row .n{font-family:var(--pixel);font-size:16px;color:#8E8C85}
+.row .t{font-family:var(--display);font-weight:400;font-size:clamp(26px,4.4vw,64px);line-height:1;text-transform:uppercase;min-width:0;overflow-wrap:anywhere;transition:color .25s}
+.row .chip{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#A9A7A0}
+.row .cart{width:44px;height:30px;border-radius:5px 5px 3px 3px;background:#E8E3D6;padding:6px 4px 3px;transform:translateY(6px) rotate(0);transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.row .cart b{display:block;height:100%;border-radius:2px;border:1.5px solid var(--graphite)}
+.row:hover .t{color:#fff}
+.row:hover .cart{transform:translateY(-8px) rotate(-8deg)}
+.note{margin:56px 0 0;font-family:var(--pixel);font-size:13px;color:#8E8C85}
+
+@media (max-width:760px){
+  .bar{grid-template-columns:1fr auto}.bar .muted{display:none}
+  .bar nav a:nth-child(2){display:none}
+  .foot{flex-direction:column;align-items:flex-start}
+  .kana,.cat{display:none}
+  .title{top:40%}
+  .row{grid-template-columns:44px minmax(0,1fr)}
+  .row .chip{grid-column:2}
+}
+@media (prefers-reduced-motion:reduce){.cue i{animation:none}.row .cart{transition:none}}
+</style>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div>
+
+<header class="bar">
+  <div class="id"><span class="led" aria-hidden="true"></span>Pema Ghising</div>
+  <div class="muted">Graphic &amp; Motion Designer</div>
+  <div class="muted">7+ years · Leapfrog Technology</div>
+  <nav aria-label="Primary"><a href="#work">Work</a><a href="#work">About</a><a href="#work">Contact</a></nav>
+</header>
+
+<main>
+<section id="hero" aria-label="Introduction">
+  <div class="stage">
+    <h1 class="title" aria-label="Pema Ghising"><span class="w w1" aria-hidden="true">PEMA</span><span class="w w2" aria-hidden="true">GHISING</span></h1>
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="cat" aria-hidden="true"><span>PG-001</span><span>SIDE A</span><span>2021—NOW</span></div>
+    <div class="kana" aria-hidden="true">ペマ・ギシン　グラフィック・モーション</div>
+    <div class="foot">
+      <p class="stmt">I turn ideas into visual systems, stories, and experiences that communicate clearly and move people.</p>
+      <div class="cue"><i aria-hidden="true"></i>Scroll to insert</div>
+    </div>
+    <div class="sideA" aria-hidden="true"><div class="k">ペマ・ギシン · SIDE A</div><h2>Selected work<br>9 cartridges</h2></div>
+    <div class="boot" aria-hidden="true">
+      <div class="lcdp"><div class="top"><span class="led"></span>Power</div><div class="lcds"><span id="scr">&nbsp;</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="work" aria-labelledby="wk">
+  <div class="wk-head"><h2 id="wk">The shelf</h2><p>INDEX 001—009 · CASE STUDIES IN PREPARATION</p></div>
+  <ol class="rows" id="rows"></ol>
+  <p class="note">PROTOTYPE: HERO + INSERT. THE 3D SHELF, CASE STUDY, AND CONTACT CABLE COME NEXT.</p>
+</section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const INKS = ['#14A39E', '#E9AE0B', '#3557E0', '#9E1B32'];
+const PROJECTS = ['Addy','SecondLook Health','Leapfrog DocWeaver','Signetic / EBS','SPKR','Adhyayan Preschool','LSPP','Frogtoberfest','Roomie'];
+
+// Shelf rows
+const rows = document.getElementById('rows');
+PROJECTS.forEach((p, i) => {
+  const li = document.createElement('li'); li.className = 'row';
+  li.innerHTML = `<span class="n">${String(i + 1).padStart(3, '0')}</span><span class="t"></span>
+    <span class="chip"><span class="cart"><b style="background:${INKS[i % 4]}"></b></span>${p === 'Roomie' ? 'Case study' : 'In preparation'}</span>`;
+  li.querySelector('.t').textContent = p;
+  rows.appendChild(li);
+});
+
+// Split the title into letters
+document.querySelectorAll('.title .w').forEach(w => {
+  w.innerHTML = [...w.textContent].map(c => `<span class="ch">${c}</span>`).join('');
+});
+
+// Cursor
+const cur = document.querySelector('.cursor');
+const ptr = { x: innerWidth / 2, y: innerHeight / 2, nx: 0, ny: 0 };
+addEventListener('pointermove', e => {
+  ptr.x = e.clientX; ptr.y = e.clientY;
+  ptr.nx = e.clientX / innerWidth * 2 - 1; ptr.ny = e.clientY / innerHeight * 2 - 1;
+}, { passive: true });
+
+// Fonts must be ready before the label is painted
+await Promise.race([
+  Promise.all(['400 100px "Dela Gothic One"', '400 40px "DotGothic16"', '700 30px "Zen Kaku Gothic New"'].map(f => document.fonts.load(f))),
+  new Promise(r => setTimeout(r, 2500)),
+]);
+
+function makeLabel() {
+  const W = 1600, H = 840, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  const rr = (x, y, w, h, r) => { g.beginPath(); g.roundRect(x, y, w, h, r); };
+  g.fillStyle = '#F4F0E6'; rr(0, 0, W, H, 26); g.fill();
+  // red band
+  g.fillStyle = '#9E1B32'; rr(22, 22, W - 44, 128, [16, 16, 0, 0]); g.fill();
+  g.fillStyle = '#F4F0E6'; g.font = '400 64px "DotGothic16"'; g.textBaseline = 'middle';
+  g.fillText('ペマ・ギシン', 60, 88);
+  g.textAlign = 'right'; g.font = '400 48px "DotGothic16"'; g.fillText('PG-001', W - 60, 90); g.textAlign = 'left';
+  // art panel
+  const ax = 22, ay = 168, aw = 1040, ah = 520;
+  g.fillStyle = '#1B1B1E'; rr(ax, ay, aw, ah, 10); g.fill();
+  // halftone sun
+  g.save(); rr(ax, ay, aw, ah, 10); g.clip();
+  for (let y = ay + 14; y < ay + ah; y += 26) for (let x = ax + 14; x < ax + aw; x += 26) {
+    const d = Math.hypot(x - (ax + aw - 170), y - (ay + 150));
+    const r = Math.max(0, 11 - d / 32);
+    if (r > .6) { g.fillStyle = '#9E1B32'; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
+  }
+  g.restore();
+  g.fillStyle = '#F4F0E6'; g.font = '400 210px "Dela Gothic One"'; g.textBaseline = 'alphabetic';
+  g.fillText('PEMA', ax + 44, ay + 250);
+  g.font = '400 150px "Dela Gothic One"'; g.fillText('GHISING', ax + 44, ay + 460);
+  // right column
+  const rx = 1084, rw = W - 22 - rx;
+  g.strokeStyle = '#1B1B1E'; g.lineWidth = 6; rr(rx, ay, rw, ah, 10); g.stroke();
+  g.fillStyle = '#1B1B1E'; g.font = '400 44px "DotGothic16"'; g.fillText('GRAPHIC', rx + 34, ay + 76); g.fillText('& MOTION', rx + 34, ay + 128);
+  g.font = '400 170px "DotGothic16"'; g.fillText('07+', rx + 30, ay + 330);
+  g.font = '700 30px "Zen Kaku Gothic New"'; g.fillText('YEARS OF PRACTICE', rx + 36, ay + 384);
+  g.fillStyle = '#E9AE0B'; g.beginPath(); g.arc(rx + rw - 90, ay + ah - 70, 52, 0, 7); g.fill();
+  g.fillStyle = '#1B1B1E'; g.font = '700 22px "Zen Kaku Gothic New"'; g.textAlign = 'center';
+  g.fillText('SIDE', rx + rw - 90, ay + ah - 74); g.fillText('A', rx + rw - 90, ay + ah - 48); g.textAlign = 'left';
+  // footer strip
+  g.fillStyle = '#1B1B1E'; g.fillRect(22, 708, W - 44, 6);
+  g.font = '700 34px "Zen Kaku Gothic New"'; g.fillText('GRAPHIC & MOTION DESIGNER', 44, 784);
+  g.textAlign = 'right'; g.font = '400 36px "DotGothic16"'; g.fillText('LEAPFROG TECHNOLOGY · 2021—', W - 44, 786);
+  g.lineWidth = 12; rr(6, 6, W - 12, H - 12, 22); g.stroke();
+  return c;
+}
+const labelCanvas = makeLabel();
+
+// ---------- 3D ----------
+const S = { rx: .5, ry: -2.2, rz: .2, y: -3.2, s: 1, free: 1, cy: -6, camY: 0, lookY: 0, zf: 1, led: 0 };
+let renderer;
+const canvas = document.getElementById('gl');
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+} catch (e) {
+  canvas.remove();
+  const img = new Image(); img.className = 'fallback'; img.alt = ''; img.src = labelCanvas.toDataURL();
+  document.querySelector('.stage').insertBefore(img, document.querySelector('.cat'));
+}
+
+let scene, cam, cart, con, led, blob, baseZ = 10;
+if (renderer) {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+  scene.environmentIntensity = .7;
+
+  cam = new THREE.PerspectiveCamera(26, 1, .1, 100);
+
+  const key = new THREE.DirectionalLight(0xffffff, 2.4);
+  key.position.set(-4, 7, 6); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 1, far: 30 });
+  key.shadow.bias = -.0004; key.shadow.normalBias = .02;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xfff1e6, 1.1); rim.position.set(6, 2, -4); scene.add(rim);
+
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: .14 }));
+  ground.rotation.x = -Math.PI / 2; ground.position.y = -1.66; ground.receiveShadow = true; scene.add(ground);
+
+  // Cartridge
+  cart = new THREE.Group();
+  const plastic = new THREE.MeshPhysicalMaterial({ color: 0xE6E1D3, roughness: .58, clearcoat: .25, clearcoatRoughness: .5, sheen: .2, sheenColor: 0xffffff });
+  const shell = new THREE.Mesh(new RoundedBoxGeometry(2.4, 1.62, .38, 6, .09), plastic);
+  cart.add(shell);
+  for (let i = 0; i < 5; i++) {
+    const r = new THREE.Mesh(new RoundedBoxGeometry(2.18, .05, .06, 2, .022), plastic);
+    r.position.set(0, .52 + i * .062, .19); cart.add(r);
+  }
+  const tex = new THREE.CanvasTexture(labelCanvas);
+  tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const label = new THREE.Mesh(new THREE.PlaneGeometry(2.06, 1.08), new THREE.MeshStandardMaterial({ map: tex, roughness: .48, metalness: 0 }));
+  label.position.set(0, -.2, .1915); cart.add(label);
+  const backPlate = new THREE.Mesh(new THREE.PlaneGeometry(1.2, .5), new THREE.MeshStandardMaterial({ color: 0xD5CFC0, roughness: .8 }));
+  backPlate.position.set(0, -.1, -.1915); backPlate.rotation.y = Math.PI; cart.add(backPlate);
+  // Bottom: the narrower insert tab, a dark mouth, and the exposed board edge with gold contacts
+  const tab = new THREE.Mesh(new RoundedBoxGeometry(2.14, .26, .3, 4, .05), plastic);
+  tab.position.y = -.9; cart.add(tab);
+  const step = new THREE.Mesh(new THREE.BoxGeometry(2.3, .012, .36), new THREE.MeshStandardMaterial({ color: 0xC9C3B4, roughness: .7 }));
+  step.position.y = -.805; cart.add(step);
+  const mouth = new THREE.Mesh(new RoundedBoxGeometry(1.96, .05, .14, 2, .02), new THREE.MeshStandardMaterial({ color: 0x0b0b0d, roughness: 1 }));
+  mouth.position.y = -1.025; cart.add(mouth);
+  const pcb = new THREE.Mesh(new THREE.BoxGeometry(1.9, .16, .03), new THREE.MeshStandardMaterial({ color: 0x1F5A3A, roughness: .55 }));
+  pcb.position.y = -1.03; cart.add(pcb);
+  const gold = new THREE.MeshStandardMaterial({ color: 0xD8A93B, metalness: 1, roughness: .28 });
+  const pin = new THREE.BoxGeometry(.044, .11, .036);
+  for (let i = 0; i < 30; i++) {
+    const g = new THREE.Mesh(pin, gold);
+    g.position.set(-.87 + i * .06, -1.05, 0); cart.add(g);
+  }
+  for (const sx of [-1, 1]) {
+    const notch = new THREE.Mesh(new THREE.BoxGeometry(.05, .12, .32), new THREE.MeshStandardMaterial({ color: 0x0b0b0d, roughness: 1 }));
+    notch.position.set(sx * 1.045, -.9, 0); cart.add(notch);
+  }
+  scene.add(cart);
+
+  // Console: cream top, Famicom-red plinth
+  con = new THREE.Group();
+  const red = new THREE.MeshPhysicalMaterial({ color: 0x8E1A2E, roughness: .5, clearcoat: .2, clearcoatRoughness: .5 });
+  const plinth = new THREE.Mesh(new RoundedBoxGeometry(4.8, .36, 2.7, 5, .1), red);
+  plinth.position.y = -.3; plinth.castShadow = true; con.add(plinth);
+  const top = new THREE.Mesh(new RoundedBoxGeometry(4.56, .72, 2.5, 6, .16), plastic);
+  top.position.y = .12; top.castShadow = true; top.receiveShadow = true; con.add(top);
+  const dark = new THREE.MeshStandardMaterial({ color: 0x0b0b0d, roughness: .9 });
+  const slot = new THREE.Mesh(new RoundedBoxGeometry(2.62, .05, .52, 2, .022), dark);
+  slot.position.y = .47; con.add(slot);
+  for (let i = 0; i < 4; i++) {
+    const gr = new THREE.Mesh(new THREE.BoxGeometry(4.0, .022, .02), dark);
+    gr.position.set(0, .26 - i * .1, 1.252); con.add(gr);
+  }
+  led = new THREE.Mesh(new THREE.SphereGeometry(.05, 16, 16), new THREE.MeshStandardMaterial({ color: 0x3a0a12, emissive: 0xff2244, emissiveIntensity: 0 }));
+  led.position.set(1.9, -.3, 1.36); con.add(led);
+  con.scale.setScalar(.82);
+  scene.add(con);
+
+  // Soft contact shadow under the cartridge
+  const sc = document.createElement('canvas'); sc.width = sc.height = 256;
+  const sg = sc.getContext('2d'); const gr = sg.createRadialGradient(128, 128, 0, 128, 128, 128);
+  gr.addColorStop(0, 'rgba(0,0,0,.42)'); gr.addColorStop(.55, 'rgba(0,0,0,.12)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  sg.fillStyle = gr; sg.fillRect(0, 0, 256, 256);
+  blob = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.3), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+  blob.rotation.x = -Math.PI / 2; blob.position.y = -1.64; scene.add(blob);
+
+  const resize = () => {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    cam.aspect = w / h; cam.updateProjectionMatrix();
+    baseZ = cam.aspect < 1 ? 10 / Math.max(cam.aspect, .45) * .62 : 10;
+  };
+  resize(); addEventListener('resize', resize);
+
+  const sm = { x: 0, y: 0 };
+  renderer.setAnimationLoop(t => {
+    if (document.hidden) return;
+    sm.x += (ptr.nx - sm.x) * .06; sm.y += (ptr.ny - sm.y) * .06;
+    const f = reduce ? 0 : S.free;
+    cart.rotation.set(S.rx + sm.y * .22 * f, S.ry + sm.x * .45 * f, S.rz + sm.x * -.05 * f);
+    cart.position.y = S.y + Math.sin(t * .0012) * .05 * f;
+    cart.scale.setScalar(S.s);
+    con.position.y = S.cy;
+    const lift = Math.max(0, S.y + 1.64);
+    blob.material.opacity = Math.max(0, Math.min(1, 1.25 - lift * .35)) * (1 - S.led);
+    blob.scale.setScalar(1 + lift * .12);
+    led.material.emissiveIntensity = S.led * 6;
+    cam.position.set(0, S.camY, baseZ * S.zf);
+    cam.lookAt(0, S.lookY, 0);
+    renderer.render(scene, cam);
+  });
+}
+
+// Cursor follow
+gsap.ticker.add(() => { gsap.set(cur, { x: ptr.x, y: ptr.y }); });
+
+// ---------- Boot (about 2s) ----------
+const REST = { rx: .12, ry: -.42, rz: .06, y: .22 };
+const scr = document.getElementById('scr');
+const GLYPHS = 'アカサタナハマヤラワ0123456789#*+';
+function scramble(to, dur) {
+  return new Promise(res => {
+    const start = performance.now();
+    const step = now => {
+      const p = Math.min(1, (now - start) / dur);
+      const n = Math.floor(p * to.length);
+      let s = to.slice(0, n);
+      for (let i = n; i < to.length; i++) s += to[i] === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+      scr.textContent = s;
+      p < 1 ? requestAnimationFrame(step) : res();
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+function startScroll() {
+  gsap.registerPlugin(ScrollTrigger);
+  const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: .9 } });
+  tl.to(S, { rx: .0, ry: 0, rz: 0, free: 0, y: .22, s: .9, cy: -1.25, camY: 2.6, lookY: -.6, duration: .5, ease: 'power2.inOut' }, 0)
+    .to('.w1', { xPercent: -60, opacity: .1, duration: .5, ease: 'power2.in' }, 0)
+    .to('.w2', { xPercent: 60, opacity: .1, duration: .5, ease: 'power2.in' }, 0)
+    .to('.foot, .kana, .cat', { opacity: 0, duration: .12 }, 0)
+    .to(S, { y: -.36, duration: .2, ease: 'power3.in' }, .56)
+    .to(S, { led: 1, duration: .03 }, .76)
+    .to(S, { zf: .8, camY: 3.2, duration: .24, ease: 'power1.inOut' }, .76)
+    .fromTo('.sideA', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .18, ease: 'power2.out' }, .8);
+}
+
+if (reduce) {
+  document.querySelector('.boot').remove();
+  document.getElementById('hero').classList.add('static');
+  Object.assign(S, REST);
+} else {
+  document.body.classList.add('booting');
+  gsap.set('.title .ch', { yPercent: 110 });
+  gsap.set('.foot, .kana, .cat, .bar', { opacity: 0 });
+  (async () => {
+    await scramble('ペマ・ギシン', 420);
+    await new Promise(r => setTimeout(r, 120));
+    await scramble('PEMA GHISING', 420);
+    const tl = gsap.timeline({ onComplete: () => { document.body.classList.remove('booting'); startScroll(); } });
+    tl.to('.lcdp', { scale: 1.08, opacity: 0, duration: .32, ease: 'power2.in' })
+      .to('.boot', { autoAlpha: 0, duration: .2 }, '-=.1')
+      .to('.title .ch', { yPercent: 0, duration: .7, ease: 'expo.out', stagger: .028 }, '-=.15')
+      .to(S, { ...REST, duration: .95, ease: 'expo.out' }, '<')
+      .to('.foot, .kana, .cat, .bar', { opacity: 1, duration: .4 }, '-=.55');
+  })();
+}
+
+// Cursor grows on interactive things
+document.querySelectorAll('a, .row').forEach(el => {
+  el.addEventListener('pointerenter', () => gsap.to(cur, { width: 34, height: 34, margin: '-17px 0 0 -17px', duration: .2 }));
+  el.addEventListener('pointerleave', () => gsap.to(cur, { width: 12, height: 12, margin: '-6px 0 0 -6px', duration: .2 }));
+});
+</script>
+</body></html>

@@ -29,7 +29,7 @@ Newest first.
 | 2026-10-03 | Removed `framer-motion` and the deprecated `@studio-freight/lenis`; added `gsap`, `three`, `@react-three/fiber`, `lenis` | One motion stack (GSAP), current Lenis package |
 | 2026-10-03 | Lead projects: Addy and Frogtoberfest | Pema's strongest work with visuals ready soonest |
 | 2026-10-03 | Audience: product companies, freelance clients, award juries | Pema's answer in discovery |
-| 2026-10-03 | Build process documented in `docs/` and as a project skill | Every session follows the same steps |
+| 2026-10-03 | Build process documented in `docs/` with a build checklist (`docs/07-build-checklist.md`) | Every session follows the same steps |
 | 2026-10-03 | Cartridge model gets an insert tab with exposed gold contacts | Pema's feedback on the prototype |
 | 2026-10-03 | Hero prototype approved as the quality bar | "The vibe is really nice", needs polish |
 | 2026-10-03 | Stack adds GSAP, Three.js / React Three Fiber, shaders, Lenis | Pema asked for top-tier 3D and motion |

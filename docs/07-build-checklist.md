@@ -1,11 +1,6 @@
----
-name: portfolio-build
-description: The step-by-step process for designing and building Pema Ghising's portfolio (Mixtape concept: Walkman and cassettes). Use whenever working on this site's design, sections, motion, 3D, content or launch, or when asked what step comes next.
----
-
 # Portfolio build process
 
-This repo is Pema Ghising's portfolio. Before any design or build work, read `docs/README.md` and the doc for the area you are touching. The docs are the source of truth; this skill is how to work.
+This repo is Pema Ghising's portfolio. Before any design or build work, read `docs/README.md` and the doc for the area you are touching. The docs are the source of truth; this checklist is how to work.
 
 ## Where things are
 

@@ -33,7 +33,7 @@ The earlier cartridge concept (Famicom) is kept as a backup: `prototypes/hero.ht
 | About | Liner notes | Bio, four disciplines, philosophy, tools |
 | Experience | Tracklist | Roles as tracks, newest first; Leapfrog "now playing" |
 | Experiments | B-sides | Empty slots until experiments exist; an "on rotation" strip |
-| Contact | Plug in | The invite line from data; three hardware-key buttons: Email, LinkedIn, Instagram (no address written out); headphones whose cable you drag into the player, with a pulsing red ring marking the jack |
+| Contact | Plug in | The invite line from data; a J-card tracklist: 01 Email, 02 LinkedIn, 03 Instagram (no address written out); headphones whose cable you drag into the player, with a pulsing red ring marking the jack |
 
 Roomie links to its existing standalone page at `/roomie` and is never redesigned or reused.
 

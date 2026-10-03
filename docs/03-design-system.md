@@ -41,7 +41,7 @@ Small print: the pixel face (DotGothic16) is for large readouts only. Anything s
 
 ## Buttons
 
-Content buttons (Plug in, Reset order, the contact keys) are silver hardware keys (rounded 6px, light cap, darker stem underneath) that lift on hover and press down on click; the primary contact action (Email) is the orange key. The nav keeps slim outlined buttons that fill dark on hover.
+Buttons are slim outlined buttons that fill dark on hover (nav, sound, Plug in, Reset order). Contact links are a J-card tracklist, not buttons. No chunky key tiles.
 
 ## Layout
 

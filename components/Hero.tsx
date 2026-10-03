@@ -56,32 +56,37 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
     const S = { gy: -1.98, rx: 0.5, ry: -2.2, rz: 0.2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: 0.15, ins: 0, camY: 0, lookY: 0, zf: 1, led: 0 };
     if (reduce || seen) Object.assign(S, REST);
 
-    // ---- boot: the counter rolls to 007 while the label maker punches the name.
-    // It starts at once and runs while the 3D scene loads.
+    // ---- boot: a tape deck wakes up while the 3D scene loads.
     const booting = !(reduce || seen);
     if (booting) document.body.classList.add("booting");
     const typed = booting
       ? new Promise<void>((res) => {
-          const dy = q<HTMLElement>("#dy"),
-            c2 = q<HTMLElement>("#c2");
-          const car = q<HTMLElement>(".dymo .car");
-          // every letter is laid out from the start and shown in turn, so nothing shifts;
-          // the caret slides with a transform
-          dy.innerHTML = [...name.toUpperCase()].map((ch) => (ch === " " ? "<b>&nbsp;</b>" : `<b>${ch}</b>`)).join("");
-          const letters = [...dy.children] as HTMLElement[];
-          letters.forEach((b) => (b.style.visibility = "hidden"));
+          // the deck wakes up: needles jump (CSS), the counter rolls to 007 and the LED ladder fills
+          const c2 = q<HTMLElement>("#c2");
+          const leds = [...el.querySelectorAll<HTMLElement>(".boot .leds i")];
+          const needles = [...el.querySelectorAll<HTMLElement>(".boot .vu i")];
+          const boot = q<HTMLElement>(".boot");
+          // needle swings, as if the deck were playing; same clock as the counter so they never drift apart
+          const swing = (t: number, k: number) => -10 + Math.sin(t * (7.1 + k * 1.7)) * 16 + Math.sin(t * (17.3 - k * 2.9)) * 9;
           const start = performance.now();
+          let done = false;
           const step = (now: number) => {
             if (disposed) return res();
-            const p = Math.min(1, (now - start) / 1050);
-            const n = Math.round(p * letters.length);
-            letters.forEach((b, i) => (b.style.visibility = i < n ? "" : "hidden"));
-            const lastEl = letters[n - 1];
-            const x = lastEl ? lastEl.offsetLeft + lastEl.offsetWidth : letters[0].offsetLeft;
-            car.style.transform = `translateX(${x - (dy.offsetLeft + dy.offsetWidth)}px)`;
-            c2.textContent = String(Math.min(7, Math.floor(p * 8)));
-            if (p < 1) requestAnimationFrame(step);
-            else res();
+            const t = (now - start) / 1000;
+            const p = Math.min(1, t / 1.5);
+            const rise = Math.min(1, t / 0.35); // needles kick up from rest
+            needles.forEach((n, k) => (n.style.rotate = `${-48 + (swing(t, k) + 48) * rise}deg`));
+            if (!done) {
+              c2.textContent = "00" + Math.min(7, Math.floor(p * 8));
+              const lit = Math.round(p * leds.length);
+              leds.forEach((l, k) => l.classList.toggle("lit", k < lit));
+              if (p >= 1) {
+                done = true;
+                res();
+              }
+            }
+            // keep the needles moving until the deck has faded away
+            if (getComputedStyle(boot).visibility !== "hidden" && boot.style.display !== "none") requestAnimationFrame(step);
           };
           requestAnimationFrame(step);
         })
@@ -297,14 +302,33 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
         </div>
         <div className="boot" aria-hidden="true">
           <div className="bootbox">
-            <div className="counter">
-              <span>0</span>
-              <span>0</span>
-              <span id="c2">0</span>
+            <div className="deck">
+              <div className="vu">
+                <i />
+                <b>L</b>
+              </div>
+              <div className="lcd">
+                <div className="row">
+                  <span>PG-001</span>
+                  <span>TYPE II</span>
+                </div>
+                <div className="big">
+                  SIDE A <span id="c2">000</span>
+                </div>
+                <div className="leds">
+                  {Array.from({ length: 16 }, (_, i) => (
+                    <i key={i} />
+                  ))}
+                </div>
+              </div>
+              <div className="vu">
+                <i />
+                <b>R</b>
+              </div>
             </div>
-            <div className="dymo">
-              <span id="dy" />
-              <span className="car" />
+            <div className="deck-cap">
+              <span>Stereo cassette deck</span>
+              <span>{name}</span>
             </div>
           </div>
         </div>

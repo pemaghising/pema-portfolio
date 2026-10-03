@@ -26,7 +26,7 @@ The earlier cartridge concept (Famicom) is kept as a backup: `prototypes/hero.ht
 | Section | Concept | Shows |
 | --- | --- | --- |
 | Nav | Device strip | PG monogram, Work / About / Experiments / Contact as hardware buttons, a sound icon. No full name, role, timecode or section label |
-| Hero | Label maker + press play | Name, role, statement; the tape loads into the player on scroll |
+| Hero | Tape deck loader + press play | Name, role, statement; the tape loads into the player on scroll |
 | Work | The tape library | Projects as cassette cases showing their cover (J-card front); visitors can drag them into their own order |
 | Case study | The J-card unfolded | Project page; "In preparation" + noindex until it has content |
 | Motion | Tape deck | Reels play in a deck with spinning reels; "No tape loaded" until reels exist |

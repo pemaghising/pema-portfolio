@@ -37,7 +37,7 @@ Small print: the pixel face (DotGothic16) is for large readouts only. Anything s
 ## Materials and details
 
 - Smoked cassette plastic, brushed aluminium, paper labels, grain over the whole page.
-- Screws, reel windows, label stripes, label-maker tape, a tape counter, catalogue numbers (PG-001), Side A / Side B, an orange LED.
+- Screws, reel windows, label stripes, a hi-fi deck display (VU meters, orange LCD, LED ladder), a tape counter, catalogue numbers (PG-001), Side A / Side B, an orange LED.
 
 ## Buttons
 

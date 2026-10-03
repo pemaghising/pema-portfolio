@@ -60,17 +60,27 @@ body.scrolled .bar .id{font-size:13px}
 .sideA .k{font-family:var(--pixel);font-size:14px;letter-spacing:.2em;color:var(--foam)}
 .sideA h2{margin:.25em 0 0;font-family:var(--display);font-weight:400;font-size:clamp(30px,4.2vw,68px);line-height:.95;text-transform:uppercase}
 
-/* Boot: tape counter + label-maker strip */
+/* Boot: a hi-fi tape deck wakes up (VU needles, orange display, LED ladder) */
 .boot{position:absolute;inset:0;z-index:8;display:grid;place-items:center;background:var(--studio)}
-.bootbox{display:flex;flex-direction:column;align-items:center;gap:18px}
-.counter{display:flex;gap:4px;padding:8px;border-radius:8px;background:#2A2A2E;box-shadow:inset 0 2px 6px rgba(0,0,0,.6)}
-.counter span{width:30px;height:42px;border-radius:3px;background:linear-gradient(#f4f1ea,#d9d5cc 48%,#f4f1ea 52%,#e7e3da);display:grid;place-items:center;
-  font-family:var(--text);font-weight:700;font-size:26px;font-variant-numeric:tabular-nums;color:var(--graphite)}
-.dymo{min-width:min(420px,80vw);height:58px;padding:0 22px;border-radius:6px;background:#141416;display:flex;align-items:center;gap:2px;
-  box-shadow:0 14px 30px rgba(0,0,0,.2);font-family:var(--text);font-weight:700;font-size:30px;letter-spacing:.12em;color:#F4F2EC;
-  text-shadow:0 1px 0 rgba(255,255,255,.25),0 -1px 0 rgba(0,0,0,.6)}
-.dymo b{display:inline-block;transform-origin:50% 100%}
-.dymo .car{will-change:transform;width:3px;height:30px;background:var(--foam);margin-left:4px;animation:blink .5s steps(1) infinite}
+.bootbox{width:min(620px,88vw);container-type:inline-size;display:grid;gap:14px}
+.deck{aspect-ratio:2.5/1;border-radius:3cqi;background:#141416;box-shadow:inset 0 0 0 .6cqi #2a2a2f,0 2cqi 4cqi -2cqi rgba(0,0,0,.55);
+  display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:3cqi;padding:4cqi;align-items:center}
+.deck .vu{position:relative;aspect-ratio:1.5/1;border-radius:1.4cqi;background:radial-gradient(120% 120% at 50% 110%,#F6E9C9,#E8D3A0);overflow:hidden;box-shadow:inset 0 0 0 .4cqi #000}
+.deck .vu::before{content:"";position:absolute;left:50%;bottom:-62%;width:150%;aspect-ratio:1;translate:-50% 0;border-radius:50%;
+  background:repeating-conic-gradient(from -50deg,#2b2b2b 0 .6deg,transparent .6deg 6deg);
+  -webkit-mask:radial-gradient(circle,transparent 60%,#000 61% 66%,transparent 67%);mask:radial-gradient(circle,transparent 60%,#000 61% 66%,transparent 67%)}
+.deck .vu::after{content:"";position:absolute;right:12%;top:20%;width:24%;height:6%;background:#D7322D;border-radius:2px;opacity:.8}
+.deck .vu i{will-change:rotate;position:absolute;left:50%;bottom:-20%;width:.5cqi;height:88%;background:#141416;transform-origin:50% 100%;rotate:-48deg;border-radius:2px}
+.deck .vu b{position:absolute;left:8%;bottom:8%;font:700 max(11px,2cqi)/1 var(--text);letter-spacing:.1em;color:var(--graphite)}
+.deck .lcd{border-radius:1.4cqi;background:#1d0d05;box-shadow:inset 0 0 0 .4cqi #000,inset 0 0 4cqi rgba(242,106,33,.15);padding:3cqi;
+  color:var(--foam);font-family:var(--pixel);text-shadow:0 0 1.4cqi rgba(242,106,33,.6);display:grid;gap:1.8cqi}
+.deck .row{display:flex;justify-content:space-between;font-size:max(11px,2.4cqi);letter-spacing:.12em}
+.deck .row span:first-child{opacity:.75}
+.deck .big{white-space:nowrap;font-size:6.2cqi;line-height:.9;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.deck .leds{display:grid;grid-template-columns:repeat(16,1fr);gap:.6cqi}
+.deck .leds i{height:1.5cqi;border-radius:1px;background:#3a1a0a}
+.deck .leds i.lit{background:var(--foam);box-shadow:0 0 1cqi rgba(242,106,33,.8)}
+.deck-cap{display:flex;justify-content:space-between;gap:16px;padding:0 2cqi;font:700 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 @keyframes blink{50%{opacity:0}}
 
 .cursor{position:fixed;left:0;top:0;z-index:40;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--foam);pointer-events:none}
@@ -184,7 +194,7 @@ body.scrolled .bar .id{font-size:13px}
   .kana,.cat{display:none}
   .title{top:78px}
 }
-@media (prefers-reduced-motion:reduce){.case .cs{transition:none}.dymo .car{animation:none}}
+@media (prefers-reduced-motion:reduce){.case .cs{transition:none}.deck .vu i{transition:none}}
 
 /* Library links */
 .case-link{display:block;text-decoration:none;color:inherit;outline:none}

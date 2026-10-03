@@ -14,6 +14,7 @@ Everything about how this portfolio is planned, designed and built. Read these b
 | [prototypes/mixtape.html](prototypes/mixtape.html) | Hero prototype, Mixtape concept: the chosen direction (open in a browser) |
 | [prototypes/mixtape-blue-walkman.html](prototypes/mixtape-blue-walkman.html) | Alternative player: blue, reference-style |
 | [prototypes/contact-variations.html](prototypes/contact-variations.html) | Six options for the contact links (D, the tracklist, is in use) |
+| [prototypes/loading-screens.html](prototypes/loading-screens.html) | Four loading-screen options (B, Deck, is in use) |
 | [prototypes/hero.html](prototypes/hero.html) | Hero prototype, cartridge concept: the backup |
 
 All site copy lives in `data/site.ts`. These docs describe the site; they are not content.

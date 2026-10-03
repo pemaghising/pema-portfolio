@@ -12,12 +12,20 @@ export default function Navigation() {
         <PGMark variant="compact" />
       </a>
 
-      <a
-        href="#contact"
-        className="relative font-sans text-xs uppercase tracking-[0.2em] text-primary transition-colors duration-200 before:absolute before:inset-[-10px] before:content-[''] hover:text-accent focus-visible:text-accent"
-      >
-        Contact
-      </a>
+      <nav aria-label="Primary" className="flex items-center gap-8">
+        {[
+          { href: "/roomie", label: "Case Study" },
+          { href: "#contact", label: "Contact" },
+        ].map(({ href, label }) => (
+          <a
+            key={href}
+            href={href}
+            className="relative font-sans text-xs uppercase tracking-[0.2em] text-primary transition-colors duration-200 before:absolute before:inset-[-10px] before:content-[''] hover:text-accent focus-visible:text-accent"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
     </header>
   );
 }

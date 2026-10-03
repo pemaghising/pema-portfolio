@@ -152,14 +152,18 @@ body.scrolled .bar .id{font-size:13px}
 .plug-btn:hover{background:var(--graphite);color:var(--studio)}
 .ct-info{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:40px 56px;align-items:start;padding-top:28px;border-top:1.5px solid var(--graphite)}
 .ct-mail{display:inline-block;font-family:var(--display);font-size:clamp(17px,2.6vw,42px);line-height:1.1;color:var(--graphite);text-decoration:none;overflow-wrap:anywhere;
-  background:linear-gradient(var(--foam),var(--foam)) 0 100%/0 6px no-repeat;transition:background-size .5s cubic-bezier(.2,.8,.2,1)}
-.ct-mail:hover,.ct-mail:focus-visible,.ct-stage.on ~ .ct-info .ct-mail{background-size:100% 6px}
+  display:inline-flex;align-items:center;gap:.4em;transition:color .2s}
+.ct-mail:hover,.ct-mail:focus-visible{color:var(--foam)}
+.ct-mail svg{flex:none;width:.8em;height:.8em}
+.ic2{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ic2.fill{fill:currentColor;stroke:none}
+.plug-btn,.ct-copy button,.ct-links a{display:inline-flex;align-items:center;gap:8px}
 .ct-copy{margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .ct-copy button{height:34px;padding:0 14px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 .ct-copy button:hover{background:var(--graphite);color:var(--studio)}
 .ct-side{display:flex;flex-direction:column;gap:22px}
 .ct-links{display:flex;gap:8px;flex-wrap:wrap}
-.ct-links a{padding:9px 16px;border:1.5px solid var(--graphite);border-radius:99px;text-decoration:none;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase}
+.ct-links a{padding:9px 16px 9px 14px;border:1.5px solid var(--graphite);border-radius:99px;text-decoration:none;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase}
 .ct-links a:hover{background:var(--graphite);color:var(--studio)}
 .ct-side p{margin:0;font-size:15px;line-height:1.55;max-width:44ch}
 .ct-open{display:flex;gap:6px 8px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
@@ -232,15 +236,15 @@ body.scrolled .bar .id{font-size:13px}
   <div class="ct-stage" id="ctstage">
     <canvas id="gl2" aria-hidden="true"></canvas>
     <p class="ct-hint" id="cthint"><span class="dot" aria-hidden="true"></span><span id="ctmsg">Drag the plug into the player</span></p>
-    <button class="plug-btn" id="plug" type="button" aria-pressed="false">Plug in</button>
+    <button class="plug-btn" id="plug" type="button" aria-pressed="false"><svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5"/><path d="M6.5 8h11v3.2a5.5 5.5 0 0 1-11 0z"/><path d="M12 16.7V21"/></svg><span>Plug in</span></button>
   </div>
   <div class="ct-info">
     <div>
-      <a class="ct-mail" id="mail" href="mailto:pema.ghising133@gmail.com">pema.ghising133@gmail.com</a>
-      <div class="ct-copy"><button id="copy" type="button">Copy email</button><span class="sr" id="copied" aria-live="polite"></span></div>
+      <a class="ct-mail" id="mail" href="mailto:pema.ghising133@gmail.com"><svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg><span>pema.ghising133@gmail.com</span></a>
+      <div class="ct-copy"><button id="copy" type="button"><svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg><span>Copy email</span></button><span class="sr" id="copied" aria-live="polite"></span></div>
     </div>
     <div class="ct-side">
-      <div class="ct-links"><a href="https://www.linkedin.com/in/pema-ghising-91a966103/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/pema_ghising/" target="_blank" rel="noopener">Instagram</a></div>
+      <div class="ct-links"><a href="https://www.linkedin.com/in/pema-ghising-91a966103/" target="_blank" rel="noopener"><svg class="ic2 fill" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="4.8" r="2.2"/><path d="M10 9h3.8v1.7c.7-1.2 2-2 3.8-2 3.2 0 4.4 2 4.4 5.3V21h-4v-6.2c0-1.5-.5-2.5-1.9-2.5S14 13.3 14 14.8V21h-4z"/></svg><span>LinkedIn</span></a><a href="https://www.instagram.com/pema_ghising/" target="_blank" rel="noopener"><svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></div>
       <p>I'm interested in projects where the brief still has room to move — collaborators who'd rather explore three directions than lock in the first one.</p>
       <ul class="ct-open"><li>Collaborations</li><li>Creative projects</li><li>Design opportunities</li><li>Experiments</li></ul>
     </div>
@@ -682,13 +686,14 @@ rack.addEventListener('keydown', e => {
 });
 
 // ---------- Contact: orange-foam headphones, a cable with rope physics, a plug you drag into the player ----------
+const ICON_PLUG = `<svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5"/><path d="M6.5 8h11v3.2a5.5 5.5 0 0 1-11 0z"/><path d="M12 16.7V21"/></svg>`, ICON_UNPLUG = `<svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5"/><path d="M6.5 8h11v3.2a5.5 5.5 0 0 1-11 0z"/><path d="M12 16.7V21"/><path d="M3.5 3.5l17 17"/></svg>`;
 const stage2 = document.getElementById('ctstage'), cvs2 = document.getElementById('gl2'), plugBtn = document.getElementById('plug'), ctmsg = document.getElementById('ctmsg');
 let CT = null, ctStarted = false;
 function setPlugged(on, silent) {
   if (!CT || CT.plugged === on) return;
   CT.plugged = on; CT.snap = on ? 0 : 1;
   stage2.classList.toggle('on', on);
-  plugBtn.setAttribute('aria-pressed', String(on)); plugBtn.textContent = on ? 'Unplug' : 'Plug in';
+  plugBtn.setAttribute('aria-pressed', String(on)); plugBtn.innerHTML = (on ? ICON_UNPLUG : ICON_PLUG) + '<span>' + (on ? 'Unplug' : 'Plug in') + '</span>';
   ctmsg.textContent = on ? 'Connected. Say hello.' : 'Drag the plug into the player';
 }
 function initContact() {
@@ -739,6 +744,14 @@ function initContact() {
   [.1, .45, .8].forEach(x => { const k = new THREE.Mesh(new RoundedBoxGeometry(.28, .1, .3, 3, .03), silver); k.position.set(x, 1.03, .1); pl.add(k); });
   const jk = new THREE.Mesh(new THREE.CylinderGeometry(.11, .11, .06, 28), dark); jk.position.set(-1.1, 1.0, .1); pl.add(jk);
   const jr = new THREE.Mesh(new THREE.TorusGeometry(.12, .025, 10, 28), silver); jr.rotation.x = Math.PI / 2; jr.position.set(-1.1, 1.02, .1); pl.add(jr);
+  const RED3 = 0xE5322D;
+  const arrowM = new THREE.MeshStandardMaterial({ color: RED3, emissive: RED3, emissiveIntensity: .55, roughness: .5 });
+  const arrow = new THREE.Group();
+  const aCone = new THREE.Mesh(new THREE.ConeGeometry(.17, .3, 24), arrowM); aCone.rotation.z = Math.PI; aCone.position.y = .15; arrow.add(aCone);
+  const aShaft = new THREE.Mesh(new THREE.CylinderGeometry(.062, .062, .42, 16), arrowM); aShaft.position.y = .51; arrow.add(aShaft);
+  const ringM = new THREE.MeshBasicMaterial({ color: RED3, transparent: true, opacity: .9 });
+  const jring = new THREE.Mesh(new THREE.TorusGeometry(.2, .022, 10, 40), ringM); jring.rotation.x = Math.PI / 2; jring.position.set(-1.1, 1.045, .1);
+  arrow.position.set(-1.1, 1.0 + .42, .1); pl.add(arrow, jring);
   const ledM = new THREE.MeshStandardMaterial({ color: 0x401505, emissive: 0xFF6A21, emissiveIntensity: 0 });
   const ld = new THREE.Mesh(new THREE.SphereGeometry(.04, 16, 16), ledM); ld.position.set(1.28, .82, .37); pl.add(ld);
   pl.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
@@ -847,6 +860,12 @@ function initContact() {
     if (CT.plugged && CT.snap < .05) { dir.set(0, -1, 0); }
     q.setFromUnitVectors(down, dir); plugG.quaternion.slerp(q, 1 - Math.exp(-dt * 16)); plugG.position.copy(e);
     buildCable();
+    const near = CT.drag ? Math.max(0, Math.min(1, (target.distanceTo(socket) - .5) / 1.2)) : 1;
+    const want = CT.plugged ? 0 : near;
+    CT.arr = (CT.arr ?? 1) + (want - (CT.arr ?? 1)) * Math.min(1, dt * 10);
+    arrow.visible = jring.visible = CT.arr > .02; arrow.scale.setScalar(CT.arr);
+    arrow.position.y = 1.0 + .42 + (reduce ? 0 : Math.sin(t * .005) * .08);
+    jring.scale.setScalar(CT.arr * (1 + (reduce ? 0 : (Math.sin(t * .005) * .5 + .5) * .35))); ringM.opacity = CT.arr * (reduce ? .9 : .9 - (Math.sin(t * .005) * .5 + .5) * .5);
     ledM.emissiveIntensity += ((CT.plugged ? 4 : 0) - ledM.emissiveIntensity) * .15;
     cm.position.set(camX, camY, camZ); cm.lookAt(camX, camY, 0);
     r2.render(sc, cm);
@@ -865,9 +884,9 @@ ctIO.observe(document.getElementById('contact'));
 const copyBtn = document.getElementById('copy'), copied = document.getElementById('copied');
 copyBtn.addEventListener('click', async () => {
   const em = 'pema.ghising133@gmail.com';
-  try { await navigator.clipboard.writeText(em); copied.textContent = 'Email copied.'; copyBtn.textContent = 'Copied'; }
-  catch (e) { const r = document.createRange(); r.selectNodeContents(document.getElementById('mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copied.textContent = 'Email selected. Press copy.'; }
-  setTimeout(() => { copyBtn.textContent = 'Copy email'; }, 1800);
+  try { await navigator.clipboard.writeText(em); copied.textContent = 'Email copied.'; copyBtn.innerHTML = `<svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Copied</span>`; }
+  catch (e) { const r = document.createRange(); r.selectNodeContents(document.querySelector('#mail span')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copied.textContent = 'Email selected. Press copy.'; }
+  setTimeout(() => { copyBtn.innerHTML = `<svg class="ic2" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg><span>Copy email</span>`; }, 1800);
 });
 </script>
 </body></html>

@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Contact: a red bobbing arrow and pulsing ring mark the jack where the plug goes (hidden once connected); the email is plain text with a mail icon, no highlight; icons added for LinkedIn, Instagram, copy and plug/unplug | Pema's feedback |
 | 2026-10-03 | Contact: orange-foam headphones beside the player, a verlet-rope cable that reaches toward the cursor; drag the plug into the jack (or press Plug in) and the LED lights and the email underlines. Copy-email button, LinkedIn, Instagram and the "looking forward" text from `data/site.ts`. No form, no invented details | Pema's request |
 | 2026-10-03 | Small print rule: nothing under about 5% of the cover width, and small labels use the bold text face, not the thin pixel face. Library captions stack (number, name, status) so long names never collide | Pema's feedback: small text was hard to read |
 | 2026-10-03 | Hero layout: the name sits at the top and the cassette below it, so nothing overlaps. Nav is just a PG monogram, the section links and a sound icon (no full name, role or years) | Pema's feedback |

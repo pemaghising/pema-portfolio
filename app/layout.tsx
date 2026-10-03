@@ -4,13 +4,14 @@ import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { contact, experience, site } from "@/data/site";
 import "./globals.css";
+import "./site.css";
 
-const display = Dela_Gothic_One({ weight: "400", subsets: ["latin"], variable: "--font-display", display: "swap" });
-const pixel = DotGothic16({ weight: "400", subsets: ["latin"], variable: "--font-pixel", display: "swap" });
+const display = Dela_Gothic_One({ weight: "400", subsets: ["latin"], variable: "--nf-display", display: "swap" });
+const pixel = DotGothic16({ weight: "400", subsets: ["latin"], variable: "--nf-pixel", display: "swap" });
 const text = Zen_Kaku_Gothic_New({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
-  variable: "--font-text",
+  variable: "--nf-text",
   display: "swap",
 });
 

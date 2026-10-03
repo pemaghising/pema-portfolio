@@ -13,9 +13,9 @@
   --color-foam: #f26a21;
   --color-mustard: #e9ae0b;
   --color-teal: #14a39e;
-  --font-display: var(--font-display), "Arial Black", sans-serif;
-  --font-pixel: var(--font-pixel), ui-monospace, monospace;
-  --font-sans: var(--font-text), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--nf-display), "Arial Black", sans-serif;
+  --font-pixel: var(--nf-pixel), ui-monospace, monospace;
+  --font-sans: var(--nf-text), "Helvetica Neue", Arial, sans-serif;
   --ease-snap: cubic-bezier(0.3, 1.6, 0.5, 1);
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -71,14 +71,6 @@ body {
   text-transform: uppercase;
 }
 
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
 
 /* Lenis */
 html.lenis,

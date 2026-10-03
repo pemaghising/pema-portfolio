@@ -1,26 +1,44 @@
-import Link from "next/link";
-import { nav, site } from "@/data/site";
+"use client";
 
-/** Slim device strip: monogram on the left, links as hardware buttons. No timecode, no section label. */
-export function Nav() {
+import Link from "next/link";
+import { useEffect, useSyncExternalStore } from "react";
+import { nav, site } from "@/data/site";
+import { available, getServerState, getState, subscribe, toggle } from "@/lib/sound";
+
+function SoundButton() {
+  const s = useSyncExternalStore(subscribe, getState, getServerState);
   return (
-    <header className="label fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-4 px-(--gutter) pt-[calc(16px+env(safe-area-inset-top,0px))] pb-4">
-      <Link href="/" aria-label={`${site.name}, home`} className="font-display text-[15px] tracking-[0.04em] no-underline normal-case">
+    <button className="snd" type="button" aria-pressed={s.on} aria-label={s.on ? "Pause music" : "Play music"} onClick={toggle}>
+      <span className="ic" aria-hidden="true" />
+      <span className="bars" aria-hidden="true">
+        {[0, 1, 2, 3].map((i) => (
+          <i key={i} style={{ transform: `scaleY(${s.on ? 0.15 + Math.min(1, s.level * (1.6 - i * 0.2)) * 0.85 : 0.15})` }} />
+        ))}
+      </span>
+    </button>
+  );
+}
+
+/** Slim device strip: PG monogram, the section links, and a sound icon when there is music. */
+export function Nav() {
+  useEffect(() => {
+    const set = () => document.body.classList.toggle("scrolled", scrollY > 24);
+    set();
+    addEventListener("scroll", set, { passive: true });
+    return () => removeEventListener("scroll", set);
+  }, []);
+  return (
+    <header className="bar">
+      <Link className="id" href="/" aria-label={`PG, ${site.name}, home`}>
         PG
       </Link>
+      {available ? <SoundButton /> : <span />}
       <nav aria-label="Primary">
-        <ul className="flex gap-1.5">
-          {nav.map((n) => (
-            <li key={n.href} className={n.label === "Experiments" ? "hidden sm:block" : undefined}>
-              <Link
-                href={n.href}
-                className="block rounded-full border-[1.5px] border-graphite px-2.5 py-[7px] leading-none transition-[transform,background-color,color] duration-150 hover:bg-graphite hover:text-studio active:translate-y-px"
-              >
-                {n.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {nav.map((n) => (
+          <Link key={n.href} href={n.href}>
+            {n.label}
+          </Link>
+        ))}
       </nav>
     </header>
   );

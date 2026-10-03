@@ -4,6 +4,8 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Launch build: the prototype becomes the real Next.js site (hero, tape library with case-study pages, liner-notes About, Side B contact). Case studies without content are honest "in preparation" pages, kept out of search | Pema asked to go live |
+| 2026-10-03 | 恋人へ ships with the site (`public/audio/koibito-e.mp3`) | Pema confirmed they hold the licence |
 | 2026-10-03 | Contact links become a tracklist on a J-card (01 Email, 02 LinkedIn, 03 Instagram; hover "plays" the track with a small level meter). Hardware keys dropped; Plug in and Reset order go back to slim outlined buttons like the nav. Other options kept in `docs/prototypes/contact-variations.html` | Pema didn't like the key buttons |
 | 2026-10-03 | Nav links and the sound button go back to the slim outlined buttons; the hardware-key style stays only on content buttons (Plug in, Reset order, contact keys) | Pema preferred the earlier nav |
 | 2026-10-03 | Retro buttons everywhere: the rounded pill buttons (nav links, sound, Plug in, Reset order) become small silver hardware keys with a visible stem that press down; no pill shapes. Contact keys lose the arrow and scale their text to the key width so nothing overflows. The contact headline is sentence case, smaller and balanced so it reads easily | Pema's feedback: headline hard to read, pills not retro, text overflowing the keys |

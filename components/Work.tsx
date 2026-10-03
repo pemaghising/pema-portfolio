@@ -8,8 +8,6 @@ import { otherWork, projects, type Project } from "@/data/site";
 import Plate from "./Plate";
 import { Rise, Words } from "./Reveal";
 
-const STARTS = [2, 5, 3, 7, 4, 2, 6, 3, 5];
-
 /**
  * The work index. Projects with a cover become editorial features; the rest
  * stay in a typographic index where the name is the hero. Hovering shows the
@@ -19,6 +17,7 @@ export default function Work() {
   const featured = projects.filter((p) => p.cover);
   const listed = projects.filter((p) => !p.cover);
   const [active, setActive] = useState<string | null>(null);
+  const [leaving, setLeaving] = useState<string | null>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 260, damping: 32, mass: 0.7 });
@@ -52,13 +51,12 @@ export default function Work() {
       >
         {listed.map((p) => {
           const i = projects.indexOf(p);
-          const start = p.title.length > 11 ? Math.min(STARTS[i % STARTS.length], 3) : STARTS[i % STARTS.length];
           const row = (
             <>
               <span className="t-micro muted col-span-1 self-center tabular-nums lg:col-span-1">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="col-span-3 col-start-2 md:col-span-5 lg:col-end-11 lg:[grid-column-start:var(--start)]">
+              <span className="col-span-3 col-start-2 md:col-span-5 lg:col-span-9 lg:col-start-2">
                 <ViewTransition name={`title-${p.slug}`} share="morph" default="none">
                   <span className="title inline-block text-[clamp(2.1rem,7vw,7.5rem)] leading-[0.95] font-semibold tracking-[-0.04em]">
                     {p.title}
@@ -73,7 +71,7 @@ export default function Work() {
           const cls =
             "row grid-sys hairline relative items-baseline gap-y-2 border-b py-[clamp(1.1rem,2.2vw,2.4rem)]";
           return (
-            <li key={p.slug} style={{ ["--start" as string]: start }} onPointerEnter={() => setActive(p.slug)}>
+            <li key={p.slug} onPointerEnter={() => { setActive(p.slug); setLeaving(null); }}>
               {p.href ? (
                 <a href={p.href} className={cls} data-cursor="Open">
                   {row}
@@ -84,6 +82,7 @@ export default function Work() {
                   transitionTypes={["to-case"]}
                   className={cls}
                   data-cursor="View"
+                  onClick={() => setLeaving(p.slug)}
                   // Keyboard focus hides the pointer plate; a click's focus must not,
                   // or the plate unmounts before it can grow into the case study.
                   onFocus={(e) => e.currentTarget.matches(":focus-visible") && setActive(null)}
@@ -120,7 +119,7 @@ export default function Work() {
           }}
         >
           {current && !current.href && (
-            <ViewTransition name={`plate-${current.slug}`} share="morph" default="none">
+            <ViewTransition name={leaving === current.slug ? `plate-${current.slug}` : undefined} share="morph" default="none">
               <div className="h-full w-full">
                 <Plate project={current} index={projects.indexOf(current)} sizes="440px" />
               </div>

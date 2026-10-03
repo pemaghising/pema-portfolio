@@ -68,7 +68,7 @@ export default function Hero() {
       dispatchEvent(new Event("intro-done"));
     };
     if (reduce) return finish();
-    const t = setTimeout(finish, 3000);
+    const t = setTimeout(finish, 1800);
     return () => clearTimeout(t);
   }, [reduce]);
 
@@ -98,7 +98,7 @@ export default function Hero() {
           className="flex h-full flex-col justify-end"
           initial={{ scale: 1.06 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 3, ease: out }}
+          transition={{ duration: 1.8, ease: out }}
         >
           {/* Slate */}
           <motion.div className="grid-sys t-micro absolute inset-x-0 top-[15svh]" style={{ opacity: slateFade }}>
@@ -106,7 +106,7 @@ export default function Hero() {
               className="col-span-2 md:col-span-3"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: out, delay: 0.3 }}
+              transition={{ duration: 1, ease: out, delay: 0.1 }}
             >
               {site.role}
             </motion.p>
@@ -114,7 +114,7 @@ export default function Hero() {
               className="col-span-2 text-right md:col-span-3 md:col-start-6 lg:col-start-10"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: out, delay: 0.45 }}
+              transition={{ duration: 1, ease: out, delay: 0.2 }}
             >
               {site.tagline}
             </motion.p>
@@ -129,7 +129,7 @@ export default function Hero() {
               className="col-span-3 md:col-span-4"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: out, delay: 2.4 }}
+              transition={{ duration: 1, ease: out, delay: 1.2 }}
             >
               {site.years} years · Lead Graphic Designer, Leapfrog Technology
             </motion.p>
@@ -137,7 +137,7 @@ export default function Hero() {
               className="col-span-1 text-right md:col-span-2 md:col-start-7 lg:col-start-11"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 2.9 }}
+              transition={{ duration: 0.8, delay: 1.5 }}
               aria-hidden
             >
               Scroll ↓
@@ -150,7 +150,7 @@ export default function Hero() {
               className="relative block px-[var(--margin)]"
               initial={{ clipPath: "inset(-10% 100% -10% 0%)" }}
               animate={{ clipPath: "inset(-10% 0% -10% 0%)" }}
-              transition={{ duration: 1.1, ease, delay: 0.6 }}
+              transition={{ duration: 0.8, ease, delay: 0.2 }}
             >
               <motion.span
                 ref={pema}
@@ -158,7 +158,7 @@ export default function Hero() {
                 style={{ fontSize: fit.a, x: leftX, opacity: nameFade }}
                 initial={{ fontVariationSettings: '"wdth" 62' }}
                 animate={{ fontVariationSettings: '"wdth" 125' }}
-                transition={{ duration: 1.1, ease, delay: 1.55 }}
+                transition={{ duration: 0.8, ease, delay: 0.75 }}
               >
                 PEMA
               </motion.span>
@@ -169,7 +169,7 @@ export default function Hero() {
                   style={{ fontSize: fit.b, x: rightX, opacity: nameFade }}
                   initial={{ y: "105%" }}
                   animate={{ y: 0 }}
-                  transition={{ duration: 1.1, ease: out, delay: 2.05 }}
+                  transition={{ duration: 0.8, ease: out, delay: 1.05 }}
                 >
                   GHISING
                 </motion.span>
@@ -184,8 +184,8 @@ export default function Hero() {
                   initial={{ left: "0%", opacity: 1 }}
                   animate={{ left: "100%", opacity: [1, 1, 0] }}
                   transition={{
-                    left: { duration: 1.1, ease, delay: 0.6 },
-                    opacity: { duration: 1.7, times: [0, 0.65, 1], delay: 0.6 },
+                    left: { duration: 0.8, ease, delay: 0.2 },
+                    opacity: { duration: 1.2, times: [0, 0.65, 1], delay: 0.2 },
                   }}
                 />
               </span>

@@ -6,23 +6,12 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { contact, nav } from "@/data/site";
 import { scrollToId } from "./SmoothScroll";
 
-/** The page reads as a 3-minute film; the nav shows where in it you are. */
-const RUNTIME_S = 180;
-
-function timecode(p: number) {
-  const f = Math.round(Math.min(Math.max(p, 0), 1) * RUNTIME_S * 25);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${pad(Math.floor(f / 1500))}:${pad(Math.floor(f / 25) % 60)}:${pad(f % 25)}`;
-}
-
 export default function Nav() {
   const path = usePathname();
   const home = path === "/";
   const [ready, setReady] = useState(!home);
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
-  const [scene, setScene] = useState("");
-  const tc = useRef<HTMLSpanElement>(null);
   const menuBtn = useRef<HTMLButtonElement>(null);
   const firstLink = useRef<HTMLAnchorElement>(null);
 
@@ -38,15 +27,13 @@ export default function Nav() {
     return () => window.removeEventListener("intro-done", done);
   }, [home]);
 
-  // Compact state + timecode, written straight to the DOM (no re-render per frame).
+  // Compact-on-scroll state.
   useEffect(() => {
     let raf = 0;
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const max = document.documentElement.scrollHeight - innerHeight;
         setCompact(scrollY > 60);
-        if (tc.current) tc.current.textContent = timecode(max > 0 ? scrollY / max : 0);
       });
     };
     onScroll();
@@ -55,19 +42,6 @@ export default function Nav() {
       removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
     };
-  }, [path]);
-
-  // Current scene name from [data-scene] sections.
-  useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>("[data-scene]");
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setScene(e.target.getAttribute("data-scene") || "");
-      },
-      { rootMargin: "-45% 0px -54% 0px" },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
   }, [path]);
 
   // Menu: escape to close, focus management, scroll lock.
@@ -123,12 +97,6 @@ export default function Nav() {
               &nbsp;Ghising
             </span>
           </Link>
-
-          <p className="t-micro hidden items-center gap-3 lg:col-span-3 lg:col-start-5 lg:flex" aria-hidden>
-            <span className="inline-block size-1.5 rounded-full bg-[var(--color-paper)]" />
-            <span ref={tc} className="tabular-nums">00:00:00</span>
-            <span className="opacity-60">{scene}</span>
-          </p>
 
           <ul className="col-span-5 hidden justify-end gap-8 text-[15px] md:col-start-4 md:flex lg:col-start-8">
             {nav.map((l) => (

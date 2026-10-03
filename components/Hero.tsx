@@ -1,221 +1,338 @@
 "use client";
 
-import {
-  motion,
-  transform,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { site } from "@/data/site";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { available, getLevel, getState, onTapeInserted } from "@/lib/sound";
 
-const ease = [0.76, 0, 0.24, 1] as const;
+type Props = {
+  name: string;
+  role: string;
+  years: string;
+  kana: string;
+  statement: string;
+  trackCount: number;
+};
 
-// Function-form transforms: framer would otherwise hand scroll-linked opacity to a
-// native ViewTimeline, which ignores the clamp in some Chromium builds.
-const at = (input: number[], output: number[]) => (v: number) => transform(v, input, output);
-const out = [0.16, 1, 0.3, 1] as const;
+const BOOTED = "pg-booted";
 
 /**
- * Moment 01 — the opening frame.
- * A playhead scrubs across an empty screen, PEMA is "rendered" behind it,
- * then the width axis opens the word to the full measure. GHISING rises,
- * the frame settles, the nav arrives. Scrolling then splits the name apart
- * and the statement is written into the space it leaves.
+ * Hero: label-maker boot (about 2s, once per session), a 3D cassette that tilts with the cursor,
+ * then on scroll the player rises, the tape goes in, the door shuts and the reels spin.
  */
-export default function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const pema = useRef<HTMLSpanElement>(null);
-  const ghising = useRef<HTMLSpanElement>(null);
-  const [fit, setFit] = useState<{ a: string; b: string }>({ a: "21.5vw", b: "21.5vw" });
-  const reduce = useReducedMotion();
+export function Hero({ name, role, years, kana, statement, trackCount }: Props) {
+  const root = useRef<HTMLElement>(null);
+  const [first, ...rest] = name.toUpperCase().split(" ");
+  const last = rest.join(" ");
 
-  // Justify both words to the same measure using the font's width axis.
+  // returning visitors (and reduced motion) skip the boot: drop it before the first paint
   useLayoutEffect(() => {
-    const measure = () => {
-      const el = ref.current;
-      if (!el || !pema.current || !ghising.current) return;
-      const avail = el.clientWidth - 2 * parseFloat(getComputedStyle(pema.current.parentElement!).paddingLeft);
-      const probe = (word: string, wdth: number) => {
-        const s = document.createElement("span");
-        s.textContent = word;
-        s.style.cssText = `position:absolute;visibility:hidden;white-space:nowrap;font:700 100px var(--font-sans);font-variation-settings:"wdth" ${wdth};letter-spacing:-0.045em`;
-        document.body.appendChild(s);
-        const w = s.getBoundingClientRect().width;
-        s.remove();
-        return w;
-      };
-      let a = (avail / probe("PEMA", 125)) * 100;
-      let b = (avail / probe("GHISING", 75)) * 100;
-      // On wide screens, height is the limit: shrink both, keeping them justified to each other.
-      const k = Math.min(1, (innerHeight * 0.64) / (0.8 * (a + b)));
-      a *= k;
-      b *= k;
-      setFit({ a: `${a}px`, b: `${b}px` });
-    };
-    measure();
-    document.fonts.ready.then(measure);
-    addEventListener("resize", measure);
-    return () => removeEventListener("resize", measure);
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(BOOTED) === "1";
+    } catch {}
+    if (seen || matchMedia("(prefers-reduced-motion: reduce)").matches) root.current?.querySelector<HTMLElement>(".boot")?.style.setProperty("display", "none");
   }, []);
 
   useEffect(() => {
-    const flag = window as { __introDone?: boolean };
-    const finish = () => {
-      flag.__introDone = true;
-      dispatchEvent(new Event("intro-done"));
+    const el = root.current!;
+    const q = <T extends Element>(s: string) => el.querySelector<T>(s)!;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(BOOTED) === "1";
+    } catch {}
+    let disposed = false;
+    const cleanups: (() => void)[] = [];
+
+    const ptr = { nx: 0, ny: 0 };
+    const onMove = (e: PointerEvent) => {
+      ptr.nx = (e.clientX / innerWidth) * 2 - 1;
+      ptr.ny = (e.clientY / innerHeight) * 2 - 1;
     };
-    if (reduce) return finish();
-    const t = setTimeout(finish, 1800);
-    return () => clearTimeout(t);
-  }, [reduce]);
+    addEventListener("pointermove", onMove, { passive: true });
+    cleanups.push(() => removeEventListener("pointermove", onMove));
 
-  const { scrollYProgress: p } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const leftX = useTransform(p, [0, 0.36], ["0vw", "-70vw"]);
-  const rightX = useTransform(p, [0, 0.36], ["0vw", "70vw"]);
-  const nameFade = useTransform(p, at([0.06, 0.26], [1, 0]));
-  const slateFade = useTransform(p, at([0, 0.08], [1, 0]));
-  const stageScale = useTransform(p, [0.7, 1], [1, 0.92]);
-  const stageDim = useTransform(p, at([0.7, 1], [1, 0.35]));
-  const statementY = useTransform(p, [0.2, 0.62], ["8vh", "0vh"]);
+    const portrait = innerWidth / innerHeight < 1;
+    const REST = { rx: 0.1, ry: -0.4, rz: 0.05, y: portrait ? -0.45 : -0.78 };
+    const S = { gy: -1.98, rx: 0.5, ry: -2.2, rz: 0.2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: 0.15, ins: 0, camY: 0, lookY: 0, zf: 1, led: 0 };
+    if (reduce || seen) Object.assign(S, REST);
 
+    // ---- boot: a tape deck wakes up while the 3D scene loads.
+    const booting = !(reduce || seen);
+    if (booting) document.body.classList.add("booting");
+    const typed = booting
+      ? new Promise<void>((res) => {
+          // the deck wakes up: needles jump (CSS), the counter rolls to 007 and the LED ladder fills
+          const c2 = q<HTMLElement>("#c2");
+          const leds = [...el.querySelectorAll<HTMLElement>(".boot .leds i")];
+          const needles = [...el.querySelectorAll<HTMLElement>(".boot .vu i")];
+          const boot = q<HTMLElement>(".boot");
+          // needle swings, as if the deck were playing; same clock as the counter so they never drift apart
+          const swing = (t: number, k: number) => -10 + Math.sin(t * (7.1 + k * 1.7)) * 16 + Math.sin(t * (17.3 - k * 2.9)) * 9;
+          const start = performance.now();
+          let done = false;
+          const step = (now: number) => {
+            if (disposed) return res();
+            const t = (now - start) / 1000;
+            const p = Math.min(1, t / 1.5);
+            const rise = Math.min(1, t / 0.35); // needles kick up from rest
+            needles.forEach((n, k) => (n.style.rotate = `${-48 + (swing(t, k) + 48) * rise}deg`));
+            if (!done) {
+              c2.textContent = "00" + Math.min(7, Math.floor(p * 8));
+              const lit = Math.round(p * leds.length);
+              leds.forEach((l, k) => l.classList.toggle("lit", k < lit));
+              if (p >= 1) {
+                done = true;
+                res();
+              }
+            }
+            // keep the needles moving until the deck has faded away
+            if (getComputedStyle(boot).visibility !== "hidden" && boot.style.display !== "none") requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        })
+      : null;
+
+    // start downloading the 3D code right away, in parallel with the counter
+    const m3d = import("@/lib/mixtape3d");
+    const wait = (ms: number) => new Promise<null>((r) => setTimeout(() => r(null), ms));
+
+    (async () => {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([import("gsap"), import("gsap/ScrollTrigger")]);
+      if (disposed) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ---- reveal: the name comes up and the tape flies in together, right after the counter
+      const boot = q<HTMLElement>(".boot");
+      let revealed: Promise<unknown> | null = null;
+      const reveal = () =>
+        (revealed ??= gsap
+          .timeline({
+            onComplete: () => {
+              document.body.classList.remove("booting");
+              try {
+                sessionStorage.setItem(BOOTED, "1");
+              } catch {}
+            },
+          })
+          .to(q(".bootbox"), { y: -20, opacity: 0, duration: 0.3, ease: "power2.in", delay: 0.1 })
+          .to(boot, { autoAlpha: 0, duration: 0.2 }, "-=.1")
+          .to(el.querySelectorAll(".title .ch"), { yPercent: 0, duration: 0.7, ease: "expo.out", stagger: 0.028 }, "-=.15")
+          .to([...el.querySelectorAll(".foot, .kana, .cat"), document.querySelector(".bar")], { opacity: 1, duration: 0.4 }, "-=.55")
+          .then());
+      if (!typed) boot.style.display = "none";
+      else {
+        gsap.set(el.querySelectorAll(".title .ch"), { yPercent: 110 });
+        gsap.set([...el.querySelectorAll(".foot, .kana, .cat"), document.querySelector(".bar")], { opacity: 0 });
+      }
+
+      // the 3D is built while the counter sits on 007; on a slow connection the name doesn't wait long
+      if (typed) await typed;
+      if (disposed) return;
+      let m = await (typed ? Promise.race([m3d, wait(700)]) : m3d);
+      if (!m) {
+        reveal();
+        m = await m3d;
+      }
+      if (disposed) return;
+
+      // fonts must be ready before the label is painted
+      await Promise.race([document.fonts.ready, wait(2500)]);
+      if (disposed) return;
+      const labelCanvas = m.makeLabel({ name, role, years, kana, catalogue: "PG-001" });
+
+      // ---- 3D
+      const canvas = q<HTMLCanvasElement>("#gl");
+      const st = m.createStage(canvas);
+      let frame: ((t: number) => void) | null = null;
+      if (!st) {
+        canvas.style.display = "none";
+        const img = new Image();
+        img.className = "fallback";
+        img.alt = "";
+        img.src = labelCanvas.toDataURL();
+        q(".stage").insertBefore(img, q(".cat"));
+      } else {
+        const { renderer, scene, cam, ground } = st;
+        cleanups.push(st.dispose);
+        const { tape, reels } = m.buildCassette(labelCanvas, renderer.capabilities.getMaxAnisotropy());
+        scene.add(tape);
+        const { player, door, playKey, ledMat } = m.buildPlayer();
+        scene.add(player);
+        const blob = m.contactShadow();
+        scene.add(blob);
+        let baseZ = 10;
+        const resize = () => {
+          renderer.setSize(innerWidth, innerHeight, false);
+          cam.aspect = innerWidth / innerHeight;
+          cam.updateProjectionMatrix();
+          baseZ = cam.aspect < 1 ? (10 / Math.max(cam.aspect, 0.45)) * 0.62 : 10;
+        };
+        resize();
+        addEventListener("resize", resize);
+        cleanups.push(() => removeEventListener("resize", resize));
+        const sm = { x: 0, y: 0 };
+        let last = 0;
+        let visible = true;
+        const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
+        io.observe(el);
+        cleanups.push(() => io.disconnect());
+        frame = (t: number) => {
+          if (document.hidden || !visible) return;
+          st.adapt(t);
+          const dt = Math.min(0.05, (t - last) / 1000);
+          last = t;
+          sm.x += (ptr.nx - sm.x) * 0.06;
+          sm.y += (ptr.ny - sm.y) * 0.06;
+          const f = reduce ? 0 : S.free;
+          tape.rotation.set(S.rx + sm.y * 0.22 * f, S.ry + sm.x * 0.45 * f, S.rz + sm.x * -0.05 * f);
+          tape.position.set(0, S.y + Math.sin(t * 0.0012) * 0.05 * f, S.z);
+          tape.scale.setScalar(S.s);
+          const snd = getState();
+          const playing = S.ins > 0.5 && (!available || snd.on);
+          const spd = S.ins > 0.5 ? (playing ? 1 + getLevel() * 0.8 : 0) : S.play;
+          if (!reduce) {
+            reels[0].rotation.z -= dt * spd * 4;
+            reels[1].rotation.z -= dt * spd * 6.5;
+          }
+          S.key += ((playing ? 1 : 0) - S.key) * 0.25;
+          player.position.y = S.py;
+          door.rotation.x = S.door;
+          playKey.position.y = 1.03 - S.key * 0.06;
+          ledMat.emissiveIntensity = S.led * (snd.on ? 4 + getLevel() * 8 : 3);
+          ground.position.y = S.gy;
+          blob.position.y = S.gy + 0.01;
+          const lift = Math.max(0, S.y - S.gy);
+          (blob.material as import("three").MeshBasicMaterial).opacity =
+            Math.max(0, Math.min(1, 1.25 - lift * 0.35)) * (1 - Math.min(1, (S.py + 6) / 6));
+          blob.scale.setScalar(1 + lift * 0.12);
+          cam.position.set(0, S.camY, baseZ * S.zf);
+          cam.lookAt(0, S.lookY, 0);
+          renderer.render(scene, cam);
+        };
+        // compile shaders up front so the fly-in doesn't hitch on its first frames
+        if (renderer.extensions.has("KHR_parallel_shader_compile")) await Promise.race([renderer.compileAsync(scene, cam), wait(500)]).catch(() => {});
+        else renderer.compile(scene, cam);
+        if (disposed) return;
+        renderer.setAnimationLoop(frame);
+      }
+
+      // ---- scroll: the tape goes into the player
+      const startScroll = () => {
+        if (reduce) return;
+        const w1 = q(".w1"),
+          w2 = q(".w2");
+        const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top top", end: "bottom bottom", scrub: 0.5 } });
+        tl.to(S, { gy: -1.3, rx: 0, ry: 0, rz: 0, free: 0, y: 0.2, z: 1.4, s: 0.92, py: -0.3, door: 0.95, camY: 0.9, lookY: -0.2, play: 0, duration: 0.35, ease: "power2.inOut" }, 0)
+          .to(w1, { xPercent: -60, opacity: 0.1, duration: 0.35, ease: "power2.in" }, 0)
+          .to(w1, { opacity: 0, duration: 0.15, ease: "none" }, 0.36)
+          .to(w2, { xPercent: 60, opacity: 0.1, duration: 0.35, ease: "power2.in" }, 0)
+          .to(w2, { opacity: 0, duration: 0.15, ease: "none" }, 0.36)
+          .to(el.querySelectorAll(".foot, .kana, .cat"), { opacity: 0, duration: 0.1 }, 0)
+          .to(S, { y: -0.33, z: 0, s: 1, duration: 0.2, ease: "power2.inOut" }, 0.36)
+          .to(S, { door: 0, duration: 0.1, ease: "power3.in" }, 0.57)
+          .to(S, { led: 1, duration: 0.04 }, 0.68)
+          .to(S, { ins: 1, duration: 0.02, onUpdate: () => void (S.ins > 0.5 && onTapeInserted()) }, 0.7)
+          .to(S, { zf: 1.04, camY: 0.2, lookY: -0.32, duration: 0.22, ease: "power1.inOut" }, 0.72)
+          .fromTo(q(".sideA"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.15, ease: "power2.out" }, 0.8);
+        cleanups.push(() => {
+          tl.scrollTrigger?.kill();
+          tl.kill();
+        });
+      };
+
+      // ---- the tape flies in (once the counter is done), then scroll takes over
+      if (typed) {
+        const fresh = !revealed;
+        reveal();
+        // in step with the name when both are ready together, otherwise as soon as the tape is
+        await gsap.to(S, { ...REST, duration: 0.95, ease: "expo.out", delay: fresh ? 0.45 : 0 }).then();
+        await revealed;
+      }
+      if (!disposed) startScroll();
+    })();
+
+    return () => {
+      disposed = true;
+      document.body.classList.remove("booting");
+      cleanups.forEach((f) => f());
+    };
+  }, [name, role, years, kana]);
+
+  const chars = (w: string) =>
+    [...w].map((c, i) => (
+      <span key={i} className="ch">
+        {c}
+      </span>
+    ));
 
   return (
-    <section
-      id="top"
-      ref={ref}
-      data-scene="Opening"
-      aria-label="Introduction"
-      className="surface-ink relative h-[300svh]"
-    >
-      <motion.div
-        className="rm-static sticky top-0 flex h-[100svh] flex-col justify-end overflow-hidden"
-        style={{ scale: stageScale, opacity: stageDim }}
-      >
-        <motion.div
-          className="flex h-full flex-col justify-end"
-          initial={{ scale: 1.06 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.8, ease: out }}
-        >
-          {/* Slate */}
-          <motion.div className="grid-sys t-micro absolute inset-x-0 top-[15svh]" style={{ opacity: slateFade }}>
-            <motion.p
-              className="col-span-2 md:col-span-3"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: out, delay: 0.1 }}
-            >
-              {site.role}
-            </motion.p>
-            <motion.p
-              className="col-span-2 text-right md:col-span-3 md:col-start-6 lg:col-start-10"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: out, delay: 0.2 }}
-            >
-              {site.tagline}
-            </motion.p>
-          </motion.div>
-
-          {/* Secondary line */}
-          <motion.div
-            className="grid-sys t-micro mb-[clamp(16px,2.5vw,40px)]"
-            style={{ opacity: slateFade }}
-          >
-            <motion.p
-              className="col-span-3 md:col-span-4"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: out, delay: 1.2 }}
-            >
-              {site.years} years · Lead Graphic Designer, Leapfrog Technology
-            </motion.p>
-            <motion.p
-              className="col-span-1 text-right md:col-span-2 md:col-start-7 lg:col-start-11"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.5 }}
-              aria-hidden
-            >
-              Scroll ↓
-            </motion.p>
-          </motion.div>
-          {/* Name */}
-          <h1 className="relative pb-[max(var(--margin),2svh)]" aria-label={site.name}>
-            <motion.span
-              aria-hidden
-              className="relative block px-[var(--margin)]"
-              initial={{ clipPath: "inset(-10% 100% -10% 0%)" }}
-              animate={{ clipPath: "inset(-10% 0% -10% 0%)" }}
-              transition={{ duration: 0.8, ease, delay: 0.2 }}
-            >
-              <motion.span
-                ref={pema}
-                className="rm-static block font-bold leading-[0.8] tracking-[-0.045em] whitespace-nowrap will-change-transform"
-                style={{ fontSize: fit.a, x: leftX, opacity: nameFade }}
-                initial={{ fontVariationSettings: '"wdth" 62' }}
-                animate={{ fontVariationSettings: '"wdth" 125' }}
-                transition={{ duration: 0.8, ease, delay: 0.75 }}
-              >
-                PEMA
-              </motion.span>
-              <span className="mask block">
-                <motion.span
-                  ref={ghising}
-                  className="rm-static narrow block font-bold leading-[0.8] tracking-[-0.045em] whitespace-nowrap will-change-transform"
-                  style={{ fontSize: fit.b, x: rightX, opacity: nameFade }}
-                  initial={{ y: "105%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.8, ease: out, delay: 1.05 }}
-                >
-                  GHISING
-                </motion.span>
-              </span>
-            </motion.span>
-
-            {/* Playhead */}
-            {(
-              <span aria-hidden className="absolute inset-x-[var(--margin)] top-[-6%] bottom-[8%]">
-                <motion.span
-                  className="absolute inset-y-0 w-[2px] bg-[var(--color-accent)]"
-                  initial={{ left: "0%", opacity: 1 }}
-                  animate={{ left: "100%", opacity: [1, 1, 0] }}
-                  transition={{
-                    left: { duration: 0.8, ease, delay: 0.2 },
-                    opacity: { duration: 1.2, times: [0, 0.65, 1], delay: 0.2 },
-                  }}
-                />
-              </span>
-            )}
-          </h1>
-
-        </motion.div>
-
-        {/* The statement, written into the space the name leaves. */}
-        <motion.div
-          className="rm-static grid-sys pointer-events-none absolute inset-0 content-center"
-          style={{ y: statementY }}
-        >
-          <p className="t-lead col-span-4 md:col-span-7 lg:col-span-9 lg:col-start-2 lg:text-[clamp(2rem,4.4vw,5.5rem)] lg:leading-[1.02]">
-            {site.statement.split(" ").map((w, i, all) => (
-              <Word key={i} p={p} i={i} n={all.length} word={w} />
-            ))}
-          </p>
-        </motion.div>
-      </motion.div>
+    <section id="hero" ref={root} aria-label="Introduction">
+      <div className="stage">
+        <h1 className="title" aria-label={name}>
+          <span className="w w1" aria-hidden="true">
+            {chars(first)}
+          </span>
+          <span className="w w2" aria-hidden="true">
+            {chars(last)}
+          </span>
+        </h1>
+        <canvas id="gl" aria-hidden="true" />
+        <div className="cat" aria-hidden="true">
+          <span>PG-001</span>
+          <span>SIDE A</span>
+          <span>TYPE II</span>
+        </div>
+        <div className="kana" aria-hidden="true">
+          {kana}
+        </div>
+        <div className="foot">
+          <p className="stmt">{statement}</p>
+          <div className="cue">
+            <i aria-hidden="true" />
+            Scroll to press play
+          </div>
+        </div>
+        <div className="sideA" aria-hidden="true">
+          <div className="k">{kana} · NOW PLAYING · SIDE A</div>
+          <h2>
+            Selected work
+            <br />
+            {trackCount} tracks
+          </h2>
+        </div>
+        <div className="boot" aria-hidden="true">
+          <div className="bootbox">
+            <div className="deck">
+              <div className="vu">
+                <i />
+                <b>L</b>
+              </div>
+              <div className="lcd">
+                <div className="row">
+                  <span>PG-001</span>
+                  <span>TYPE II</span>
+                </div>
+                <div className="big">
+                  SIDE A <span id="c2">000</span>
+                </div>
+                <div className="leds">
+                  {Array.from({ length: 16 }, (_, i) => (
+                    <i key={i} />
+                  ))}
+                </div>
+              </div>
+              <div className="vu">
+                <i />
+                <b>R</b>
+              </div>
+            </div>
+            <div className="deck-cap">
+              <span>Stereo cassette deck</span>
+              <span>{name}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-  );
-}
-
-function Word({ p, i, n, word }: { p: MotionValue<number>; i: number; n: number; word: string }) {
-  const start = 0.2 + (i / n) * 0.34;
-  const opacity = useTransform(p, at([start, start + 0.06], [0, 1]));
-  return (
-    <>
-      <motion.span style={{ opacity }}>{word}</motion.span>{" "}
-    </>
   );
 }

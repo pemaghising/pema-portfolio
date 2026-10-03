@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main id="main" className="surface-ink grid min-h-[100svh] content-end px-[var(--margin)] pb-[var(--margin)]">
-      <p className="t-micro muted mb-6">404 — Missing frame</p>
-      <h1 className="wide text-[clamp(3rem,12vw,14rem)] leading-[0.85] font-bold tracking-[-0.05em]">Cut.</h1>
-      <Link href="/" className="link-u t-micro mt-10 w-fit">
-        Back to the opening frame
+    <main id="main" className="flex min-h-svh flex-col items-start justify-center gap-6 px-(--gutter)">
+      <p className="font-pixel text-foam">ERROR 404 · NO TAPE</p>
+      <h1 className="font-display text-[clamp(40px,8vw,120px)] leading-[0.9]">Nothing on this side.</h1>
+      <Link href="/" className="label rounded-full border-[1.5px] border-graphite px-3 py-2 hover:bg-graphite hover:text-studio">
+        Back to the rack
       </Link>
     </main>
   );

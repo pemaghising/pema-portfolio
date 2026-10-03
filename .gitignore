@@ -42,8 +42,6 @@ next-env.d.ts
 
 .vercel
 
-# claude code / impeccable local-only state
-.claude/settings.local.json
 .impeccable/config.local.json
 .impeccable/hook.cache.json
 

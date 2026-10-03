@@ -1,76 +1,64 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Mona_Sans } from "next/font/google";
-import Nav from "@/components/Nav";
-import Cursor from "@/components/Cursor";
-import SmoothScroll from "@/components/SmoothScroll";
-import { site } from "@/data/site";
+import { Dela_Gothic_One, DotGothic16, Zen_Kaku_Gothic_New } from "next/font/google";
+import { Nav } from "@/components/Nav";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { contact, experience, site } from "@/data/site";
 import "./globals.css";
+import "./site.css";
 
-const mona = Mona_Sans({
+const display = Dela_Gothic_One({ weight: "400", subsets: ["latin"], variable: "--nf-display", display: "swap" });
+const pixel = DotGothic16({ weight: "400", subsets: ["latin"], variable: "--nf-pixel", display: "swap" });
+const text = Zen_Kaku_Gothic_New({
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-mona",
+  variable: "--nf-text",
   display: "swap",
 });
-
-const mono = Geist_Mono({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-geist-mono",
-  display: "swap",
-});
-
-const title = `${site.name} — ${site.role}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: title, template: `%s — ${site.name}` },
+  title: { default: `${site.name} — ${site.role}`, template: `%s — ${site.name}` },
   description: site.description,
-  alternates: { canonical: "/" },
   openGraph: {
-    type: "website",
+    title: `${site.name} — ${site.role}`,
+    description: site.description,
     url: site.url,
     siteName: site.name,
-    title,
-    description: site.description,
+    type: "website",
   },
-  twitter: { card: "summary_large_image", title, description: site.description },
+  twitter: { card: "summary_large_image" },
+  alternates: { canonical: "/" },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#0d0d0c",
-};
+export const viewport: Viewport = { themeColor: "#E3E2DD", colorScheme: "light" };
 
-const personLd = {
+const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: site.name,
-  jobTitle: "Lead Graphic Designer",
-  worksFor: { "@type": "Organization", name: "Leapfrog Technology" },
+  jobTitle: site.role,
   description: site.description,
   url: site.url,
-  sameAs: [
-    "https://www.linkedin.com/in/pema-ghising-91a966103/",
-    "https://www.instagram.com/pema_ghising/",
-  ],
+  email: `mailto:${contact.email}`,
+  sameAs: contact.links.map((l) => l.href),
+  worksFor: experience[0] && { "@type": "Organization", name: experience[0].company },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${mona.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${pixel.variable} ${text.variable}`}>
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
-        />
-        <a href="#main" className="skip-link t-micro">
+        <a className="skip" href="#main">
           Skip to content
         </a>
-        <SmoothScroll>
-          <Cursor />
-          <Nav />
-          {children}
-        </SmoothScroll>
+        <SmoothScroll />
+        <Nav />
+        {children}
+        <div className="grain" aria-hidden="true" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        />
       </body>
     </html>
   );

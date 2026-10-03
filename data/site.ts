@@ -189,9 +189,20 @@ export const lookingForward = {
   open: ["Collaborations", "Creative projects", "Design opportunities", "Experiments"],
 };
 
+/** Sections that exist on the page. Add Experiments back once there are experiments to show. */
 export const nav = [
   { label: "Work", href: "/#work" },
   { label: "About", href: "/#about" },
-  { label: "Experiments", href: "/#experiments" },
   { label: "Contact", href: "/#contact" },
 ];
+
+/** Pema's name in katakana, used on labels as on Japanese tape packaging. */
+export const kana = "ペマ・ギシン";
+
+export type Soundtrack = { src: string; title: string };
+
+/**
+ * Hero music: starts when the tape goes into the player (licensed by Pema).
+ * Set to undefined to turn the music and the sound button off.
+ */
+export const soundtrack: Soundtrack | undefined = { src: "/audio/koibito-e.mp3", title: "恋人へ" };

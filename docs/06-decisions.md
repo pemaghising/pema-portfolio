@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Site copy is in Pema's own voice (first person: "I'm a graphic and motion designer…"), never third person ("Pema is…"). The cursor swell is tuned to normal mouse speeds (about 1.5× at a brisk movement, about 2.2× on a flick) | Pema: the site should read as Pema talking; the cursor didn't visibly react
 | 2026-10-03 | The orange-foam dot cursor from the prototype is back and replaces the system cursor on mouse and pen devices (sits exactly on the pointer, swells and stretches with the speed of the hand, opens into a ring over anything clickable). Touch devices are unchanged | It was in the prototype but missed in the build; two cursors at once looked wrong |
 | 2026-10-03 | Loading screen becomes option B, "Deck": a hi-fi tape deck with VU meters, an orange LCD counting to 007 and an LED ladder (replaces the label maker). Options are in `docs/prototypes/loading-screens.html` | Pema wanted a more retro loader from the mood board and picked Deck |
 | 2026-10-03 | The 3D code downloads during the counter and the scene is built (shaders pre-compiled) while it rests on 007, so the cassette flies in together with the name instead of after it | Pema saw the cassette arrive late |

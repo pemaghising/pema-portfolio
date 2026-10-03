@@ -34,9 +34,9 @@ export function Cursor() {
       const dt = last ? Math.min(0.1, (t - last) / 1000) : 1 / 60;
       last = t;
       // speed falls back to rest on its own, so the dot shrinks once the hand stops
-      speed *= Math.exp(-dt * 7);
-      const v = reduce ? 0 : Math.min(1, speed / 2600);
-      const grow = 1 + v * 1.3; // up to 2.3× when shaken hard
+      speed *= Math.exp(-dt * 6);
+      const v = reduce ? 0 : Math.min(1, speed / 900); // a brisk hand movement is ~900px/s
+      const grow = 1 + v * 1.2; // up to 2.2× when moved fast or shaken
       const stretch = 1 + v * 0.35; // a little longer along the direction of travel
       el.style.transform = `translate3d(${x}px,${y}px,0)`;
       blob.style.transform = `rotate(${angle}rad) scale(${grow * stretch},${grow / stretch})`;

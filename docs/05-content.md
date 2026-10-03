@@ -38,3 +38,7 @@ Each project shows as a cassette case in the tape library. Its cover is the J-ca
 
 - 恋人へ starts when the tape is inserted (fade-in at low volume, pause control in the nav, pauses on tab switch). Browsers allow sound only after one click, tap or key press; if the visitor has not done one yet, the song starts on their first.
 - Pema holds the licence for the track. The file is `public/audio/koibito-e.mp3`, set in `soundtrack` in `data/site.ts` (set it to `undefined` to switch music off).
+
+## Voice
+
+The site is Pema speaking, so copy is first person ("I"), never "Pema is…" or "Pema works…". Keep it plain and direct.

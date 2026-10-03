@@ -13,7 +13,7 @@ How a professional portfolio gets made, step by step. Each step ends with Pema's
 | 7 | Key screens | Hero, work index, one case study | Hero done as prototype |
 | 8 | Motion prototypes | Signature moments tested in a browser | Hero done (prototypes/hero.html) |
 | 9 | Copy and assets | Case-study text, covers, reels, optimised images | Waiting on Pema |
-| 10 | Build | Foundation, then section by section | Next |
+| 10 | Build | Foundation, then section by section | In progress: foundation done |
 | 11 | Polish | Micro-interactions, timing, sound, loading and empty states | Not started |
 | 12 | Quality checks | Lighthouse, mobile, accessibility, browsers, SEO | Not started |
 | 13 | Launch | Domain, analytics, soft launch for feedback | Not started |
@@ -21,7 +21,7 @@ How a professional portfolio gets made, step by step. Each step ends with Pema's
 
 ## Build order (step 10)
 
-1. Foundation: tokens, fonts, grid, nav, libraries
+1. Foundation: tokens, fonts, grid, nav, libraries (done)
 2. Hero (from the prototype)
 3. Work shelf and case-study transition
 4. Motion tape deck

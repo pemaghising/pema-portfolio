@@ -4,6 +4,8 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Foundation: tokens in `app/globals.css` (Tailwind `@theme`), fonts via `next/font`, device-strip nav, Lenis | Step 10.1 of the build |
+| 2026-10-03 | Removed `framer-motion` and the deprecated `@studio-freight/lenis`; added `gsap`, `three`, `@react-three/fiber`, `lenis` | One motion stack (GSAP), current Lenis package |
 | 2026-10-03 | Lead projects: Addy and Frogtoberfest | Pema's strongest work with visuals ready soonest |
 | 2026-10-03 | Audience: product companies, freelance clients, award juries | Pema's answer in discovery |
 | 2026-10-03 | Build process documented in `docs/` and as a project skill | Every session follows the same steps |

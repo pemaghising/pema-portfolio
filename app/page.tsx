@@ -1,65 +1,21 @@
-import { about, contact, currently, experience, nav, otherWork, projects, site } from "@/data/site";
+import { site } from "@/data/site";
 
+/** Foundation only: sections are built one by one (docs/02-process.md). */
 export default function Home() {
   return (
-    <main>
-      <h1>{site.name}</h1>
-      <p>{site.role}</p>
-      <p>{site.statement}</p>
-      <nav>
-        <ul>
-          {nav.map((n) => (
-            <li key={n.href}>
-              <a href={n.href}>{n.label}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <h2>Work</h2>
-      <ul>
-        {projects.map((p) => (
-          <li key={p.slug}>{p.title}</li>
-        ))}
-        {otherWork.map((o) => (
-          <li key={o}>{o}</li>
-        ))}
-      </ul>
-      <h2>About</h2>
-      <p>{about.lead}</p>
-      <p>{about.body}</p>
-      <ul>
-        {about.disciplines.map((d) => (
-          <li key={d.name}>
-            {d.name}: {d.text}
-          </li>
-        ))}
-      </ul>
-      <h2>Experience</h2>
-      {experience.map((r) => (
-        <p key={r.company}>
-          {r.title}, {r.company}, {r.start}–{r.end ?? "present"}. {r.text}
-        </p>
-      ))}
-      <h2>Currently</h2>
-      <ul>
-        {currently.map((c) => (
-          <li key={c.label}>
-            {c.label}: {c.text}
-          </li>
-        ))}
-      </ul>
-      <h2>Contact</h2>
-      <p>{contact.invite}</p>
-      <ul>
-        <li>
-          <a href={`mailto:${contact.email}`}>{contact.email}</a>
-        </li>
-        {contact.links.map((l) => (
-          <li key={l.href}>
-            <a href={l.href}>{l.label}</a>
-          </li>
-        ))}
-      </ul>
+    <main id="main" className="px-(--gutter)">
+      <section className="flex min-h-svh flex-col justify-center gap-8 pt-24">
+        <p className="font-pixel text-sm text-ink-2">ペマ・ギシン · PG-001</p>
+        <h1 className="font-display text-[clamp(48px,15.2vw,300px)] leading-[0.84] tracking-[-0.015em] whitespace-nowrap">
+          <span className="block">PEMA</span>
+          <span className="block text-right">GHISING</span>
+        </h1>
+        <p className="max-w-[34ch] text-base font-medium text-balance">{site.statement}</p>
+      </section>
+      <section id="work" className="min-h-[50svh]" />
+      <section id="about" className="min-h-[50svh]" />
+      <section id="experiments" className="min-h-[50svh]" />
+      <section id="contact" className="min-h-[50svh]" />
     </main>
   );
 }

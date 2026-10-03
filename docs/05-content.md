@@ -17,12 +17,22 @@ Start with the lead projects, Addy and Frogtoberfest.
 
 - [ ] Addy: category, year, one-line summary, cover image, case-study sections and images
 - [ ] Frogtoberfest: category, year, one-line summary, cover image, case-study sections and images
-- [ ] Label art or key visual per project (used on the cartridge label)
+- [ ] Cassette cover (J-card front) per project — see Cover art spec below
 - [ ] Motion reels: muted, looping H.264 MP4 plus a poster frame, in `public/motion/`
 - [ ] Experiments, if any
 - [ ] Earlier roles before Leapfrog, if they should appear
 
 Images go in `public/work/<slug>/`.
+
+## Cover art spec (tape library)
+
+Each project shows as a cassette case in the tape library. Its cover is the J-card front, seen through the clear case.
+
+- **Ratio:** 5:8 portrait (a real J-card front is 63.5 × 101.6 mm).
+- **Export:** 1250 × 2000 px, sRGB, JPG or WebP (under 400 KB), plus a 2500 × 4000 px master for case-study pages.
+- **Safe area:** keep text 7% in from every edge; the case frame and hinge overlap the edges slightly.
+- **File:** `public/work/<slug>/cover.jpg`, then set `cover` for that project in `data/site.ts`.
+- **Until a cover exists,** the library shows a typographic placeholder J-card (4 layouts, the project's ink colour, an "In prep" sticker).
 
 ## Music
 

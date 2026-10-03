@@ -23,7 +23,7 @@ How a professional portfolio gets made, step by step. Each step ends with Pema's
 
 1. Foundation: tokens, fonts, grid, nav, libraries (done)
 2. Hero (from the prototype)
-3. Tape rack and case-study transition
+3. Tape library and case-study transition
 4. Motion tape deck
 5. About and Experience
 6. Experiments

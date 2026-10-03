@@ -2,7 +2,7 @@
 
 ## Overview
 
-A new portfolio for Pema Ghising, Graphic & Motion Designer with 7+ years of experience, Lead Graphic Designer at Leapfrog Technology. The site presents the work as a mixtape: projects are cassettes in a tape rack. It is built to be submitted to Awwwards (Site of the Day / Month) and shared as shots and clips on Behance and Dribbble.
+A new portfolio for Pema Ghising, Graphic & Motion Designer with 7+ years of experience, Lead Graphic Designer at Leapfrog Technology. The site presents the work as a mixtape: projects are cassettes in a tape library. It is built to be submitted to Awwwards (Site of the Day / Month) and shared as shots and clips on Behance and Dribbble.
 
 - **Audience, in order:** product companies (in-house brand and design teams), freelance clients, award juries.
 - **What a visitor leaves with:** Pema's name, what Pema does, a feel for the craft, an easy way to get in touch.
@@ -12,7 +12,7 @@ A new portfolio for Pema Ghising, Graphic & Motion Designer with 7+ years of exp
 
 ## Concept: Mixtape
 
-The work is a mixtape. Each project is a cassette in a tape rack, with its own J-card, catalogue number and side. The hero loads Pema's tape into a portable cassette player and presses play. It draws on Pema's interests: Walkmans, cassettes, wired earphones, 80s tech, collecting music and films.
+The work is a mixtape. Each project is a cassette in a tape library, with its own J-card, catalogue number and side. The hero loads Pema's tape into a portable cassette player and presses play. It draws on Pema's interests: Walkmans, cassettes, wired earphones, 80s tech, collecting music and films.
 
 The earlier cartridge concept (Famicom) is kept as a backup: `prototypes/hero.html`.
 
@@ -27,7 +27,7 @@ The earlier cartridge concept (Famicom) is kept as a backup: `prototypes/hero.ht
 | --- | --- | --- |
 | Nav | Device strip | Orange LED, name, Work / About / Experiments / Contact as hardware buttons. No timecode, no section label |
 | Hero | Label maker + press play | Name, role, statement; the tape loads into the player on scroll |
-| Work | The tape rack | Projects as cassette spines with their own ink stripe, number and side |
+| Work | The tape library | Projects as cassette cases showing their cover (J-card front); visitors can drag them into their own order |
 | Case study | The J-card unfolded | Project page; "In preparation" + noindex until it has content |
 | Motion | Tape deck | Reels play in a deck with spinning reels; "No tape loaded" until reels exist |
 | About | Liner notes | Bio, four disciplines, philosophy, tools |

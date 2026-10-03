@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { available, getState, onTapeInserted } from "@/lib/sound";
+import { available, getLevel, getState, onTapeInserted } from "@/lib/sound";
 
 type Props = {
   name: string;
@@ -169,6 +169,7 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
         cleanups.push(() => io.disconnect());
         frame = (t: number) => {
           if (document.hidden || !visible) return;
+          st.adapt(t);
           const dt = Math.min(0.05, (t - last) / 1000);
           last = t;
           sm.x += (ptr.nx - sm.x) * 0.06;
@@ -179,7 +180,7 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
           tape.scale.setScalar(S.s);
           const snd = getState();
           const playing = S.ins > 0.5 && (!available || snd.on);
-          const spd = S.ins > 0.5 ? (playing ? 1 + snd.level * 0.8 : 0) : S.play;
+          const spd = S.ins > 0.5 ? (playing ? 1 + getLevel() * 0.8 : 0) : S.play;
           if (!reduce) {
             reels[0].rotation.z -= dt * spd * 4;
             reels[1].rotation.z -= dt * spd * 6.5;
@@ -188,7 +189,7 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
           player.position.y = S.py;
           door.rotation.x = S.door;
           playKey.position.y = 1.03 - S.key * 0.06;
-          ledMat.emissiveIntensity = S.led * (snd.on ? 4 + snd.level * 8 : 3);
+          ledMat.emissiveIntensity = S.led * (snd.on ? 4 + getLevel() * 8 : 3);
           ground.position.y = S.gy;
           blob.position.y = S.gy + 0.01;
           const lift = Math.max(0, S.y - S.gy);
@@ -207,7 +208,7 @@ export function Hero({ name, role, years, kana, statement, trackCount }: Props) 
         if (reduce) return;
         const w1 = q(".w1"),
           w2 = q(".w2");
-        const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top top", end: "bottom bottom", scrub: 0.9 } });
+        const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top top", end: "bottom bottom", scrub: 0.5 } });
         tl.to(S, { gy: -1.3, rx: 0, ry: 0, rz: 0, free: 0, y: 0.2, z: 1.4, s: 0.92, py: -0.3, door: 0.95, camY: 0.9, lookY: -0.2, play: 0, duration: 0.35, ease: "power2.inOut" }, 0)
           .to(w1, { xPercent: -60, opacity: 0.1, duration: 0.35, ease: "power2.in" }, 0)
           .to(w1, { opacity: 0, duration: 0.15, ease: "none" }, 0.36)

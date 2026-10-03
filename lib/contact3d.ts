@@ -271,6 +271,8 @@ export function createContactScene({ canvas, labelCanvas, reduce, onPlugged }: O
   addEventListener("resize", layout);
   layout();
 
+  const shape = Array.from({ length: N }, () => new THREE.Vector3(1e3, 0, 0));
+  const curve = new THREE.CatmullRomCurve3(shape, false, "catmullrom", 0.3);
   const q = new THREE.Quaternion(),
     down = new THREE.Vector3(0, -1, 0),
     dir = new THREE.Vector3();
@@ -279,6 +281,7 @@ export function createContactScene({ canvas, labelCanvas, reduce, onPlugged }: O
     running = false;
   const frame = (t: number) => {
     if (document.hidden) return;
+    st.adapt(t);
     const dt = Math.min(0.033, (t - last) / 1000 || 0.016);
     last = t;
     sm.x += (ptr.nx - sm.x) * 0.05;
@@ -297,9 +300,14 @@ export function createContactScene({ canvas, labelCanvas, reduce, onPlugged }: O
     q.setFromUnitVectors(down, dir);
     plug.quaternion.slerp(q, 1 - Math.exp(-dt * 16));
     plug.position.copy(e);
-    const pts = P.map((p) => p.clone());
-    cable.geometry.dispose();
-    cable.geometry = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, "catmullrom", 0.3), 90, 0.042, 8, false);
+    // rebuild the cable only while it moves; at rest it costs nothing
+    let moved = 0;
+    for (let i = 0; i < N; i++) moved = Math.max(moved, P[i].distanceToSquared(shape[i]));
+    if (moved > 1e-7 || !cable.geometry.attributes.position) {
+      for (let i = 0; i < N; i++) shape[i].copy(P[i]);
+      cable.geometry.dispose();
+      cable.geometry = new THREE.TubeGeometry(curve, st.low ? 56 : 84, 0.042, st.low ? 6 : 8, false);
+    }
     const near = S.drag ? Math.max(0, Math.min(1, (target.distanceTo(socket) - 0.5) / 1.2)) : 1;
     S.arr += ((S.plugged ? 0 : near) - S.arr) * Math.min(1, dt * 10);
     const pulse = reduce ? 1 : Math.sin(t * 0.006) * 0.5 + 0.5;

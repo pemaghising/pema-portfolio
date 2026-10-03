@@ -97,15 +97,27 @@ export const darkMat = () => new THREE.MeshStandardMaterial({ color: 0x0c0c0e, r
 export const aluMat = () => new THREE.MeshPhysicalMaterial({ color: 0xc9cdd3, roughness: 0.32, metalness: 0.85 });
 export const blueMat = () => new THREE.MeshPhysicalMaterial({ color: 0x2d3e78, roughness: 0.45, metalness: 0.35, clearcoat: 0.3 });
 
+/** A rough guess at a modest GPU: few cores, little memory, or a phone with a very dense screen. */
+export function isLowEnd() {
+  const n = navigator as Navigator & { deviceMemory?: number };
+  const cores = n.hardwareConcurrency || 8;
+  const mem = n.deviceMemory || 8;
+  const phone = matchMedia("(pointer: coarse)").matches;
+  return cores <= 4 || mem <= 4 || (phone && devicePixelRatio > 2);
+}
+
 /** Renderer, studio lighting, a shadow-catching floor. Returns null when WebGL is unavailable. */
 export function createStage(canvas: HTMLCanvasElement) {
+  const low = isLowEnd();
   let renderer: THREE.WebGLRenderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+    // dense screens don't need MSAA, and modest GPUs can't afford it
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: !low && devicePixelRatio < 2, alpha: true, powerPreference: "high-performance" });
   } catch {
     return null;
   }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  let ratio = Math.min(devicePixelRatio, low ? 1.5 : 2);
+  renderer.setPixelRatio(ratio);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.shadowMap.enabled = true;
@@ -118,7 +130,7 @@ export function createStage(canvas: HTMLCanvasElement) {
   const key = new THREE.DirectionalLight(0xffffff, 2.3);
   key.position.set(-4, 7, 6);
   key.castShadow = true;
-  key.shadow.mapSize.set(2048, 2048);
+  key.shadow.mapSize.set(low ? 1024 : 2048, low ? 1024 : 2048);
   Object.assign(key.shadow.camera, { left: -7, right: 7, top: 7, bottom: -7, near: 1, far: 30 });
   key.shadow.bias = -0.0004;
   key.shadow.normalBias = 0.02;
@@ -141,7 +153,27 @@ export function createStage(canvas: HTMLCanvasElement) {
     pmrem.dispose();
     renderer.dispose();
   };
-  return { renderer, scene, cam, ground, dispose };
+  // Frame governor: if frames run slow, lower the resolution step by step so motion stays smooth.
+  // It only ever steps down, so it never flickers between sizes.
+  let last = 0,
+    warm = 0,
+    sum = 0,
+    count = 0;
+  const adapt = (t: number) => {
+    const d = t - last;
+    last = t;
+    if (warm < 20) return void warm++; // skip shader compiles and the first frames
+    if (d <= 0 || d > 1000) return; // a tab switch, not the steady state
+    sum += Math.min(d, 120); // one long hitch should not decide alone
+    if (++count < 30) return;
+    const avg = sum / count;
+    sum = count = 0;
+    if (avg > 21 && ratio > 0.75) {
+      ratio = Math.max(0.75, ratio - 0.25);
+      renderer.setPixelRatio(ratio);
+    }
+  };
+  return { renderer, scene, cam, ground, dispose, adapt, low };
 }
 
 /** The smoked cassette with spinning reels. Origin at its centre, 2.56 × 1.6 units. */

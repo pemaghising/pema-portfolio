@@ -4,6 +4,8 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Smoothness on modest devices: smooth scroll and scroll animation share one clock; 3D resolution and shadows scale to the device and step down if frames run slow; the contact cable is only rebuilt while it moves; no backdrop blur on the nav; the music meter no longer re-renders the page | Pema saw choppy animation on lower-GPU devices |
+| 2026-10-03 | Music unlocks on the visitor's first click, tap or key anywhere, so it can start by itself when the tape goes in; if the browser still blocks it, the nav sound button pulses orange until tapped | Browsers block sound until a click; scrolling does not count |
 | 2026-10-03 | Launch build: the prototype becomes the real Next.js site (hero, tape library with case-study pages, liner-notes About, Side B contact). Case studies without content are honest "in preparation" pages, kept out of search | Pema asked to go live |
 | 2026-10-03 | 恋人へ ships with the site (`public/audio/koibito-e.mp3`) | Pema confirmed they hold the licence |
 | 2026-10-03 | Contact links become a tracklist on a J-card (01 Email, 02 LinkedIn, 03 Instagram; hover "plays" the track with a small level meter). Hardware keys dropped; Plug in and Reset order go back to slim outlined buttons like the nav. Other options kept in `docs/prototypes/contact-variations.html` | Pema didn't like the key buttons |

@@ -27,7 +27,7 @@ a{color:inherit}
   padding:calc(16px + env(safe-area-inset-top,0px)) 24px 16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
 .bar .id{display:flex;align-items:center;gap:10px}
 /* Nav: solid frosted bar so nothing shows through it; shrinks once the page scrolls */
-.bar{background:rgba(229,227,222,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(27,27,30,.1);
+.bar{background:rgba(229,227,222,.97);box-shadow:0 1px 0 rgba(27,27,30,.1);
   transition:padding .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
 .bar .id,.bar nav a,.snd,.bar .muted{transition:font-size .3s,padding .3s,height .3s}
 body.scrolled .bar{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;box-shadow:0 1px 0 rgba(27,27,30,.18),0 8px 24px -12px rgba(27,27,30,.25)}
@@ -248,3 +248,8 @@ body.scrolled .bar .id{font-size:13px}
 /* If scripts never run, the boot screen must not cover the page */
 .boot{animation:boot-out 0s 6s forwards}
 @keyframes boot-out{to{visibility:hidden;opacity:0}}
+
+/* Sound is blocked until a tap: the button pulses (box-shadow only, no layout work) */
+.snd.wait{border-color:var(--foam);color:var(--foam);animation:snd-wait 1.6s ease-in-out infinite}
+@keyframes snd-wait{0%,100%{box-shadow:0 0 0 0 rgba(242,106,33,.45)}50%{box-shadow:0 0 0 7px rgba(242,106,33,0)}}
+@media (prefers-reduced-motion:reduce){.snd.wait{animation:none}}

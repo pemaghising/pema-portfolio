@@ -1,18 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { nav, site } from "@/data/site";
-import { available, getServerState, getState, subscribe, toggle } from "@/lib/sound";
+import { available, getLevel, getServerState, getState, subscribe, toggle } from "@/lib/sound";
 
 function SoundButton() {
   const s = useSyncExternalStore(subscribe, getState, getServerState);
+  const bars = useRef<HTMLSpanElement>(null);
+  // the level meter writes straight to the DOM, so React does not re-render every frame
+  useEffect(() => {
+    if (!s.on) return;
+    let id = 0;
+    const tick = () => {
+      const lv = getLevel();
+      bars.current?.querySelectorAll("i").forEach((el, i) => {
+        el.style.transform = `scaleY(${0.15 + Math.min(1, lv * (1.6 - i * 0.2)) * 0.85})`;
+      });
+      id = requestAnimationFrame(tick);
+    };
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
+  }, [s.on]);
   return (
-    <button className="snd" type="button" aria-pressed={s.on} aria-label={s.on ? "Pause music" : "Play music"} onClick={toggle}>
+    <button
+      className={`snd${s.blocked ? " wait" : ""}`}
+      type="button"
+      aria-pressed={s.on}
+      aria-label={s.on ? "Pause music" : "Play music"}
+      title={s.blocked ? "Tap to play the music" : undefined}
+      onClick={toggle}
+    >
       <span className="ic" aria-hidden="true" />
-      <span className="bars" aria-hidden="true">
+      <span className="bars" ref={bars} aria-hidden="true">
         {[0, 1, 2, 3].map((i) => (
-          <i key={i} style={{ transform: `scaleY(${s.on ? 0.15 + Math.min(1, s.level * (1.6 - i * 0.2)) * 0.85 : 0.15})` }} />
+          <i key={i} />
         ))}
       </span>
     </button>

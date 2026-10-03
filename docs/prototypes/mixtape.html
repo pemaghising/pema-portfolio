@@ -265,10 +265,10 @@ const labelCanvas = makeLabel();
 
 // small print on the player door
 function makeBadge() {
-  const c = document.createElement('canvas'); c.width = 512; c.height = 1024;
+  const c = document.createElement('canvas'); c.width = 1200; c.height = 800;
   const g = c.getContext('2d');
-  g.fillStyle = '#E4E6EA'; g.font = '400 54px "DotGothic16"'; g.fillText('ペマ・ギシン', 40, 110);
-  g.font = '400 92px "Dela Gothic One"'; g.fillText('PG-1', 40, 960);
+  g.fillStyle = '#E4E6EA'; g.font = '400 60px "DotGothic16"'; g.fillText('ペマ・ギシン', 40, 100);
+  g.font = '400 96px "Dela Gothic One"'; g.fillText('PG-1', 40, 760);
   return c;
 }
 
@@ -355,48 +355,47 @@ if (renderer) {
   });
   scene.add(tape);
 
-  // Player, portrait: blue body, brushed-silver strip on the right, front door hinged on the left
+  // Player, landscape: blue body, brushed-silver strip on the right, front door hinged at the bottom
   player = new THREE.Group();
   const blue = new THREE.MeshPhysicalMaterial({ color: 0x2F4A86, roughness: .5, metalness: .25, clearcoat: .25, clearcoatRoughness: .5 });
   const silver = new THREE.MeshPhysicalMaterial({ color: 0xC9CCD1, roughness: .3, metalness: .85 });
-  const PW = 2.2, PH = 3.0, HX = -.17;                       // hole centre x (cassette sits here)
+  const PW = 3.3, PH = 2.1, HX = -.24;                       // hole centre x (cassette sits here)
   const backP = new THREE.Mesh(new RoundedBoxGeometry(PW, PH, .14, 5, .06), blue); backP.position.z = -.45; player.add(backP);
-  const frameS = roundRectShape(PW, PH, .1); frameS.holes.push(rrPath(1.68, 2.66, .05, HX, 0));
+  const frameS = roundRectShape(PW, PH, .1); frameS.holes.push(rrPath(2.66, 1.7, .05, HX, 0));
   const frameM = new THREE.Mesh(new THREE.ExtrudeGeometry(frameS, { depth: .4, bevelEnabled: true, bevelThickness: .02, bevelSize: .02, bevelSegments: 2, curveSegments: 8 }), blue);
   frameM.position.z = -.4; player.add(frameM);
-  const cavity = new THREE.Mesh(new THREE.PlaneGeometry(1.68, 2.66), dark); cavity.position.set(HX, 0, -.375); player.add(cavity);
-  [[HX, .62], [HX, -.62]].forEach(([x, y]) => { const sp = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .14, 16), silver); sp.rotation.x = Math.PI / 2; sp.position.set(x - .113, y, -.32); player.add(sp); });
-  const strip = new THREE.Mesh(new RoundedBoxGeometry(.44, PH - .02, .6, 4, .05), silver); strip.position.set(PW / 2 - .22, 0, -.2); player.add(strip);
-  // door: pivot on the left edge; window lines up with the cassette reels
-  door = new THREE.Group(); door.position.set(-PW / 2 + .01, 0, .02);
-  const DW = 1.84, dcx = DW / 2;
-  const doorS = roundRectShape(DW, PH - .06, .09, dcx, 0);
-  const wx = (HX + .113) - door.position.x;                  // reel window centre in door space
-  doorS.holes.push(rrPath(.44, 1.12, .05, wx, 0));
-  const doorM = new THREE.Mesh(new THREE.ExtrudeGeometry(doorS, { depth: .05, bevelEnabled: true, bevelThickness: .012, bevelSize: .012, bevelSegments: 2, curveSegments: 8 }), blue);
-  door.add(doorM);
-  const pane = new THREE.Mesh(new THREE.PlaneGeometry(.44, 1.12), new THREE.MeshPhysicalMaterial({ color: 0x20242c, transparent: true, opacity: .3, roughness: .05, clearcoat: 1 }));
-  pane.position.set(wx, 0, .03); door.add(pane);
-  const frameW = new THREE.Mesh(new THREE.ExtrudeGeometry((() => { const o = roundRectShape(.54, 1.22, .07, wx, 0); o.holes.push(rrPath(.44, 1.12, .05, wx, 0)); return o; })(), { depth: .02, bevelEnabled: false }), dark);
-  frameW.position.z = .06; door.add(frameW);
+  const cavity = new THREE.Mesh(new THREE.PlaneGeometry(2.66, 1.7), dark); cavity.position.set(HX, 0, -.375); player.add(cavity);
+  [-.39, .39].forEach(dx => { const sp = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .14, 16), silver); sp.rotation.x = Math.PI / 2; sp.position.set(HX + dx, .113, -.32); player.add(sp); });
+  const strip = new THREE.Mesh(new RoundedBoxGeometry(.46, PH - .02, .6, 4, .05), silver); strip.position.set(PW / 2 - .23, 0, -.2); player.add(strip);
+  // door: pivot on the bottom edge; window lines up with the cassette reels
+  const DW = PW - .5, dx0 = -PW / 2 + .02 + DW / 2, DH = PH - .06;
+  door = new THREE.Group(); door.position.set(dx0, -PH / 2 + .03, .02);
+  const doorS = roundRectShape(DW, DH, .09, 0, DH / 2);
+  const wx = HX - dx0, wy = .113 + PH / 2 - .03;                // reel window centre in door space
+  doorS.holes.push(rrPath(1.12, .44, .05, wx, wy));
+  door.add(new THREE.Mesh(new THREE.ExtrudeGeometry(doorS, { depth: .05, bevelEnabled: true, bevelThickness: .012, bevelSize: .012, bevelSegments: 2, curveSegments: 8 }), blue));
+  const pane = new THREE.Mesh(new THREE.PlaneGeometry(1.12, .44), new THREE.MeshPhysicalMaterial({ color: 0x20242c, transparent: true, opacity: .3, roughness: .05, clearcoat: 1 }));
+  pane.position.set(wx, wy, .03); door.add(pane);
+  const ring = roundRectShape(1.22, .54, .07, wx, wy); ring.holes.push(rrPath(1.12, .44, .05, wx, wy));
+  const frameW = new THREE.Mesh(new THREE.ExtrudeGeometry(ring, { depth: .02, bevelEnabled: false }), dark); frameW.position.z = .06; door.add(frameW);
   const badgeTex = new THREE.CanvasTexture(makeBadge()); badgeTex.colorSpace = THREE.SRGBColorSpace;
-  const badge = new THREE.Mesh(new THREE.PlaneGeometry(.75, 1.5), new THREE.MeshStandardMaterial({ map: badgeTex, transparent: true, roughness: .4 }));
-  badge.position.set(.5, -.05, .075); badge.scale.set(1, 1.72, 1); door.add(badge);
+  const badge = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 1.6), new THREE.MeshStandardMaterial({ map: badgeTex, transparent: true, roughness: .4 }));
+  badge.position.set(0, DH / 2, .075); door.add(badge);
   player.add(door);
   // top: yellow stop/eject, jack, three silver keys (the middle one is play)
   const yellow = new THREE.MeshPhysicalMaterial({ color: 0xF2B233, roughness: .45, clearcoat: .3 });
   const top = PH / 2;
-  const eject = new THREE.Mesh(new RoundedBoxGeometry(.38, .12, .3, 3, .035), yellow); eject.position.set(-.7, top + .04, -.2); player.add(eject);
-  const jack = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .05, 24), dark); jack.position.set(-.3, top + .01, -.2); player.add(jack);
-  [.05, .35, .65].forEach((x, i) => {
-    const kk = new THREE.Mesh(new RoundedBoxGeometry(.26, .1, .3, 3, .03), silver);
+  const eject = new THREE.Mesh(new RoundedBoxGeometry(.42, .12, .3, 3, .035), yellow); eject.position.set(-1.2, top + .04, -.2); player.add(eject);
+  const jack = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .05, 24), dark); jack.position.set(-.78, top + .01, -.2); player.add(jack);
+  [-.35, 0, .35].forEach((x, i) => {
+    const kk = new THREE.Mesh(new RoundedBoxGeometry(.28, .1, .3, 3, .03), silver);
     kk.position.set(x, top + .03, -.2); player.add(kk); if (i === 1) playKey = kk;
   });
   // right side: volume wheel and two headphone jacks
-  const wheel = new THREE.Mesh(new THREE.CylinderGeometry(.22, .22, .12, 32), dark); wheel.rotation.z = Math.PI / 2; wheel.position.set(PW / 2 + .02, .5, -.2); player.add(wheel);
-  [-.85, -1.1].forEach(y => { const j = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .04, 20), dark); j.rotation.z = Math.PI / 2; j.position.set(PW / 2 + .01, y, -.2); player.add(j); });
+  const wheel = new THREE.Mesh(new THREE.CylinderGeometry(.22, .22, .12, 32), dark); wheel.rotation.z = Math.PI / 2; wheel.position.set(PW / 2 + .02, .35, -.2); player.add(wheel);
+  [-.4, -.65].forEach(y => { const j = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .04, 20), dark); j.rotation.z = Math.PI / 2; j.position.set(PW / 2 + .01, y, -.2); player.add(j); });
   led = new THREE.Mesh(new THREE.SphereGeometry(.035, 16, 16), new THREE.MeshStandardMaterial({ color: 0x401505, emissive: 0xFF6A21, emissiveIntensity: 0 }));
-  led.position.set(PW / 2 - .22, 1.2, .105); player.add(led);
+  led.position.set(PW / 2 - .23, .78, .105); player.add(led);
   player.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   scene.add(player);
 
@@ -428,7 +427,7 @@ if (renderer) {
     if (!reduce) { reels[0].rotation.z -= dt * spd * 4; reels[1].rotation.z -= dt * spd * 6.5; }
     S.key += ((S.ins > .5 && A.on ? 1 : 0) - S.key) * .25;
     player.position.y = S.py;
-    door.rotation.y = -S.door * 1.9;
+    door.rotation.x = S.door * 1.25;
     playKey.position.y = PH / 2 + .03 - S.key * .05;
     led.material.emissiveIntensity = S.led * (A.on ? 4 + A.level * 8 : 3);
     const lift = Math.max(0, S.y - GROUND);
@@ -523,15 +522,15 @@ function boot() {
 function startScroll() {
   gsap.registerPlugin(ScrollTrigger);
   const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: .9 } });
-  tl.to(S, { rx: 0, ry: 0, rz: -Math.PI / 2, free: 0, x: -.17, y: -.1, z: 1.9, s: 1, py: -.1, door: 1, camY: .9, lookY: -.12, play: 0, duration: .35, ease: 'power2.inOut' }, 0)
+  tl.to(S, { rx: 0, ry: 0, rz: 0, free: 0, x: -.24, y: .5, z: 1.6, s: 1, py: -.55, door: 1, camY: 1.1, lookY: -.3, play: 0, duration: .35, ease: 'power2.inOut' }, 0)
     .to('.w1', { xPercent: -60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)
     .to('.w2', { xPercent: 60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)
     .to('.foot, .kana, .cat', { opacity: 0, duration: .1 }, 0)
-    .to(S, { z: -.22, duration: .2, ease: 'power2.inOut' }, .36)
+    .to(S, { y: -.55, z: -.22, duration: .2, ease: 'power2.inOut' }, .36)
     .to(S, { door: 0, duration: .1, ease: 'power3.in' }, .57)
     .to(S, { led: 1, duration: .04 }, .68)
     .to(S, { ins: 1, duration: .02, onUpdate: onInsert }, .7)
-    .to(S, { zf: 1.1, camY: .5, lookY: -.5, duration: .22, ease: 'power1.inOut' }, .72)
+    .to(S, { zf: 1.05, camY: .5, lookY: -.62, duration: .22, ease: 'power1.inOut' }, .72)
     .fromTo('.sideA', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .15, ease: 'power2.out' }, .8);
 }
 

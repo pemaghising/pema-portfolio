@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Player turned landscape again: the cassette slides in flat through a door that flips down (Pema liked the earlier sideways insert); keeps the reference styling (blue body, silver strip, yellow key) | Pema's feedback |
 | 2026-10-03 | Player modelled on Pema's portable-player reference: portrait blue body, brushed-silver right strip, front door hinged left with a small upright reel window, yellow stop/eject + silver keys on top, volume wheel and jacks on the side. Cassette: cream shell, white label with red PG-001 print. No brand names; the door reads ペマ・ギシン and PG-1 | Pema's reference sheet |
 | 2026-10-03 | Work section becomes a tape library: a grid of cassette cases showing cover art (5:8 J-card), placeholders until Pema designs covers; still draggable | Pema's request; covers show design work better than spines |
 | 2026-10-03 | Tape rack is reorderable: visitors drag tapes (mouse anywhere, touch on the grip, Alt+arrow keys) to make their own mix; order saved per visitor, with a reset | Pema's request; the default order still comes from `data/site.ts` |

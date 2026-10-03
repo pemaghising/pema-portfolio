@@ -155,25 +155,29 @@ body.scrolled .bar .id{font-size:13px}
 .plug-btn{display:inline-flex;align-items:center;gap:8px}
 .ct-foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;font-family:var(--pixel);font-size:13px;color:var(--ink-2)}
 @media (max-width:760px){.ct-stage{height:660px}#gl2{bottom:112px;height:calc(100% - 112px)}.ct-hint{bottom:66px}.plug-btn{left:24px;right:auto;bottom:8px}}
-.ct-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-top:28px;border-top:1.5px solid var(--graphite)}
-.tile{position:relative;display:flex;align-items:center;gap:18px;min-height:112px;padding:22px 24px;border:1.5px solid var(--graphite);border-radius:22px;color:var(--graphite);text-decoration:none;overflow:hidden;
-  background:linear-gradient(var(--graphite),var(--graphite)) 0 100%/100% 0 no-repeat;transition:background-size .45s cubic-bezier(.2,.8,.2,1),color .3s,transform .3s cubic-bezier(.3,1.5,.5,1)}
-.tile:hover,.tile:focus-visible{background-size:100% 100%;color:var(--paper);transform:translateY(-3px)}
-.tile .ti{flex:none;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--graphite);color:var(--paper);transition:background .3s,color .3s}
-.tile:hover .ti,.tile:focus-visible .ti{background:var(--foam);color:var(--graphite)}
-.tile .ti svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ct-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding:34px 0 18px;border-top:1.5px solid var(--graphite)}
+/* Hardware keys, like the player's: chunky silver caps on a visible stem, pressed down when clicked */
+.tile{--cap1:#E8EAEE;--cap2:#B7BBC3;--stem:#7E828B;position:relative;display:flex;align-items:center;gap:16px;min-height:104px;padding:16px 20px 16px 16px;border-radius:16px;
+  color:var(--graphite);text-decoration:none;background:linear-gradient(180deg,var(--cap1),var(--cap2));
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.85),inset 0 -2px 0 rgba(0,0,0,.08),0 9px 0 var(--stem),0 18px 22px -6px rgba(27,27,30,.35);
+  transform:translateY(0);transition:transform .14s cubic-bezier(.3,1.3,.5,1),box-shadow .14s}
+.tile:hover,.tile:focus-visible{transform:translateY(-3px);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.85),inset 0 -2px 0 rgba(0,0,0,.08),0 12px 0 var(--stem),0 24px 26px -6px rgba(27,27,30,.38)}
+.tile:active{transform:translateY(8px);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(0,0,0,.08),0 1px 0 var(--stem),0 4px 8px -4px rgba(27,27,30,.4)}
+.tile.hot{--cap1:#FFA55C;--cap2:#F26A21;--stem:#B4440F}
+.tile .ti{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:9px;background:#141416;color:#F4F2EC;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.6)}
+.tile .ti svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .tile .ti svg.fill{fill:currentColor;stroke:none}
-.tile .tx2{display:flex;flex-direction:column;gap:4px;min-width:0}
-.tile .tx2 b{font-family:var(--display);font-weight:400;font-size:clamp(20px,2vw,28px);line-height:1;text-transform:uppercase}
-.tile .tx2 small{font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;opacity:.65}
-.tile .go{margin-left:auto;flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
-.tile:hover .go,.tile:focus-visible .go{transform:translate(3px,-3px)}
-.tile-copy{position:absolute;right:14px;top:14px;z-index:2;width:34px;height:34px;display:grid;place-items:center;border:1.5px solid currentColor;border-radius:50%;background:transparent;color:inherit;cursor:pointer;transition:background .2s,color .2s}
-.tile-copy svg{width:15px;height:15px}
-.tile-copy:hover{background:var(--foam);color:var(--graphite);border-color:var(--foam)}
+.tile .tx2{display:flex;flex-direction:column;gap:7px;min-width:0}
+.tile .tx2 b{font-family:var(--display);font-weight:400;font-size:clamp(19px,1.9vw,27px);line-height:1;text-transform:uppercase}
+.tile .tx2 small{font:700 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:rgba(27,27,30,.62)}
+.tile .go{margin-left:auto;flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+.tile-copy{position:absolute;right:12px;top:12px;z-index:2;width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:50%;background:#141416;color:#F4F2EC;cursor:pointer;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.6),0 1px 0 rgba(255,255,255,.5);transition:transform .12s}
+.tile-copy svg{width:14px;height:14px}
+.tile-copy:hover{background:var(--foam);color:var(--graphite)}
+.tile-copy:active{transform:translateY(1px)}
 .etile{position:relative}
-.etile:hover .tile-copy,.etile:focus-within .tile-copy{color:var(--paper)}
-.etile:hover .tile-copy:hover{color:var(--graphite)}
 @media (max-width:860px){.ct-tiles{grid-template-columns:1fr}}
 /* Sound: nav control */
 .bar{grid-template-columns:1fr auto auto}
@@ -245,7 +249,7 @@ body.scrolled .bar .id{font-size:13px}
   </div>
   <div class="ct-tiles">
     <div class="etile">
-      <a class="tile" id="mail" href="mailto:pema.ghising133@gmail.com" aria-label="Send an email"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg></span><span class="tx2"><b>Email</b><small>Say hello</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <a class="tile hot" id="mail" href="mailto:pema.ghising133@gmail.com" aria-label="Send an email"><span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg></span><span class="tx2"><b>Email</b><small>Say hello</small></span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       <button class="tile-copy" id="copy" type="button" aria-label="Copy email address" title="Copy email address"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg></button>
       <span class="sr" id="copied" aria-live="polite"></span>
     </div>
@@ -748,13 +752,9 @@ function initContact() {
   const jk = new THREE.Mesh(new THREE.CylinderGeometry(.11, .11, .06, 28), dark); jk.position.set(-1.1, 1.0, .1); pl.add(jk);
   const jr = new THREE.Mesh(new THREE.TorusGeometry(.12, .025, 10, 28), silver); jr.rotation.x = Math.PI / 2; jr.position.set(-1.1, 1.02, .1); pl.add(jr);
   const RED3 = 0xE5322D;
-  // a small red arrow printed on the player's face under the jack, plus a glowing ring round the jack mouth
-  const tri = new THREE.Shape(); tri.moveTo(0, .13); tri.lineTo(.13, -.07); tri.lineTo(.045, -.07); tri.lineTo(.045, -.2); tri.lineTo(-.045, -.2); tri.lineTo(-.045, -.07); tri.lineTo(-.13, -.07); tri.closePath();
-  const arrowM = new THREE.MeshBasicMaterial({ color: RED3, transparent: true });
-  const arrow = new THREE.Mesh(new THREE.ShapeGeometry(tri), arrowM); arrow.position.set(-1.1, .8, .352);
   const ringM = new THREE.MeshBasicMaterial({ color: RED3, transparent: true, opacity: .9 });
   const jring = new THREE.Mesh(new THREE.TorusGeometry(.17, .02, 10, 40), ringM); jring.rotation.x = Math.PI / 2; jring.position.set(-1.1, 1.045, .1);
-  pl.add(arrow, jring);
+  pl.add(jring);
   const ledM = new THREE.MeshStandardMaterial({ color: 0x401505, emissive: 0xFF6A21, emissiveIntensity: 0 });
   const ld = new THREE.Mesh(new THREE.SphereGeometry(.04, 16, 16), ledM); ld.position.set(1.28, .82, .37); pl.add(ld);
   pl.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
@@ -867,8 +867,7 @@ function initContact() {
     const want = CT.plugged ? 0 : near;
     CT.arr = (CT.arr ?? 1) + (want - (CT.arr ?? 1)) * Math.min(1, dt * 10);
     const pulse = reduce ? 1 : (Math.sin(t * .006) * .5 + .5);
-    arrow.visible = jring.visible = CT.arr > .02;
-    arrowM.opacity = CT.arr * (.45 + .55 * pulse);
+    jring.visible = CT.arr > .02;
     jring.scale.setScalar(CT.arr * (1 + pulse * .3)); ringM.opacity = CT.arr * (.95 - pulse * .55);
     ledM.emissiveIntensity += ((CT.plugged ? 4 : 0) - ledM.emissiveIntensity) * .15;
     cm.position.set(camX, camY, camZ); cm.lookAt(camX, camY, 0);

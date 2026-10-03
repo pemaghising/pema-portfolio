@@ -4,7 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
-| 2026-10-03 | The orange-foam dot cursor from the prototype is back and replaces the system cursor on mouse and pen devices (sits exactly on the pointer, opens into a ring over anything clickable). Touch devices are unchanged | It was in the prototype but missed in the build; two cursors at once looked wrong |
+| 2026-10-03 | The orange-foam dot cursor from the prototype is back and replaces the system cursor on mouse and pen devices (sits exactly on the pointer, swells and stretches with the speed of the hand, opens into a ring over anything clickable). Touch devices are unchanged | It was in the prototype but missed in the build; two cursors at once looked wrong |
 | 2026-10-03 | Loading screen becomes option B, "Deck": a hi-fi tape deck with VU meters, an orange LCD counting to 007 and an LED ladder (replaces the label maker). Options are in `docs/prototypes/loading-screens.html` | Pema wanted a more retro loader from the mood board and picked Deck |
 | 2026-10-03 | The 3D code downloads during the counter and the scene is built (shaders pre-compiled) while it rests on 007, so the cassette flies in together with the name instead of after it | Pema saw the cassette arrive late |
 | 2026-10-03 | Smoothness on modest devices: smooth scroll and scroll animation share one clock; 3D resolution and shadows scale to the device and step down if frames run slow; the contact cable is only rebuilt while it moves; no backdrop blur on the nav; the music meter no longer re-renders the page | Pema saw choppy animation on lower-GPU devices |

@@ -91,7 +91,24 @@ a{color:inherit}
 .rack .spine:hover{opacity:1;transform:translateX(26px) rotate(-.6deg)}
 .note{margin:56px 0 0;font-family:var(--pixel);font-size:13px;color:#8E8C85}
 
+/* Sound: nav control + press-play hint */
+.bar{grid-template-columns:1.2fr 1fr 1fr auto auto}
+.snd{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 10px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;
+  font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+.snd:hover{background:var(--graphite);color:var(--studio)}
+.snd .ic{width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.snd[aria-pressed="true"] .ic{width:8px;height:10px;border:0;background:linear-gradient(90deg,currentColor 0 3px,transparent 3px 5px,currentColor 5px)}
+.snd .bars{display:flex;align-items:flex-end;gap:2px;height:12px}
+.snd .bars i{display:block;width:2px;height:12px;background:var(--foam);transform-origin:50% 100%;transform:scaleY(.15)}
+.hint{position:absolute;left:50%;bottom:calc(5vh + 150px);z-index:4;transform:translateX(-50%);display:flex;align-items:center;gap:10px;
+  padding:12px 20px 12px 16px;border:0;border-radius:99px;background:var(--foam);color:var(--graphite);cursor:pointer;
+  font:700 12px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;box-shadow:0 10px 30px rgba(242,106,33,.35);animation:pulse 1.6s ease-in-out infinite}
+.hint span{font-family:var(--pixel);letter-spacing:.06em;font-weight:400;font-size:14px;text-transform:none}
+.hint i{width:0;height:0;border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
+@keyframes pulse{50%{box-shadow:0 10px 44px rgba(242,106,33,.65)}}
 @media (max-width:760px){
+  .bar{grid-template-columns:1fr auto auto}
+  .snd .tx{display:none}
   .bar{grid-template-columns:1fr auto}.bar .muted{display:none}
   .bar nav a:nth-child(2){display:none}
   .foot{flex-direction:column;align-items:flex-start}
@@ -110,6 +127,7 @@ a{color:inherit}
   <div class="id"><span class="led" aria-hidden="true"></span>Pema Ghising</div>
   <div class="muted">Graphic &amp; Motion Designer</div>
   <div class="muted">7+ years · Leapfrog Technology</div>
+  <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Play music"><span class="ic" aria-hidden="true"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tx">Sound off</span></button>
   <nav aria-label="Primary"><a href="#work">Work</a><a href="#work">About</a><a href="#work">Contact</a></nav>
 </header>
 
@@ -124,6 +142,7 @@ a{color:inherit}
       <p class="stmt">I turn ideas into visual systems, stories, and experiences that communicate clearly and move people.</p>
       <div class="cue"><i aria-hidden="true"></i>Scroll to press play</div>
     </div>
+    <button class="hint" id="hint" type="button" hidden><i aria-hidden="true"></i>Press play <span>恋人へ</span></button>
     <div class="sideA" aria-hidden="true"><div class="k">ペマ・ギシン · NOW PLAYING · SIDE A</div><h2>Selected work<br>9 tracks</h2></div>
     <div class="boot" aria-hidden="true">
       <div class="bootbox">
@@ -133,6 +152,8 @@ a{color:inherit}
     </div>
   </div>
 </section>
+
+<audio id="song" src="audio/koibito-e.mp3" preload="none" loop></audio>
 
 <section id="work" aria-labelledby="wk">
   <div class="wk-head"><h2 id="wk">The tape rack</h2><p>PG-001—009 · CASE STUDIES IN PREPARATION</p></div>
@@ -205,7 +226,7 @@ function makeLabel() {
 const labelCanvas = makeLabel();
 
 // ---------- 3D ----------
-const S = { rx: .5, ry: -2.2, rz: .2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: .15, camY: 0, lookY: 0, zf: 1, led: 0 };
+const S = { rx: .5, ry: -2.2, rz: .2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: .15, ins: 0, hintOk: 1, camY: 0, lookY: 0, zf: 1, led: 0 };
 let renderer;
 const canvas = document.getElementById('gl');
 try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
@@ -335,11 +356,13 @@ if (renderer) {
     tape.rotation.set(S.rx + sm.y * .22 * f, S.ry + sm.x * .45 * f, S.rz + sm.x * -.05 * f);
     tape.position.set(0, S.y + Math.sin(t * .0012) * .05 * f, S.z);
     tape.scale.setScalar(S.s);
-    if (!reduce) { reels[0].rotation.z -= dt * S.play * 4; reels[1].rotation.z -= dt * S.play * 6.5; }
+    const spd = S.ins > .5 ? (A.on ? 1 + A.level * .8 : 0) : S.play;
+    if (!reduce) { reels[0].rotation.z -= dt * spd * 4; reels[1].rotation.z -= dt * spd * 6.5; }
+    S.key += ((S.ins > .5 && A.on ? 1 : 0) - S.key) * .25;
     player.position.y = S.py;
     door.rotation.x = S.door;
     playKey.position.y = 1.03 - S.key * .06;
-    led.material.emissiveIntensity = S.led * 6;
+    led.material.emissiveIntensity = S.led * (A.on ? 4 + A.level * 8 : 3);
     const lift = Math.max(0, S.y + 1.29);
     blob.material.opacity = Math.max(0, Math.min(1, 1.25 - lift * .35)) * (1 - Math.min(1, (S.py + 6) / 6));
     blob.scale.setScalar(1 + lift * .12);
@@ -349,6 +372,49 @@ if (renderer) {
 }
 
 gsap.ticker.add(() => gsap.set(cur, { x: ptr.x, y: ptr.y }));
+
+// ---------- Sound: off until the visitor presses play; fades in low, pauses on tab switch ----------
+const song = document.getElementById('song'), sndBtn = document.getElementById('snd'), hint = document.getElementById('hint');
+const A = { on: false, ctx: null, gain: null, an: null, data: null, level: 0 };
+function initAudio() {
+  if (A.ctx) return;
+  A.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const src = A.ctx.createMediaElementSource(song);
+  A.gain = A.ctx.createGain(); A.gain.gain.value = 0;
+  A.an = A.ctx.createAnalyser(); A.an.fftSize = 64; A.data = new Uint8Array(A.an.frequencyBinCount);
+  src.connect(A.an); A.an.connect(A.gain); A.gain.connect(A.ctx.destination);
+}
+function ramp(to, secs) {
+  const t = A.ctx.currentTime, g = A.gain.gain;
+  g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(to, t + secs);
+}
+async function playSong() {
+  initAudio();
+  try { await A.ctx.resume(); await song.play(); } catch (e) { return; }
+  A.on = true; ramp(.3, 1.4); syncUI();
+}
+function pauseSong() {
+  if (!A.on) return;
+  A.on = false; ramp(0, .35); setTimeout(() => { if (!A.on) song.pause(); }, 380); syncUI();
+}
+function syncUI() {
+  sndBtn.setAttribute('aria-pressed', String(A.on));
+  sndBtn.setAttribute('aria-label', A.on ? 'Pause music' : 'Play music');
+  sndBtn.querySelector('.tx').textContent = A.on ? '恋人へ' : 'Sound off';
+  hint.hidden = A.on || S.ins < .5 || S.hintOk < .5;
+}
+sndBtn.addEventListener('click', () => (A.on ? pauseSong() : playSong()));
+hint.addEventListener('click', playSong);
+document.addEventListener('visibilitychange', () => { if (document.hidden) pauseSong(); });
+const bars = [...sndBtn.querySelectorAll('.bars i')];
+gsap.ticker.add(() => {
+  let lv = 0;
+  if (A.on && A.an) {
+    A.an.getByteFrequencyData(A.data);
+    bars.forEach((b, i) => { const v = A.data[2 + i * 5] / 255; b.style.transform = `scaleY(${.15 + v * .85})`; lv += v / 4; });
+  } else bars.forEach(b => { b.style.transform = 'scaleY(.15)'; });
+  A.level += (lv - A.level) * .2;
+});
 
 // ---------- Boot: counter rolls to 007 while the label maker punches the name (about 2s) ----------
 const REST = { rx: .1, ry: -.4, rz: .05, y: .15 };
@@ -377,8 +443,9 @@ function startScroll() {
     .to('.foot, .kana, .cat', { opacity: 0, duration: .1 }, 0)
     .to(S, { y: -.33, z: .0, s: 1, duration: .2, ease: 'power2.inOut' }, .36)
     .to(S, { door: 0, duration: .1, ease: 'power3.in' }, .57)
-    .to(S, { key: 1, led: 1, duration: .04 }, .68)
-    .to(S, { play: 1, duration: .1 }, .7)
+    .to(S, { led: 1, duration: .04 }, .68)
+    .to(S, { ins: 1, duration: .02, onUpdate: syncUI }, .7)
+    .fromTo(S, { hintOk: 1 }, { hintOk: 0, duration: .02, onUpdate: syncUI, immediateRender: false }, .96)
     .to(S, { zf: 1.04, camY: .2, lookY: -.32, duration: .22, ease: 'power1.inOut' }, .72)
     .fromTo('.sideA', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .15, ease: 'power2.out' }, .8);
 }

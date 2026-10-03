@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
 import { CoverArt } from "@/components/CoverArt";
-import { kana, projects, site } from "@/data/site";
+import { kana, projects } from "@/data/site";
 
 export const dynamicParams = false;
 
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   const ready = Boolean(p.sections?.length);
   return {
     title: p.title,
-    description: p.summary ?? `${p.title}, a project by ${site.name}.`,
+    description: p.summary ?? `${p.title}. Case study coming soon.`,
     alternates: { canonical: `/work/${p.slug}` },
     // pages still in preparation stay out of search results
     robots: ready ? undefined : { index: false, follow: true },

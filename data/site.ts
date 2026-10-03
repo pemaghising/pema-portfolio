@@ -4,6 +4,8 @@
  * Rule for this file: only facts Pema has published (LinkedIn / the current
  * live site). Missing facts stay missing — optional fields are simply omitted
  * and the UI hides whatever isn't there.
+ *
+ * Voice: Pema speaks for themself, in the first person ("I"), never "Pema is…".
  */
 
 export const site = {
@@ -15,7 +17,7 @@ export const site = {
   statement:
     "I turn ideas into visual systems, stories, and experiences that communicate clearly and move people.",
   description:
-    "Pema Ghising is a graphic and motion designer with 7+ years of experience, leading visual communication at Leapfrog Technology across graphic, motion, brand and digital work.",
+    "I'm Pema Ghising, a graphic and motion designer with 7+ years of experience, leading visual communication at Leapfrog Technology across graphic, motion, brand and digital work.",
 };
 
 export const contact = {
@@ -29,8 +31,8 @@ export const contact = {
 };
 
 export const about = {
-  lead: "Pema Ghising is a graphic and motion designer in the business of making ideas visible.",
-  body: "Pema works where structure meets experimentation — taking complex ideas and turning them into visual systems that are clear, engaging, and memorable.",
+  lead: "I'm a graphic and motion designer in the business of making ideas visible.",
+  body: "I work where structure meets experimentation, taking complex ideas and turning them into visual systems that are clear, engaging, and memorable.",
   disciplines: [
     {
       name: "Graphic Design",

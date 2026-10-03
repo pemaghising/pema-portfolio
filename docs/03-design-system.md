@@ -32,6 +32,8 @@ Backup (cartridge concept): Famicom red #9E1B32, plastic #E6E1D3, cobalt #3557E0
 
 All three are Japanese foundry faces with katakana.
 
+Small print: the pixel face (DotGothic16) is for large readouts only. Anything small (labels, captions, catalogue numbers on covers) uses Zen Kaku Gothic New bold, at least 11px on screen and about 5% of a cover's width.
+
 ## Materials and details
 
 - Smoked cassette plastic, brushed aluminium, paper labels, grain over the whole page.

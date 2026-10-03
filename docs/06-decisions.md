@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Small print rule: nothing under about 5% of the cover width, and small labels use the bold text face, not the thin pixel face. Library captions stack (number, name, status) so long names never collide | Pema's feedback: small text was hard to read |
 | 2026-10-03 | Hero layout: the name sits at the top and the cassette below it, so nothing overlaps. Nav is just a PG monogram, the section links and a sound icon (no full name, role or years) | Pema's feedback |
 | 2026-10-03 | Nav: frosted solid bar (nothing shows through), shrinks on scroll, no dot before the name; the giant name fully fades out once the tape is inserted | Pema's feedback: text overlapped the player, name still visible behind it |
 | 2026-10-03 | Back to the earlier player design (smoked dark cassette, aluminium-face landscape player, flat insert). The blue reference-style Walkman is kept as an alternative in `docs/prototypes/mixtape-blue-walkman.html` | Pema preferred the earlier look |

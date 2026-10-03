@@ -95,7 +95,7 @@ body.scrolled .bar .id{font-size:13px}
 
 /* Tape library: front-facing cassette cases, cover slot 5:8 (J-card front) */
 .lib{list-style:none;margin:0;padding:0;position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:48px 28px}
-@media (max-width:560px){.lib{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px}.case .cap{grid-template-columns:1fr}.case .cap .st{grid-column:1}.case .cap .nm{font-size:13px}}
+@media (max-width:560px){.lib{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px}.case .cap .nm{font-size:13px}}
 .case{position:relative;user-select:none;-webkit-user-select:none;cursor:grab;outline:none;--rx:0deg;--ry:0deg;--gx:30%}
 .case .cs{position:relative;aspect-ratio:69/109;border-radius:7px;padding:5px 5px 5px 13px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05));
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 2px 0 rgba(0,0,0,.4),0 18px 30px -12px rgba(0,0,0,.6);transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
@@ -107,10 +107,10 @@ body.scrolled .bar .id{font-size:13px}
   background:linear-gradient(115deg,transparent calc(var(--gx) - 18%),rgba(255,255,255,.22) var(--gx),transparent calc(var(--gx) + 12%))}
 .case:hover .cs,.case:focus-visible .cs{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 2px 0 rgba(0,0,0,.4),0 34px 50px -16px rgba(0,0,0,.8)}
 .case:focus-visible .cs{outline:2px solid var(--foam);outline-offset:4px}
-.case .cap{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:16px;align-items:baseline}
-.case .cap .no{font-family:var(--pixel);font-size:13px;color:#8E8C85}
-.case .cap .nm{font-family:var(--display);font-size:18px;line-height:1.1;text-transform:uppercase;color:#ECEAE4;min-width:0;text-wrap:balance}
-.case .cap .st{grid-column:2;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8E8C85}
+.case .cap{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;margin-top:16px}
+.case .cap .no{font-family:var(--pixel);font-size:14px;color:#A9A7A0}
+.case .cap .nm{font-family:var(--display);font-size:clamp(14px,1.2vw,17px);line-height:1.15;text-transform:uppercase;color:#ECEAE4;min-width:0;overflow-wrap:anywhere}
+.case .cap .st{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#A9A7A0}
 .case .grip{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(27,27,30,.75);touch-action:none;display:none;
   background-image:radial-gradient(#ECEAE4 1.2px,transparent 1.5px);background-size:6px 6px;background-position:5px 5px}
 @media (hover:none){.case .grip{display:block}}
@@ -121,7 +121,7 @@ body.scrolled .bar .id{font-size:13px}
   background:var(--mustard);color:var(--graphite);font:700 4cqi/1.15 var(--text);letter-spacing:.1em;text-transform:uppercase;transform:rotate(-12deg);box-shadow:0 2px 0 rgba(0,0,0,.25)}
 /* placeholder J-cards: four layouts, each project's ink */
 .jc{position:absolute;inset:0;display:flex;flex-direction:column;padding:9% 9% 8%;gap:6%}
-.jc .top,.jc .bot{display:flex;justify-content:space-between;font:400 4.6cqi/1 var(--pixel);letter-spacing:.04em}
+.jc .top,.jc .bot{display:flex;justify-content:space-between;font:700 5.4cqi/1 var(--text);letter-spacing:.06em}
 .jc .ttl{font-family:var(--display);text-transform:uppercase;line-height:.95;font-size:9cqi;text-wrap:balance}
 .jc .kana{font:400 clamp(8px,.7vw,10px)/1 var(--pixel)}
 .v1{background:var(--paper)}
@@ -133,7 +133,8 @@ body.scrolled .bar .id{font-size:13px}
 .v3 .sun{position:relative;margin:auto 0;aspect-ratio:1;border-radius:50%;background:radial-gradient(var(--ink) 34%,transparent 36%) 0 0/9px 9px;
   -webkit-mask:radial-gradient(circle,#000 60%,transparent 71%);mask:radial-gradient(circle,#000 60%,transparent 71%)}
 .v4{background:var(--paper);background-image:linear-gradient(var(--ink) 0 0);background-size:100% 38%;background-position:0 100%;background-repeat:no-repeat}
-.v4 .ttl{margin-top:auto;color:var(--graphite)}
+.v4 .ttl{margin-top:auto;color:var(--paper)}
+.v4 .bot{color:var(--paper)}
 .v4 .band{height:6%;background:var(--graphite);margin:0 -9%}
 /* Sound: nav control */
 .bar{grid-template-columns:1fr auto auto}
@@ -252,19 +253,19 @@ function makeLabel() {
   [['#F26A21', 40], ['#E9AE0B', 74], ['#14A39E', 108]].forEach(([col, y]) => { g.fillStyle = col; g.fillRect(0, y, LW, 26); });
   g.fillStyle = '#1B1B1E'; g.textBaseline = 'alphabetic';
   g.font = '400 92px "Dela Gothic One"'; g.fillText('PEMA GHISING', 60, 234);
-  g.textAlign = 'right'; g.font = '400 40px "DotGothic16"'; g.fillText('TYPE II · 90', LW - 60, 230); g.textAlign = 'left';
+  g.textAlign = 'right'; g.font = '700 50px "Zen Kaku Gothic New"'; g.fillText('TYPE II · 90', LW - 60, 226); g.textAlign = 'left';
   // window surround
   g.fillStyle = '#1B1B1E'; rr(WIN.x - 16, WIN.y - 16, WIN.w + 32, WIN.h + 32, 40); g.fill();
   // side letter
   g.beginPath(); g.arc(240, 390, 96, 0, 7); g.lineWidth = 10; g.strokeStyle = '#1B1B1E'; g.stroke();
   g.font = '400 120px "Dela Gothic One"'; g.textAlign = 'center'; g.fillText('A', 240, 434);
-  g.font = '700 26px "Zen Kaku Gothic New"'; g.fillText('SIDE', 240, 520);
-  g.font = '400 110px "DotGothic16"'; g.fillText('07+', 1360, 420);
-  g.font = '700 26px "Zen Kaku Gothic New"'; g.fillText('YEARS', 1360, 470); g.textAlign = 'left';
+  g.font = '700 40px "Zen Kaku Gothic New"'; g.fillText('SIDE', 240, 536);
+  g.font = '400 150px "DotGothic16"'; g.fillText('07+', 1360, 420);
+  g.font = '700 40px "Zen Kaku Gothic New"'; g.fillText('YEARS', 1360, 482); g.textAlign = 'left';
   // writing lines + footer
-  g.fillStyle = '#1B1B1E'; g.fillRect(60, 572, LW - 120, 5);
-  g.font = '700 34px "Zen Kaku Gothic New"'; g.fillText('GRAPHIC & MOTION DESIGNER', 60, 640);
-  g.textAlign = 'right'; g.font = '400 40px "DotGothic16"'; g.fillText('ペマ・ギシン · PG-001', LW - 60, 642);
+  g.fillStyle = '#1B1B1E'; g.fillRect(60, 566, LW - 120, 7);
+  g.font = '700 46px "Zen Kaku Gothic New"'; g.fillText('GRAPHIC & MOTION DESIGNER', 60, 646);
+  g.textAlign = 'right'; g.font = '700 50px "Zen Kaku Gothic New"'; g.fillText('ペマ・ギシン · PG-001', LW - 60, 648);
   // cut the window
   g.globalCompositeOperation = 'destination-out'; rr(WIN.x, WIN.y, WIN.w, WIN.h, 30); g.fill();
   g.globalCompositeOperation = 'source-over';

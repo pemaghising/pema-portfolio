@@ -1,48 +1,76 @@
-import type { Metadata } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
-import Navigation from "@/components/layout/Navigation";
-import SmoothScroll from "@/components/layout/SmoothScroll";
-import { ArchitecturalGrid, NoiseOverlay } from "@/components/ui/PageTexture";
+import type { Metadata, Viewport } from "next";
+import { Geist_Mono, Mona_Sans } from "next/font/google";
+import Nav from "@/components/Nav";
+import Cursor from "@/components/Cursor";
+import SmoothScroll from "@/components/SmoothScroll";
+import { site } from "@/data/site";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const mona = Mona_Sans({
+  subsets: ["latin"],
+  axes: ["wdth"],
+  variable: "--font-mona",
+  display: "swap",
+});
+
+const mono = Geist_Mono({
   subsets: ["latin"],
   weight: "400",
+  variable: "--font-geist-mono",
+  display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
+const title = `${site.name} — ${site.role}`;
 
 export const metadata: Metadata = {
-  title: "Pema Ghising — Graphic & Motion Designer",
-  description:
-    "Pema Ghising is a graphic and motion designer with 7+ years of experience across brand, motion, digital and visual systems.",
+  metadataBase: new URL(site.url),
+  title: { default: title, template: `%s — ${site.name}` },
+  description: site.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: site.url,
+    siteName: site.name,
+    title,
+    description: site.description,
+  },
+  twitter: { card: "summary_large_image", title, description: site.description },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0d0d0c",
+};
+
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  jobTitle: "Lead Graphic Designer",
+  worksFor: { "@type": "Organization", name: "Leapfrog Technology" },
+  description: site.description,
+  url: site.url,
+  sameAs: [
+    "https://www.linkedin.com/in/pema-ghising-91a966103/",
+    "https://www.instagram.com/pema_ghising/",
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${instrumentSerif.variable} ${inter.variable}`}
-    >
-      <body className="relative bg-background text-primary antialiased">
-        <a
-          href="#main-content"
-          className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[60] focus-visible:rounded-sm focus-visible:bg-background focus-visible:px-4 focus-visible:py-3 focus-visible:font-sans focus-visible:text-xs focus-visible:uppercase focus-visible:tracking-[0.2em] focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
+    <html lang="en" className={`${mona.variable} ${mono.variable}`}>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
+        />
+        <a href="#main" className="skip-link t-micro">
           Skip to content
         </a>
-        <NoiseOverlay />
-        <ArchitecturalGrid />
-        <div className="relative z-10">
-          <SmoothScroll>
-            <Navigation />
-            {children}
-          </SmoothScroll>
-        </div>
+        <SmoothScroll>
+          <Cursor />
+          <Nav />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

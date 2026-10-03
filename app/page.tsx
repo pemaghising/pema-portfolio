@@ -1,27 +1,33 @@
-import Hero from "@/components/hero/Hero";
-import Experience from "@/components/experience/Experience";
-import WhatIDo from "@/components/services/WhatIDo";
-import Currently from "@/components/currently/Currently";
-import Philosophy from "@/components/philosophy/Philosophy";
-import DesignTech from "@/components/technology/DesignTech";
-import Tools from "@/components/tools/Tools";
-import BeyondDesign from "@/components/personal/BeyondDesign";
-import LookingForward from "@/components/looking-forward/LookingForward";
-import Contact from "@/components/contact/Contact";
+import { ViewTransition } from "react";
+import Experience from "@/components/Experience";
+import Experiments from "@/components/Experiments";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import MotionSection from "@/components/MotionSection";
+import Practice from "@/components/Practice";
+import { About, Kit, Philosophy } from "@/components/Sections";
+import Work from "@/components/Work";
 
 export default function Home() {
+  const year = new Date().getFullYear();
   return (
-    <main id="main-content">
-      <Hero />
-      <Experience />
-      <WhatIDo />
-      <Currently />
-      <Philosophy />
-      <DesignTech />
-      <Tools />
-      <BeyondDesign />
-      <LookingForward />
-      <Contact />
-    </main>
+    <ViewTransition
+      enter={{ "nav-back": "page", default: "none" }}
+      exit={{ "to-case": "page", default: "none" }}
+      default="none"
+    >
+      <main id="main">
+        <Hero />
+        <Work />
+        <About />
+        <Philosophy />
+        <Experience now={year} />
+        <Practice />
+        <MotionSection />
+        <Experiments />
+        <Kit />
+        <Footer year={year} />
+      </main>
+    </ViewTransition>
   );
 }

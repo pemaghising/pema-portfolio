@@ -1,32 +1,286 @@
 @import "tailwindcss";
-@import "./themes/dark.css";
 
-@theme inline {
-  --font-serif: var(--font-instrument-serif);
-  --font-sans: var(--font-inter);
+/* ───────────────────────── Tokens ───────────────────────── */
+
+@theme {
+  --color-ink: #0d0d0c;
+  --color-ink-soft: #1a1a18;
+  --color-paper: #eeebe5;
+  --color-paper-soft: #e3dfd7;
+  --color-accent: #a855f7;
+  --font-sans: var(--font-mona), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+:root {
+  /* Grid — 4 / 8 / 12 columns */
+  --margin: clamp(20px, 3.4vw, 64px);
+  --gutter: clamp(12px, 1.25vw, 24px);
+
+  /* Type scale */
+  --fs-display: clamp(4rem, 10vw, 12rem);
+  --fs-section: clamp(3rem, 7vw, 8rem);
+  --fs-lead: clamp(1.625rem, 2.9vw, 3.5rem);
+  --fs-body: clamp(1rem, 0.94rem + 0.25vw, 1.25rem);
+  --fs-micro: 0.75rem;
+
+  /* Rhythm */
+  --space-section: clamp(7rem, 16vw, 18rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --bg: var(--color-paper);
+  --fg: var(--color-ink);
+  --muted: #5e5a54;
+  --line: rgb(13 13 12 / 0.16);
+}
+
+@layer components {
+/* Surfaces flip the local palette; children inherit through the vars. */
+.surface-ink {
+  --bg: var(--color-ink);
+  --fg: var(--color-paper);
+  --muted: #9c978f;
+  --line: rgb(238 235 229 / 0.16);
+  background: var(--bg);
+  color: var(--fg);
+}
+.surface-paper {
+  --bg: var(--color-paper);
+  --fg: var(--color-ink);
+  --muted: #5e5a54;
+  --line: rgb(13 13 12 / 0.16);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+
+html {
+  background: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 ::selection {
   background: var(--color-accent);
-  color: var(--color-white);
+  color: var(--color-ink);
 }
 
-@keyframes marquee {
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+@media (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none !important;
+  }
+}
+
+@layer components {
+/* ───────────────────────── System ───────────────────────── */
+
+.grid-sys {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding-inline: var(--margin);
+}
+@media (min-width: 768px) {
+  .grid-sys {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .grid-sys {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+.t-display {
+  font-size: var(--fs-display);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+}
+.t-section {
+  font-size: var(--fs-section);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  font-variation-settings: "wdth" 112;
+}
+.t-lead {
+  font-size: var(--fs-lead);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  font-weight: 450;
+}
+.t-micro {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.muted {
+  color: var(--muted);
+}
+.hairline {
+  border-color: var(--line);
+}
+.wide {
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+}
+.narrow {
+  font-stretch: 75%;
+  font-variation-settings: "wdth" 75;
+}
+
+/* Masked line reveal (used by <Reveal>) */
+.mask {
+  overflow: clip;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+/* Animated underline for text links */
+.link-u {
+  background: linear-gradient(currentColor, currentColor) no-repeat 100% 100% / 0% 1px;
+  transition: background-size 0.6s var(--ease-out);
+}
+.link-u:hover,
+.link-u:focus-visible {
+  background-position: 0% 100%;
+  background-size: 100% 1px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 16px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+}
+
+/* ───────────────────────── View transitions ─────────────────────────
+   Moment 02: the project plate grows into the case study. */
+
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(.morph) {
+  animation-duration: 900ms;
+  animation-timing-function: var(--ease-in-out);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+::view-transition-old(.morph),
+::view-transition-new(.morph) {
+  height: 100%;
+  object-fit: cover;
+}
+@keyframes via-blur {
+  40% {
+    filter: blur(4px);
+  }
+}
+
+::view-transition-new(.plate-rise) {
+  animation: plate-rise 900ms var(--ease-in-out) both;
+}
+@keyframes plate-rise {
   from {
-    transform: translateX(0);
+    clip-path: inset(100% 0 0 0);
   }
   to {
-    transform: translateX(-50%);
+    clip-path: inset(0 0 0 0);
   }
 }
 
+::view-transition-old(.page) {
+  animation: page-out 500ms var(--ease-in-out) both;
+}
+::view-transition-new(.page) {
+  animation: page-in 700ms var(--ease-out) 250ms both;
+}
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+::view-transition-group(site-nav) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-nav) {
+  display: none;
+}
+::view-transition-new(site-nav) {
+  animation: none;
+}
+
+/* ───────────────────────── Reduced motion ───────────────────────── */
+
 @media (prefers-reduced-motion: reduce) {
+  /* Scroll-linked movement (not just timed animation) is switched off too. */
+  .rm-static {
+    transform: none !important;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  }
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }

@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Tape rack is reorderable: visitors drag tapes (mouse anywhere, touch on the grip, Alt+arrow keys) to make their own mix; order saved per visitor, with a reset | Pema's request; the default order still comes from `data/site.ts` |
 | 2026-10-03 | Hero music: 恋人へ starts when the tape is inserted (or on the first click if the browser has blocked sound), low volume, nav pause control | Pema asked for no press-play step |
 | 2026-10-03 | Concept switched to Mixtape (Walkman and cassettes); cartridge concept kept as backup | Pema compared both prototypes and chose Mixtape |
 | 2026-10-03 | Accent changes to headphone-foam orange #F26A21, with aluminium and player blue | Fits the Walkman look |

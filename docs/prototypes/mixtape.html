@@ -80,15 +80,25 @@ a{color:inherit}
 .wk-head h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(40px,7vw,110px);line-height:.9;text-transform:uppercase}
 .wk-head p{margin:0;font-family:var(--pixel);font-size:14px;color:#A9A7A0}
 .rack{list-style:none;margin:0;padding:14px;border-radius:14px;background:#26262A;box-shadow:inset 0 0 0 1px #34343A;display:flex;flex-direction:column;gap:8px}
-.spine{position:relative;display:grid;grid-template-columns:96px 10px minmax(0,1fr) auto;gap:18px;align-items:center;height:68px;padding:0 20px 0 0;border-radius:5px;
+.spine{position:relative;display:grid;grid-template-columns:96px 10px minmax(0,1fr) auto 22px;user-select:none;-webkit-user-select:none;cursor:grab;gap:18px;align-items:center;height:68px;padding:0 20px 0 0;border-radius:5px;
   background:var(--paper);color:var(--graphite);box-shadow:0 2px 0 rgba(0,0,0,.35);transition:transform .45s cubic-bezier(.3,1.5,.5,1),opacity .3s}
 .spine .no{height:100%;display:grid;place-items:center;border-radius:5px 0 0 5px;background:#141416;color:#F4F2EC;font-family:var(--pixel);font-size:15px}
 .spine .ink{height:44px;border-radius:2px}
 .spine .t{font-family:var(--display);font-weight:400;font-size:clamp(20px,3.2vw,40px);line-height:1;text-transform:uppercase;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .spine .meta{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-2);display:flex;gap:14px;align-items:center}
 .spine .meta em{font-style:normal;font-family:var(--pixel);letter-spacing:.06em;font-size:13px}
-.rack:hover .spine{opacity:.55}
-.rack .spine:hover{opacity:1;transform:translateX(26px) rotate(-.6deg)}
+.rack:not(.sorting):hover .spine{opacity:.55}
+.rack:not(.sorting) .spine:hover{opacity:1;transform:translateX(26px) rotate(-.6deg)}
+.rack.sorting .spine{transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.rack.sorting{cursor:grabbing}
+.rack .spine.lifted{z-index:5;transition:none;cursor:grabbing;box-shadow:0 18px 40px rgba(0,0,0,.55),0 0 0 2px var(--foam)}
+.spine:focus-visible{outline:2px solid var(--foam);outline-offset:3px}
+.grip{width:12px;height:22px;justify-self:center;touch-action:none;opacity:.55;background-image:radial-gradient(var(--graphite) 1.3px,transparent 1.6px);background-size:6px 6px}
+.spine:hover .grip{opacity:1}
+.wk-tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.reset{border:1.5px solid #8E8C85;background:transparent;color:#ECEAE4;border-radius:99px;padding:6px 12px;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.reset:hover{border-color:var(--foam);color:var(--foam)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .note{margin:56px 0 0;font-family:var(--pixel);font-size:13px;color:#8E8C85}
 
 /* Sound: nav control */
@@ -108,7 +118,7 @@ a{color:inherit}
   .foot{flex-direction:column;align-items:flex-start}
   .kana,.cat{display:none}
   .title{top:40%}
-  .spine{grid-template-columns:60px 8px minmax(0,1fr);height:60px;gap:12px}
+  .spine{grid-template-columns:60px 8px minmax(0,1fr) 28px;height:60px;gap:12px}
   .spine .meta{display:none}
 }
 @media (prefers-reduced-motion:reduce){.spine{transition:none}.dymo .car{animation:none}}
@@ -149,7 +159,8 @@ a{color:inherit}
 <audio id="song" src="audio/koibito-e.mp3" preload="none" loop></audio>
 
 <section id="work" aria-labelledby="wk">
-  <div class="wk-head"><h2 id="wk">The tape rack</h2><p>PG-001—009 · CASE STUDIES IN PREPARATION</p></div>
+  <div class="wk-head"><h2 id="wk">The tape rack</h2><div class="wk-tools"><p>DRAG THE TAPES TO MAKE YOUR OWN MIX</p><button class="reset" id="reset" type="button" hidden>Reset order</button></div></div>
+  <p class="sr" id="live" aria-live="polite"></p>
   <ol class="rack" id="rack"></ol>
   <p class="note">PROTOTYPE: HERO + PRESS PLAY. CASE STUDY, TAPE DECK AND HEADPHONE CABLE COME NEXT.</p>
 </section>
@@ -157,6 +168,7 @@ a{color:inherit}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
 <script type="module">
 import * as THREE from 'three';
@@ -170,11 +182,16 @@ const PROJECTS = ['Addy','SecondLook Health','Leapfrog DocWeaver','Signetic / EB
 const rack = document.getElementById('rack');
 PROJECTS.forEach((p, i) => {
   const li = document.createElement('li'); li.className = 'spine';
+  li.tabIndex = 0; li.dataset.name = p;
+  li.setAttribute('aria-roledescription', 'tape');
+  li.setAttribute('aria-describedby', 'how');
   li.innerHTML = `<span class="no">PG-${String(i + 1).padStart(3, '0')}</span><span class="ink" style="background:${INKS[i % 4]}"></span><span class="t"></span>
-    <span class="meta"><em>SIDE ${i % 2 ? 'B' : 'A'}</em>${p === 'Roomie' ? 'Case study' : 'In preparation'}</span>`;
+    <span class="meta"><em>SIDE ${i % 2 ? 'B' : 'A'}</em>${p === 'Roomie' ? 'Case study' : 'In preparation'}</span><span class="grip" aria-hidden="true"></span>`;
   li.querySelector('.t').textContent = p;
   rack.appendChild(li);
 });
+rack.insertAdjacentHTML('afterend', '<p class="sr" id="how">Drag to reorder, or press Alt with the up or down arrow key.</p>');
+
 
 document.querySelectorAll('.title .w').forEach(w => { w.innerHTML = [...w.textContent].map(c => `<span class="ch">${c}</span>`).join(''); });
 
@@ -482,6 +499,85 @@ if (reduce) {
 document.querySelectorAll('a, .spine').forEach(el => {
   el.addEventListener('pointerenter', () => gsap.to(cur, { width: 34, height: 34, margin: '-17px 0 0 -17px', duration: .2 }));
   el.addEventListener('pointerleave', () => gsap.to(cur, { width: 12, height: 12, margin: '-6px 0 0 -6px', duration: .2 }));
+});
+
+// ---------- Make your own mix: drag tapes to reorder (mouse anywhere on a tape, touch on the grip) ----------
+gsap.registerPlugin(Flip);
+const KEY = 'pg-mix-order', live = document.getElementById('live'), resetBtn = document.getElementById('reset');
+const DEFAULT = PROJECTS.slice();
+const spines = () => [...rack.children];
+const order = () => spines().map(li => li.dataset.name);
+function save() {
+  const o = order(), changed = o.join() !== DEFAULT.join();
+  resetBtn.hidden = !changed;
+  try { changed ? localStorage.setItem(KEY, JSON.stringify(o)) : localStorage.removeItem(KEY); } catch (e) {}
+}
+function applyOrder(names, animate) {
+  const state = animate ? Flip.getState(spines()) : null;
+  names.forEach(n => { const li = spines().find(x => x.dataset.name === n); if (li) rack.appendChild(li); });
+  if (state) Flip.from(state, { duration: reduce ? 0 : .5, ease: 'back.out(1.4)' });
+}
+try { const o = JSON.parse(localStorage.getItem(KEY) || 'null'); if (Array.isArray(o)) applyOrder(o, false); } catch (e) {}
+save();
+resetBtn.addEventListener('click', () => { applyOrder(DEFAULT, true); save(); live.textContent = 'Original order restored.'; });
+
+let drag = null;
+rack.addEventListener('pointerdown', e => {
+  const sp = e.target.closest('.spine');
+  if (!sp || e.button !== 0) return;
+  if (e.pointerType !== 'mouse' && !e.target.closest('.grip')) return;
+  drag = { sp, y0: e.clientY, id: e.pointerId, on: false };
+});
+addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dy = e.clientY - drag.y0;
+  if (!drag.on) {
+    if (Math.abs(dy) < 6) return;
+    const items = spines();
+    Object.assign(drag, { on: true, items, from: items.indexOf(drag.sp), step: drag.sp.offsetHeight + parseFloat(getComputedStyle(rack).rowGap || 8) });
+    rack.classList.add('sorting'); drag.sp.classList.add('lifted');
+  }
+  const n = drag.items.length, lo = -drag.from * drag.step, hi = (n - 1 - drag.from) * drag.step;
+  const y = Math.max(lo - 20, Math.min(hi + 20, dy));
+  drag.to = Math.max(0, Math.min(n - 1, drag.from + Math.round(y / drag.step)));
+  drag.sp.style.transform = `translateY(${y}px) scale(1.015) rotate(-.4deg)`;
+  drag.items.forEach((it, i) => {
+    if (it === drag.sp) return;
+    const s = i > drag.from && i <= drag.to ? -drag.step : i < drag.from && i >= drag.to ? drag.step : 0;
+    it.style.transform = s ? `translateY(${s}px)` : '';
+  });
+});
+function endDrag() {
+  if (!drag) return;
+  const d = drag; drag = null;
+  if (!d.on) return;
+  const state = Flip.getState(d.items);
+  d.items.forEach(it => { it.style.transform = ''; });
+  rack.classList.remove('sorting'); d.sp.classList.remove('lifted');
+  if (d.to !== d.from) {
+    const ref = d.items[d.to];
+    rack.insertBefore(d.sp, d.to > d.from ? ref.nextSibling : ref);
+  }
+  Flip.from(state, { duration: reduce ? 0 : .45, ease: 'back.out(1.6)' });
+  save();
+  live.textContent = `${d.sp.dataset.name} moved to position ${spines().indexOf(d.sp) + 1} of ${d.items.length}.`;
+  // swallow the click that follows a drag
+  addEventListener('click', ev => ev.stopPropagation(), { capture: true, once: true });
+}
+addEventListener('pointerup', endDrag);
+addEventListener('pointercancel', endDrag);
+
+rack.addEventListener('keydown', e => {
+  const sp = e.target.closest('.spine');
+  if (!sp || !e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+  e.preventDefault();
+  const items = spines(), i = items.indexOf(sp), j = e.key === 'ArrowUp' ? i - 1 : i + 1;
+  if (j < 0 || j >= items.length) return;
+  const state = Flip.getState(items);
+  rack.insertBefore(sp, e.key === 'ArrowUp' ? items[j] : items[j].nextSibling);
+  Flip.from(state, { duration: reduce ? 0 : .35, ease: 'power3.out' });
+  sp.focus(); save();
+  live.textContent = `${sp.dataset.name} moved to position ${j + 1} of ${items.length}.`;
 });
 </script>
 </body></html>

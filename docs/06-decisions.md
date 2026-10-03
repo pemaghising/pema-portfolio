@@ -4,7 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
-| 2026-10-03 | Hero music: 恋人へ plays only after the visitor presses play, at low volume, with a nav pause control | Pema's request; browsers block sound without a click, and it keeps the page calm |
+| 2026-10-03 | Hero music: 恋人へ starts when the tape is inserted (or on the first click if the browser has blocked sound), low volume, nav pause control | Pema asked for no press-play step |
 | 2026-10-03 | Concept switched to Mixtape (Walkman and cassettes); cartridge concept kept as backup | Pema compared both prototypes and chose Mixtape |
 | 2026-10-03 | Accent changes to headphone-foam orange #F26A21, with aluminium and player blue | Fits the Walkman look |
 | 2026-10-03 | Foundation: tokens in `app/globals.css` (Tailwind `@theme`), fonts via `next/font`, device-strip nav, Lenis | Step 10.1 of the build |

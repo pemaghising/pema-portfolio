@@ -91,7 +91,7 @@ a{color:inherit}
 .rack .spine:hover{opacity:1;transform:translateX(26px) rotate(-.6deg)}
 .note{margin:56px 0 0;font-family:var(--pixel);font-size:13px;color:#8E8C85}
 
-/* Sound: nav control + press-play hint */
+/* Sound: nav control */
 .bar{grid-template-columns:1.2fr 1fr 1fr auto auto}
 .snd{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 10px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;
   font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
@@ -100,12 +100,6 @@ a{color:inherit}
 .snd[aria-pressed="true"] .ic{width:8px;height:10px;border:0;background:linear-gradient(90deg,currentColor 0 3px,transparent 3px 5px,currentColor 5px)}
 .snd .bars{display:flex;align-items:flex-end;gap:2px;height:12px}
 .snd .bars i{display:block;width:2px;height:12px;background:var(--foam);transform-origin:50% 100%;transform:scaleY(.15)}
-.hint{position:absolute;left:50%;bottom:calc(5vh + 150px);z-index:4;transform:translateX(-50%);display:flex;align-items:center;gap:10px;
-  padding:12px 20px 12px 16px;border:0;border-radius:99px;background:var(--foam);color:var(--graphite);cursor:pointer;
-  font:700 12px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;box-shadow:0 10px 30px rgba(242,106,33,.35);animation:pulse 1.6s ease-in-out infinite}
-.hint span{font-family:var(--pixel);letter-spacing:.06em;font-weight:400;font-size:14px;text-transform:none}
-.hint i{width:0;height:0;border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
-@keyframes pulse{50%{box-shadow:0 10px 44px rgba(242,106,33,.65)}}
 @media (max-width:760px){
   .bar{grid-template-columns:1fr auto auto}
   .snd .tx{display:none}
@@ -142,7 +136,6 @@ a{color:inherit}
       <p class="stmt">I turn ideas into visual systems, stories, and experiences that communicate clearly and move people.</p>
       <div class="cue"><i aria-hidden="true"></i>Scroll to press play</div>
     </div>
-    <button class="hint" id="hint" type="button" hidden><i aria-hidden="true"></i>Press play <span>恋人へ</span></button>
     <div class="sideA" aria-hidden="true"><div class="k">ペマ・ギシン · NOW PLAYING · SIDE A</div><h2>Selected work<br>9 tracks</h2></div>
     <div class="boot" aria-hidden="true">
       <div class="bootbox">
@@ -226,7 +219,7 @@ function makeLabel() {
 const labelCanvas = makeLabel();
 
 // ---------- 3D ----------
-const S = { rx: .5, ry: -2.2, rz: .2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: .15, ins: 0, hintOk: 1, camY: 0, lookY: 0, zf: 1, led: 0 };
+const S = { rx: .5, ry: -2.2, rz: .2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: .15, ins: 0, camY: 0, lookY: 0, zf: 1, led: 0 };
 let renderer;
 const canvas = document.getElementById('gl');
 try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
@@ -374,8 +367,8 @@ if (renderer) {
 gsap.ticker.add(() => gsap.set(cur, { x: ptr.x, y: ptr.y }));
 
 // ---------- Sound: off until the visitor presses play; fades in low, pauses on tab switch ----------
-const song = document.getElementById('song'), sndBtn = document.getElementById('snd'), hint = document.getElementById('hint');
-const A = { on: false, ctx: null, gain: null, an: null, data: null, level: 0 };
+const song = document.getElementById('song'), sndBtn = document.getElementById('snd');
+const A = { on: false, userPaused: false, armed: false, ctx: null, gain: null, an: null, data: null, level: 0 };
 function initAudio() {
   if (A.ctx) return;
   A.ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -390,8 +383,14 @@ function ramp(to, secs) {
 }
 async function playSong() {
   initAudio();
-  try { await A.ctx.resume(); await song.play(); } catch (e) { return; }
-  A.on = true; ramp(.3, 1.4); syncUI();
+  if (A.on || A.busy) return A.on;
+  A.busy = true;
+  try {
+    await Promise.race([A.ctx.resume(), new Promise(r => setTimeout(r, 600))]);
+    if (A.ctx.state !== 'running') return false;
+    await song.play();
+  } catch (e) { return false; } finally { A.busy = false; }
+  A.on = true; ramp(.3, 1.4); syncUI(); return true;
 }
 function pauseSong() {
   if (!A.on) return;
@@ -401,10 +400,22 @@ function syncUI() {
   sndBtn.setAttribute('aria-pressed', String(A.on));
   sndBtn.setAttribute('aria-label', A.on ? 'Pause music' : 'Play music');
   sndBtn.querySelector('.tx').textContent = A.on ? '恋人へ' : 'Sound off';
-  hint.hidden = A.on || S.ins < .5 || S.hintOk < .5;
 }
-sndBtn.addEventListener('click', () => (A.on ? pauseSong() : playSong()));
-hint.addEventListener('click', playSong);
+sndBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  if (A.on) { A.userPaused = true; pauseSong(); } else { A.userPaused = false; playSong(); }
+});
+// The song starts when the tape is inserted. Browsers only allow sound after the visitor has
+// clicked, tapped or pressed a key once; if they haven't yet, it starts on their first one.
+async function onInsert() {
+  if (S.ins < .5 || A.on || A.userPaused || A.armed) return;
+  const active = navigator.userActivation ? navigator.userActivation.hasBeenActive : true;
+  if (active && await playSong()) return;
+  if (A.armed || A.on) return;
+  A.armed = true;
+  const go = () => { ['pointerdown', 'keydown', 'touchend'].forEach(t => removeEventListener(t, go, true)); A.armed = false; if (!A.userPaused) playSong(); };
+  ['pointerdown', 'keydown', 'touchend'].forEach(t => addEventListener(t, go, true));
+}
 document.addEventListener('visibilitychange', () => { if (document.hidden) pauseSong(); });
 const bars = [...sndBtn.querySelectorAll('.bars i')];
 gsap.ticker.add(() => {
@@ -444,8 +455,7 @@ function startScroll() {
     .to(S, { y: -.33, z: .0, s: 1, duration: .2, ease: 'power2.inOut' }, .36)
     .to(S, { door: 0, duration: .1, ease: 'power3.in' }, .57)
     .to(S, { led: 1, duration: .04 }, .68)
-    .to(S, { ins: 1, duration: .02, onUpdate: syncUI }, .7)
-    .fromTo(S, { hintOk: 1 }, { hintOk: 0, duration: .02, onUpdate: syncUI, immediateRender: false }, .96)
+    .to(S, { ins: 1, duration: .02, onUpdate: onInsert }, .7)
     .to(S, { zf: 1.04, camY: .2, lookY: -.32, duration: .22, ease: 'power1.inOut' }, .72)
     .fromTo('.sideA', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .15, ease: 'power2.out' }, .8);
 }

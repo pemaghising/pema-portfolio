@@ -26,5 +26,5 @@ Images go in `public/work/<slug>/`.
 
 ## Music
 
-- The hero can play 恋人へ after the visitor presses play (fade-in at low volume, pause control in the nav, pauses on tab switch).
+- 恋人へ starts when the tape is inserted (fade-in at low volume, pause control in the nav, pauses on tab switch). Browsers allow sound only after one click, tap or key press; if the visitor has not done one yet, the song starts on their first.
 - The audio file is not in the repo. Before launch, either get a licence for the track or replace it with Pema's own recording or a royalty-free track, then add it as `public/audio/<name>.mp3`.

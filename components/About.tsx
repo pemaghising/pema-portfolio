@@ -18,11 +18,21 @@ export function About() {
         <ol className="ab-list" aria-label="Disciplines">
           {about.disciplines.map((d, i) => (
             <li key={d.name}>
-              <span className="n">A{i + 1}</span>
+              <span className="n">
+                <span className="num">A{i + 1}</span>
+                <span className="play" aria-hidden="true">
+                  ▶
+                </span>
+              </span>
               <div>
                 <h3>{d.name}</h3>
                 <p>{d.text}</p>
               </div>
+              <span className="eq" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
             </li>
           ))}
         </ol>

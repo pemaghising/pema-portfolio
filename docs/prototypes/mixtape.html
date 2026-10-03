@@ -1,0 +1,410 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}</style></head><body><title>Pema Ghising Mixtape</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* Layout: pinned studio stage (giant type behind, 3D tape + player in front), then the tape rack. Single light look. */
+:root{
+  --studio:#E5E3DE;
+  --studio-2:#D7D4CD;
+  --graphite:#1B1B1E;
+  --ink-2:#55534D;
+  --paper:#F2ECDF;
+  --alu:#C9CDD3;
+  --blue:#2D3E78;       /* player body */
+  --foam:#F26A21;       /* headphone-foam orange, the accent */
+  --mustard:#E9AE0B; --teal:#14A39E;
+  --display:'Dela Gothic One','Arial Black',sans-serif;
+  --pixel:'DotGothic16',ui-monospace,monospace;
+  --text:'Zen Kaku Gothic New','Helvetica Neue',Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:var(--studio)}
+body{background:var(--studio);color:var(--graphite);font-family:var(--text);font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.booting{overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--foam);outline-offset:3px}
+.grain{position:fixed;inset:-50%;z-index:30;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:16px;align-items:center;
+  padding:calc(16px + env(safe-area-inset-top,0px)) 24px 16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.bar .id{display:flex;align-items:center;gap:10px}
+.led{width:8px;height:8px;border-radius:50%;background:var(--foam);box-shadow:0 0 0 3px rgba(242,106,33,.18)}
+.bar nav{display:flex;gap:6px}
+.bar nav a{text-decoration:none;padding:7px 10px;border:1.5px solid var(--graphite);border-radius:99px;line-height:1}
+.bar nav a:hover{background:var(--graphite);color:var(--studio)}
+.bar .muted{color:var(--ink-2)}
+
+#hero{position:relative;height:360vh}
+#hero.static{height:100vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background:radial-gradient(120% 80% at 50% 38%,#EFEDE9 0%,var(--studio) 55%,var(--studio-2) 100%)}
+.title{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);margin:0;padding:0 2.2vw;z-index:1;
+  font-family:var(--display);font-weight:400;font-size:clamp(48px,15.2vw,300px);line-height:.84;letter-spacing:-.015em;white-space:nowrap;display:flex;flex-direction:column;user-select:none}
+.title .w{display:block;overflow:hidden;padding-bottom:.06em}
+.title .w2{text-align:right}
+.title .ch{display:inline-block}
+#gl,.fallback{position:absolute;inset:0;width:100%;height:100%;z-index:2;display:block}
+.fallback{object-fit:contain;padding:20vh 20vw;pointer-events:none}
+.kana{position:absolute;right:24px;top:50%;transform:translateY(-50%);z-index:3;writing-mode:vertical-rl;font-family:var(--pixel);font-size:14px;letter-spacing:.3em;color:var(--ink-2)}
+.cat{position:absolute;left:24px;top:50%;transform:translateY(-50%);z-index:3;font-family:var(--pixel);font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px}
+.foot{position:absolute;left:24px;right:24px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.stmt{margin:0;max-width:34ch;font-size:16px;line-height:1.5;font-weight:500;text-wrap:balance}
+.cue{font-family:var(--pixel);font-size:14px;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.cue i{display:inline-block;width:0;height:0;border-left:9px solid var(--graphite);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.sideA{position:absolute;left:0;right:0;bottom:5vh;z-index:3;text-align:center;opacity:0;pointer-events:none}
+.sideA .k{font-family:var(--pixel);font-size:14px;letter-spacing:.2em;color:var(--foam)}
+.sideA h2{margin:.25em 0 0;font-family:var(--display);font-weight:400;font-size:clamp(30px,4.2vw,68px);line-height:.95;text-transform:uppercase}
+
+/* Boot: tape counter + label-maker strip */
+.boot{position:absolute;inset:0;z-index:8;display:grid;place-items:center;background:var(--studio)}
+.bootbox{display:flex;flex-direction:column;align-items:center;gap:18px}
+.counter{display:flex;gap:4px;padding:8px;border-radius:8px;background:#2A2A2E;box-shadow:inset 0 2px 6px rgba(0,0,0,.6)}
+.counter span{width:30px;height:42px;border-radius:3px;background:linear-gradient(#f4f1ea,#d9d5cc 48%,#f4f1ea 52%,#e7e3da);display:grid;place-items:center;
+  font-family:var(--text);font-weight:700;font-size:26px;font-variant-numeric:tabular-nums;color:var(--graphite)}
+.dymo{min-width:min(420px,80vw);height:58px;padding:0 22px;border-radius:6px;background:#141416;display:flex;align-items:center;gap:2px;
+  box-shadow:0 14px 30px rgba(0,0,0,.2);font-family:var(--text);font-weight:700;font-size:30px;letter-spacing:.12em;color:#F4F2EC;
+  text-shadow:0 1px 0 rgba(255,255,255,.25),0 -1px 0 rgba(0,0,0,.6)}
+.dymo b{display:inline-block;transform-origin:50% 100%}
+.dymo .car{width:3px;height:30px;background:var(--foam);margin-left:4px;animation:blink .5s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.cursor{position:fixed;left:0;top:0;z-index:40;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--foam);pointer-events:none}
+@media (hover:none){.cursor{display:none}}
+
+/* Tape rack */
+#work{position:relative;z-index:4;background:var(--graphite);color:#ECEAE4;padding:96px 24px 120px;border-radius:28px 28px 0 0;margin-top:-28px}
+.wk-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.wk-head h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(40px,7vw,110px);line-height:.9;text-transform:uppercase}
+.wk-head p{margin:0;font-family:var(--pixel);font-size:14px;color:#A9A7A0}
+.rack{list-style:none;margin:0;padding:14px;border-radius:14px;background:#26262A;box-shadow:inset 0 0 0 1px #34343A;display:flex;flex-direction:column;gap:8px}
+.spine{position:relative;display:grid;grid-template-columns:96px 10px minmax(0,1fr) auto;gap:18px;align-items:center;height:68px;padding:0 20px 0 0;border-radius:5px;
+  background:var(--paper);color:var(--graphite);box-shadow:0 2px 0 rgba(0,0,0,.35);transition:transform .45s cubic-bezier(.3,1.5,.5,1),opacity .3s}
+.spine .no{height:100%;display:grid;place-items:center;border-radius:5px 0 0 5px;background:#141416;color:#F4F2EC;font-family:var(--pixel);font-size:15px}
+.spine .ink{height:44px;border-radius:2px}
+.spine .t{font-family:var(--display);font-weight:400;font-size:clamp(20px,3.2vw,40px);line-height:1;text-transform:uppercase;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spine .meta{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-2);display:flex;gap:14px;align-items:center}
+.spine .meta em{font-style:normal;font-family:var(--pixel);letter-spacing:.06em;font-size:13px}
+.rack:hover .spine{opacity:.55}
+.rack .spine:hover{opacity:1;transform:translateX(26px) rotate(-.6deg)}
+.note{margin:56px 0 0;font-family:var(--pixel);font-size:13px;color:#8E8C85}
+
+@media (max-width:760px){
+  .bar{grid-template-columns:1fr auto}.bar .muted{display:none}
+  .bar nav a:nth-child(2){display:none}
+  .foot{flex-direction:column;align-items:flex-start}
+  .kana,.cat{display:none}
+  .title{top:40%}
+  .spine{grid-template-columns:60px 8px minmax(0,1fr);height:60px;gap:12px}
+  .spine .meta{display:none}
+}
+@media (prefers-reduced-motion:reduce){.spine{transition:none}.dymo .car{animation:none}}
+</style>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div>
+
+<header class="bar">
+  <div class="id"><span class="led" aria-hidden="true"></span>Pema Ghising</div>
+  <div class="muted">Graphic &amp; Motion Designer</div>
+  <div class="muted">7+ years · Leapfrog Technology</div>
+  <nav aria-label="Primary"><a href="#work">Work</a><a href="#work">About</a><a href="#work">Contact</a></nav>
+</header>
+
+<main>
+<section id="hero" aria-label="Introduction">
+  <div class="stage">
+    <h1 class="title" aria-label="Pema Ghising"><span class="w w1" aria-hidden="true">PEMA</span><span class="w w2" aria-hidden="true">GHISING</span></h1>
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="cat" aria-hidden="true"><span>PG-001</span><span>SIDE A</span><span>TYPE II</span></div>
+    <div class="kana" aria-hidden="true">ペマ・ギシン　ミックステープ</div>
+    <div class="foot">
+      <p class="stmt">I turn ideas into visual systems, stories, and experiences that communicate clearly and move people.</p>
+      <div class="cue"><i aria-hidden="true"></i>Scroll to press play</div>
+    </div>
+    <div class="sideA" aria-hidden="true"><div class="k">ペマ・ギシン · NOW PLAYING · SIDE A</div><h2>Selected work<br>9 tracks</h2></div>
+    <div class="boot" aria-hidden="true">
+      <div class="bootbox">
+        <div class="counter"><span id="c0">0</span><span id="c1">0</span><span id="c2">0</span></div>
+        <div class="dymo"><span id="dy"></span><span class="car"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work" aria-labelledby="wk">
+  <div class="wk-head"><h2 id="wk">The tape rack</h2><p>PG-001—009 · CASE STUDIES IN PREPARATION</p></div>
+  <ol class="rack" id="rack"></ol>
+  <p class="note">PROTOTYPE: HERO + PRESS PLAY. CASE STUDY, TAPE DECK AND HEADPHONE CABLE COME NEXT.</p>
+</section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const INKS = ['#F26A21', '#14A39E', '#E9AE0B', '#2D3E78'];
+const PROJECTS = ['Addy','SecondLook Health','Leapfrog DocWeaver','Signetic / EBS','SPKR','Adhyayan Preschool','LSPP','Frogtoberfest','Roomie'];
+
+const rack = document.getElementById('rack');
+PROJECTS.forEach((p, i) => {
+  const li = document.createElement('li'); li.className = 'spine';
+  li.innerHTML = `<span class="no">PG-${String(i + 1).padStart(3, '0')}</span><span class="ink" style="background:${INKS[i % 4]}"></span><span class="t"></span>
+    <span class="meta"><em>SIDE ${i % 2 ? 'B' : 'A'}</em>${p === 'Roomie' ? 'Case study' : 'In preparation'}</span>`;
+  li.querySelector('.t').textContent = p;
+  rack.appendChild(li);
+});
+
+document.querySelectorAll('.title .w').forEach(w => { w.innerHTML = [...w.textContent].map(c => `<span class="ch">${c}</span>`).join(''); });
+
+const cur = document.querySelector('.cursor');
+const ptr = { x: innerWidth / 2, y: innerHeight / 2, nx: 0, ny: 0 };
+addEventListener('pointermove', e => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.nx = e.clientX / innerWidth * 2 - 1; ptr.ny = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+
+await Promise.race([
+  Promise.all(['400 100px "Dela Gothic One"', '400 40px "DotGothic16"', '700 30px "Zen Kaku Gothic New"'].map(f => document.fonts.load(f))),
+  new Promise(r => setTimeout(r, 2500)),
+]);
+
+// ---------- Cassette label (window left transparent) ----------
+const LW = 1600, LH = 700, WIN = { x: 430, y: 270, w: 740, h: 240 };
+function makeLabel() {
+  const c = document.createElement('canvas'); c.width = LW; c.height = LH;
+  const g = c.getContext('2d');
+  const rr = (x, y, w, h, r) => { g.beginPath(); g.roundRect(x, y, w, h, r); };
+  g.fillStyle = '#F2ECDF'; rr(0, 0, LW, LH, 30); g.fill();
+  // stripes
+  [['#F26A21', 40], ['#E9AE0B', 74], ['#14A39E', 108]].forEach(([col, y]) => { g.fillStyle = col; g.fillRect(0, y, LW, 26); });
+  g.fillStyle = '#1B1B1E'; g.textBaseline = 'alphabetic';
+  g.font = '400 92px "Dela Gothic One"'; g.fillText('PEMA GHISING', 60, 234);
+  g.textAlign = 'right'; g.font = '400 40px "DotGothic16"'; g.fillText('TYPE II · 90', LW - 60, 230); g.textAlign = 'left';
+  // window surround
+  g.fillStyle = '#1B1B1E'; rr(WIN.x - 16, WIN.y - 16, WIN.w + 32, WIN.h + 32, 40); g.fill();
+  // side letter
+  g.beginPath(); g.arc(240, 390, 96, 0, 7); g.lineWidth = 10; g.strokeStyle = '#1B1B1E'; g.stroke();
+  g.font = '400 120px "Dela Gothic One"'; g.textAlign = 'center'; g.fillText('A', 240, 434);
+  g.font = '700 26px "Zen Kaku Gothic New"'; g.fillText('SIDE', 240, 520);
+  g.font = '400 110px "DotGothic16"'; g.fillText('07+', 1360, 420);
+  g.font = '700 26px "Zen Kaku Gothic New"'; g.fillText('YEARS', 1360, 470); g.textAlign = 'left';
+  // writing lines + footer
+  g.fillStyle = '#1B1B1E'; g.fillRect(60, 572, LW - 120, 5);
+  g.font = '700 34px "Zen Kaku Gothic New"'; g.fillText('GRAPHIC & MOTION DESIGNER', 60, 640);
+  g.textAlign = 'right'; g.font = '400 40px "DotGothic16"'; g.fillText('ペマ・ギシン · PG-001', LW - 60, 642);
+  // cut the window
+  g.globalCompositeOperation = 'destination-out'; rr(WIN.x, WIN.y, WIN.w, WIN.h, 30); g.fill();
+  g.globalCompositeOperation = 'source-over';
+  return c;
+}
+const labelCanvas = makeLabel();
+
+// ---------- 3D ----------
+const S = { rx: .5, ry: -2.2, rz: .2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: .15, camY: 0, lookY: 0, zf: 1, led: 0 };
+let renderer;
+const canvas = document.getElementById('gl');
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
+catch (e) {
+  canvas.remove();
+  const img = new Image(); img.className = 'fallback'; img.alt = ''; img.src = labelCanvas.toDataURL();
+  document.querySelector('.stage').insertBefore(img, document.querySelector('.cat'));
+}
+
+let scene, cam, tape, player, door, playKey, led, reels = [], blob, baseZ = 10;
+if (renderer) {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+  scene.environmentIntensity = .75;
+  cam = new THREE.PerspectiveCamera(26, 1, .1, 100);
+  const key = new THREE.DirectionalLight(0xffffff, 2.3); key.position.set(-4, 7, 6); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 1, far: 30 });
+  key.shadow.bias = -.0004; key.shadow.normalBias = .02; scene.add(key);
+  const rim = new THREE.DirectionalLight(0xfff1e6, 1.1); rim.position.set(6, 2, -4); scene.add(rim);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: .14 }));
+  ground.rotation.x = -Math.PI / 2; ground.position.y = -1.3; ground.receiveShadow = true; scene.add(ground);
+
+  const roundRectShape = (w, h, r, cx = 0, cy = 0) => {
+    const s = new THREE.Shape(), x = cx - w / 2, y = cy - h / 2;
+    s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+    s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+    s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s;
+  };
+  const dark = new THREE.MeshStandardMaterial({ color: 0x0c0c0e, roughness: .9 });
+
+  // Cassette: 2.56 × 1.6, label 2.3 × 1.0
+  tape = new THREE.Group();
+  const shellMat = new THREE.MeshPhysicalMaterial({ color: 0x26262A, roughness: .32, clearcoat: .7, clearcoatRoughness: .25 });
+  const back = new THREE.Mesh(new RoundedBoxGeometry(2.56, 1.6, .22, 5, .06), shellMat);
+  back.position.z = -.03; tape.add(back);
+  const k = 2.3 / LW, lcy = .17;
+  const toX = px => (px - LW / 2) * k, toY = py => lcy + (LH / 2 - py) * (1 / LH);
+  const winW = WIN.w * k, winH = WIN.h / LH, winCy = toY(WIN.y + WIN.h / 2);
+  const front = roundRectShape(2.56, 1.6, .08);
+  front.holes.push(roundRectShape(winW - .02, winH - .02, .04, 0, winCy));
+  const plate = new THREE.Mesh(new THREE.ExtrudeGeometry(front, { depth: .06, bevelEnabled: true, bevelThickness: .01, bevelSize: .01, bevelSegments: 2, curveSegments: 10 }), shellMat);
+  plate.position.z = .08; tape.add(plate);
+  const tex = new THREE.CanvasTexture(labelCanvas); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const label = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 1.0), new THREE.MeshStandardMaterial({ map: tex, transparent: true, alphaTest: .5, roughness: .55 }));
+  label.position.set(0, lcy, .152); tape.add(label);
+  // window glass (smoked)
+  const glass = new THREE.Mesh(new THREE.PlaneGeometry(winW, winH), new THREE.MeshPhysicalMaterial({ color: 0x777777, transparent: true, opacity: .16, roughness: .05, clearcoat: 1 }));
+  glass.position.set(0, winCy, .145); tape.add(glass);
+  // reels behind the window
+  const brown = new THREE.MeshStandardMaterial({ color: 0x3B2A20, roughness: .6, metalness: .1 });
+  const white = new THREE.MeshStandardMaterial({ color: 0xF2EFE8, roughness: .5 });
+  [[toX(WIN.x + WIN.w * .26), .3], [toX(WIN.x + WIN.w * .74), .17]].forEach(([x, packR]) => {
+    const r = new THREE.Group(); r.position.set(x, winCy, .085);
+    const pack = new THREE.Mesh(new THREE.CylinderGeometry(packR, packR, .015, 48), brown); pack.rotation.x = Math.PI / 2; r.add(pack);
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(.075, .075, .03, 32), white); hub.rotation.x = Math.PI / 2; hub.position.z = .01; r.add(hub);
+    for (let i = 0; i < 6; i++) {
+      const t = new THREE.Mesh(new THREE.BoxGeometry(.018, .04, .035), dark);
+      const a = i / 6 * Math.PI * 2; t.position.set(Math.cos(a) * .045, Math.sin(a) * .045, .014); t.rotation.z = a; r.add(t);
+    }
+    tape.add(r); reels.push(r);
+  });
+  // bottom trapezoid with head openings
+  const trap = new THREE.Shape(); trap.moveTo(-.95, -.8); trap.lineTo(.95, -.8); trap.lineTo(.74, -.43); trap.lineTo(-.74, -.43); trap.closePath();
+  const tz = new THREE.Mesh(new THREE.ExtrudeGeometry(trap, { depth: .05, bevelEnabled: true, bevelThickness: .008, bevelSize: .008, bevelSegments: 1 }), shellMat);
+  tz.position.z = .14; tape.add(tz);
+  [-.6, -.3, 0, .3, .6].forEach((x, i) => {
+    const h = new THREE.Mesh(new THREE.BoxGeometry(i === 2 ? .2 : .1, .07, .06), dark); h.position.set(x, -.77, .17); tape.add(h);
+  });
+  // screws
+  const screwMat = new THREE.MeshStandardMaterial({ color: 0x9a9a9f, metalness: .9, roughness: .3 });
+  [[-1.2, .72], [1.2, .72], [-1.2, -.72], [1.2, -.72], [0, -.55]].forEach(([x, y]) => {
+    const s = new THREE.Mesh(new THREE.CylinderGeometry(.04, .04, .02, 20), screwMat); s.rotation.x = Math.PI / 2; s.position.set(x, y, y === -.55 ? .2 : .152); tape.add(s);
+  });
+    scene.add(tape);
+
+  // Player: blue body, brushed aluminium face, smoked door, piano keys
+  player = new THREE.Group();
+  const blue = new THREE.MeshPhysicalMaterial({ color: 0x2D3E78, roughness: .45, metalness: .35, clearcoat: .3 });
+  const alu = new THREE.MeshPhysicalMaterial({ color: 0xC9CDD3, roughness: .32, metalness: .85 });
+  const body = new THREE.Mesh(new RoundedBoxGeometry(3.0, 2.0, .4, 6, .12), blue); body.position.z = -.36; player.add(body);
+  const face = roundRectShape(2.92, 1.92, .1); face.holes.push(roundRectShape(2.66, 1.7, .06, 0, -.03));
+  const faceM = new THREE.Mesh(new THREE.ExtrudeGeometry(face, { depth: .42, bevelEnabled: true, bevelThickness: .02, bevelSize: .02, bevelSegments: 2, curveSegments: 10 }), alu); faceM.position.z = -.2; player.add(faceM);
+  const cavity = new THREE.Mesh(new THREE.PlaneGeometry(2.66, 1.7), dark); cavity.position.set(0, -.03, -.155); player.add(cavity);
+  door = new THREE.Group(); door.position.set(0, -.88, .24);
+  const frame = roundRectShape(2.66, 1.7, .06, 0, .85); frame.holes.push(roundRectShape(2.36, 1.32, .05, 0, .87));
+  door.add(new THREE.Mesh(new THREE.ExtrudeGeometry(frame, { depth: .03, bevelEnabled: false }), alu));
+  const pane = new THREE.Mesh(new THREE.PlaneGeometry(2.36, 1.32), new THREE.MeshPhysicalMaterial({ color: 0x3a3f4a, transparent: true, opacity: .32, roughness: .05, clearcoat: 1 }));
+  pane.position.set(0, .87, .015); door.add(pane);
+  player.add(door);
+  [-1.05, -.6, -.15, .3].forEach((x, i) => {
+    const kk = new THREE.Mesh(new RoundedBoxGeometry(.4, .14, .34, 3, .04), i === 0 ? new THREE.MeshPhysicalMaterial({ color: 0xF26A21, roughness: .4, clearcoat: .4 }) : alu);
+    kk.position.set(x, 1.03, -.1); player.add(kk); if (i === 0) playKey = kk;
+  });
+  const jack = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .08, 24), alu); jack.position.set(1.1, 1.02, -.1); player.add(jack);
+  led = new THREE.Mesh(new THREE.SphereGeometry(.04, 16, 16), new THREE.MeshStandardMaterial({ color: 0x401505, emissive: 0xFF6A21, emissiveIntensity: 0 }));
+  led.position.set(1.25, .9, .24); player.add(led);
+  player.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  scene.add(player);
+
+  // soft contact shadow under the tape
+  const sc = document.createElement('canvas'); sc.width = sc.height = 256;
+  const sg = sc.getContext('2d'); const gr = sg.createRadialGradient(128, 128, 0, 128, 128, 128);
+  gr.addColorStop(0, 'rgba(0,0,0,.42)'); gr.addColorStop(.55, 'rgba(0,0,0,.12)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  sg.fillStyle = gr; sg.fillRect(0, 0, 256, 256);
+  blob = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+  blob.rotation.x = -Math.PI / 2; blob.position.y = -1.29; scene.add(blob);
+
+  const resize = () => {
+    renderer.setSize(innerWidth, innerHeight, false);
+    cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix();
+    baseZ = cam.aspect < 1 ? 10 / Math.max(cam.aspect, .45) * .62 : 10;
+  };
+  resize(); addEventListener('resize', resize);
+
+  const sm = { x: 0, y: 0 }; let last = 0;
+  renderer.setAnimationLoop(t => {
+    if (document.hidden) return;
+    const dt = Math.min(.05, (t - last) / 1000); last = t;
+    sm.x += (ptr.nx - sm.x) * .06; sm.y += (ptr.ny - sm.y) * .06;
+    const f = reduce ? 0 : S.free;
+    tape.rotation.set(S.rx + sm.y * .22 * f, S.ry + sm.x * .45 * f, S.rz + sm.x * -.05 * f);
+    tape.position.set(0, S.y + Math.sin(t * .0012) * .05 * f, S.z);
+    tape.scale.setScalar(S.s);
+    if (!reduce) { reels[0].rotation.z -= dt * S.play * 4; reels[1].rotation.z -= dt * S.play * 6.5; }
+    player.position.y = S.py;
+    door.rotation.x = S.door;
+    playKey.position.y = 1.03 - S.key * .06;
+    led.material.emissiveIntensity = S.led * 6;
+    const lift = Math.max(0, S.y + 1.29);
+    blob.material.opacity = Math.max(0, Math.min(1, 1.25 - lift * .35)) * (1 - Math.min(1, (S.py + 6) / 6));
+    blob.scale.setScalar(1 + lift * .12);
+    cam.position.set(0, S.camY, baseZ * S.zf); cam.lookAt(0, S.lookY, 0);
+    renderer.render(scene, cam);
+  });
+}
+
+gsap.ticker.add(() => gsap.set(cur, { x: ptr.x, y: ptr.y }));
+
+// ---------- Boot: counter rolls to 007 while the label maker punches the name (about 2s) ----------
+const REST = { rx: .1, ry: -.4, rz: .05, y: .15 };
+const dy = document.getElementById('dy');
+function boot() {
+  return new Promise(res => {
+    const name = 'PEMA GHISING', start = performance.now(), dur = 1050;
+    const cs = ['c0', 'c1', 'c2'].map(id => document.getElementById(id));
+    const step = now => {
+      const p = Math.min(1, (now - start) / dur);
+      dy.innerHTML = [...name.slice(0, Math.round(p * name.length))].map(ch => ch === ' ' ? '&nbsp;' : `<b>${ch}</b>`).join('');
+      const n = Math.min(7, Math.floor(p * 8));
+      cs[2].textContent = n;
+      p < 1 ? requestAnimationFrame(step) : res();
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+function startScroll() {
+  gsap.registerPlugin(ScrollTrigger);
+  const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: .9 } });
+  tl.to(S, { rx: 0, ry: 0, rz: 0, free: 0, y: .2, z: 1.4, s: .92, py: -.3, door: .95, camY: .9, lookY: -.2, play: 0, duration: .35, ease: 'power2.inOut' }, 0)
+    .to('.w1', { xPercent: -60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)
+    .to('.w2', { xPercent: 60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)
+    .to('.foot, .kana, .cat', { opacity: 0, duration: .1 }, 0)
+    .to(S, { y: -.33, z: .0, s: 1, duration: .2, ease: 'power2.inOut' }, .36)
+    .to(S, { door: 0, duration: .1, ease: 'power3.in' }, .57)
+    .to(S, { key: 1, led: 1, duration: .04 }, .68)
+    .to(S, { play: 1, duration: .1 }, .7)
+    .to(S, { zf: 1.04, camY: .2, lookY: -.32, duration: .22, ease: 'power1.inOut' }, .72)
+    .fromTo('.sideA', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .15, ease: 'power2.out' }, .8);
+}
+
+if (reduce) {
+  document.querySelector('.boot').remove();
+  document.getElementById('hero').classList.add('static');
+  Object.assign(S, REST);
+} else {
+  document.body.classList.add('booting');
+  gsap.set('.title .ch', { yPercent: 110 });
+  gsap.set('.foot, .kana, .cat, .bar', { opacity: 0 });
+  (async () => {
+    await boot();
+    const tl = gsap.timeline({ onComplete: () => { document.body.classList.remove('booting'); startScroll(); } });
+    tl.to('.bootbox', { y: -20, opacity: 0, duration: .3, ease: 'power2.in', delay: .1 })
+      .to('.boot', { autoAlpha: 0, duration: .2 }, '-=.1')
+      .to('.title .ch', { yPercent: 0, duration: .7, ease: 'expo.out', stagger: .028 }, '-=.15')
+      .to(S, { ...REST, duration: .95, ease: 'expo.out' }, '<')
+      .to('.foot, .kana, .cat, .bar', { opacity: 1, duration: .4 }, '-=.55');
+  })();
+}
+
+document.querySelectorAll('a, .spine').forEach(el => {
+  el.addEventListener('pointerenter', () => gsap.to(cur, { width: 34, height: 34, margin: '-17px 0 0 -17px', duration: .2 }));
+  el.addEventListener('pointerleave', () => gsap.to(cur, { width: 12, height: 12, margin: '-6px 0 0 -6px', duration: .2 }));
+});
+</script>
+</body></html>

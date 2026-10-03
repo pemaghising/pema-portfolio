@@ -16,7 +16,6 @@
   --font-display: var(--nf-display), "Arial Black", sans-serif;
   --font-pixel: var(--nf-pixel), ui-monospace, monospace;
   --font-sans: var(--nf-text), "Helvetica Neue", Arial, sans-serif;
-  --ease-snap: cubic-bezier(0.3, 1.6, 0.5, 1);
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -65,7 +64,7 @@ body {
 
 /* Small uppercase label used across the site */
 .label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -84,12 +83,3 @@ html.lenis body {
   overflow: clip;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}

@@ -1,13 +1,13 @@
 import { about, beyond, experience, kana, philosophy, tools } from "@/data/site";
+import { Disciplines } from "./Disciplines";
+import { LensHeading } from "./LensHeading";
 
 /** About, laid out like the liner notes folded inside a cassette case. */
 export function About() {
   return (
     <section id="about" aria-labelledby="ab">
       <p className="ab-k">{kana} · LINER NOTES</p>
-      <h2 className="ab-h" id="ab">
-        {about.lead}
-      </h2>
+      <LensHeading id="ab" text={about.lead} />
       <div className="ab-grid">
         <div className="ab-col">
           <p className="ab-body">{about.body}</p>
@@ -15,27 +15,7 @@ export function About() {
             <b>{philosophy.line}</b> {philosophy.note}
           </p>
         </div>
-        <ol className="ab-list" aria-label="Disciplines">
-          {about.disciplines.map((d, i) => (
-            <li key={d.name}>
-              <span className="n">
-                <span className="num">A{i + 1}</span>
-                <span className="play" aria-hidden="true">
-                  ▶
-                </span>
-              </span>
-              <div>
-                <h3>{d.name}</h3>
-                <p>{d.text}</p>
-              </div>
-              <span className="eq" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-              </span>
-            </li>
-          ))}
-        </ol>
+        <Disciplines items={about.disciplines} />
       </div>
 
       <div className="ab-card">
@@ -46,7 +26,7 @@ export function About() {
         {experience.map((r) => (
           <div className="ab-role" key={r.company + r.start}>
             <span className="yr">
-              {r.start}–{r.end ?? "Now"}
+              {r.end === r.start ? r.start : `${r.start}–${r.end ?? "Now"}`}
             </span>
             <div>
               <h3>{r.title}</h3>
@@ -54,7 +34,7 @@ export function About() {
                 {r.company}
                 {!r.end && <span className="live">Now playing</span>}
               </p>
-              <p>{r.text}</p>
+              {r.text && <p>{r.text}</p>}
             </div>
           </div>
         ))}

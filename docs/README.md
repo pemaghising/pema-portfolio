@@ -11,6 +11,7 @@ Everything about how this portfolio is planned, designed and built. Read these b
 | [05-content.md](05-content.md) | Content rules and what Pema still needs to supply |
 | [06-decisions.md](06-decisions.md) | Decision log, newest first |
 | [prototypes/mixtape.html](prototypes/mixtape.html) | Hero prototype, Mixtape concept: the chosen direction (open in a browser) |
+| [prototypes/mixtape-blue-walkman.html](prototypes/mixtape-blue-walkman.html) | Alternative player: blue, reference-style |
 | [prototypes/hero.html](prototypes/hero.html) | Hero prototype, cartridge concept: the backup |
 
 All site copy lives in `data/site.ts`. These docs describe the site; they are not content.

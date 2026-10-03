@@ -37,8 +37,8 @@ a{color:inherit}
 .bar .id,.bar nav a,.snd,.bar .muted{transition:font-size .3s,padding .3s,height .3s}
 body.scrolled .bar{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;box-shadow:0 1px 0 rgba(27,27,30,.18),0 8px 24px -12px rgba(27,27,30,.25)}
 body.scrolled .bar nav a{padding:5px 9px;font-size:10px}
-body.scrolled .snd{height:24px}
-body.scrolled .bar .id{font-size:10px}
+body.scrolled .snd{height:24px}body.scrolled .snd:not([aria-pressed="true"]){width:28px}
+body.scrolled .bar .id{font-size:13px}
 .bar nav{display:flex;gap:6px}
 .bar nav a{text-decoration:none;padding:7px 10px;border:1.5px solid var(--graphite);border-radius:99px;line-height:1}
 .bar nav a:hover{background:var(--graphite);color:var(--studio)}
@@ -48,8 +48,8 @@ body.scrolled .bar .id{font-size:10px}
 #hero.static{height:100vh}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
   background:radial-gradient(120% 80% at 50% 38%,#EFEDE9 0%,var(--studio) 55%,var(--studio-2) 100%)}
-.title{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);margin:0;padding:0 2.2vw;z-index:1;
-  font-family:var(--display);font-weight:400;font-size:clamp(48px,15.2vw,300px);line-height:.84;letter-spacing:-.015em;white-space:nowrap;display:flex;flex-direction:column;user-select:none}
+.title{position:absolute;left:0;right:0;top:clamp(76px,10vh,110px);margin:0;padding:0 2.2vw;z-index:1;
+  font-family:var(--display);font-weight:400;font-size:clamp(44px,11.6vw,230px);line-height:.84;letter-spacing:-.015em;white-space:nowrap;display:flex;flex-direction:column;user-select:none}
 .title .w{display:block;overflow:hidden;padding-bottom:.06em}
 .title .w2{text-align:right}
 .title .ch{display:inline-block}
@@ -136,7 +136,9 @@ body.scrolled .bar .id{font-size:10px}
 .v4 .ttl{margin-top:auto;color:var(--graphite)}
 .v4 .band{height:6%;background:var(--graphite);margin:0 -9%}
 /* Sound: nav control */
-.bar{grid-template-columns:1.2fr 1fr 1fr auto auto}
+.bar{grid-template-columns:1fr auto auto}
+.bar .id{text-decoration:none;font-family:var(--display);font-size:15px;letter-spacing:.04em;text-transform:none}
+.snd{width:34px;padding:0;justify-content:center;gap:5px}.snd:not([aria-pressed="true"]) .bars{display:none}.snd[aria-pressed="true"]{width:auto;padding:0 12px 0 10px}
 .snd{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 10px;border:1.5px solid var(--graphite);border-radius:99px;background:transparent;color:inherit;
   font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
 .snd:hover{background:var(--graphite);color:var(--studio)}
@@ -146,12 +148,10 @@ body.scrolled .bar .id{font-size:10px}
 .snd .bars i{display:block;width:2px;height:12px;background:var(--foam);transform-origin:50% 100%;transform:scaleY(.15)}
 @media (max-width:760px){
   .bar{grid-template-columns:1fr auto auto}
-  .snd .tx{display:none}
-  .bar{grid-template-columns:1fr auto}.bar .muted{display:none}
   .bar nav a:nth-child(2){display:none}
   .foot{flex-direction:column;align-items:flex-start}
   .kana,.cat{display:none}
-  .title{top:40%}
+  .title{top:78px}
 }
 @media (prefers-reduced-motion:reduce){.case .cs{transition:none}.dymo .car{animation:none}}
 </style>
@@ -160,10 +160,8 @@ body.scrolled .bar .id{font-size:10px}
 <div class="cursor" aria-hidden="true"></div>
 
 <header class="bar">
-  <div class="id">Pema Ghising</div>
-  <div class="muted">Graphic &amp; Motion Designer</div>
-  <div class="muted">7+ years · Leapfrog Technology</div>
-  <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Play music"><span class="ic" aria-hidden="true"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tx">Sound off</span></button>
+  <a class="id" href="#" aria-label="Pema Ghising, home">PG</a>
+  <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Play music"><span class="ic" aria-hidden="true"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
   <nav aria-label="Primary"><a href="#work">Work</a><a href="#work">About</a><a href="#work">Contact</a></nav>
 </header>
 
@@ -275,7 +273,7 @@ function makeLabel() {
 const labelCanvas = makeLabel();
 
 // ---------- 3D ----------
-const S = { rx: .5, ry: -2.2, rz: .2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: .15, ins: 0, camY: 0, lookY: 0, zf: 1, led: 0 };
+const S = { gy: -1.98, rx: .5, ry: -2.2, rz: .2, y: -3.4, z: 0, s: 1, free: 1, py: -6, door: 0, key: 0, play: .15, ins: 0, camY: 0, lookY: 0, zf: 1, led: 0 };
 let renderer;
 const canvas = document.getElementById('gl');
 try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
@@ -301,7 +299,7 @@ if (renderer) {
   key.shadow.bias = -.0004; key.shadow.normalBias = .02; scene.add(key);
   const rim = new THREE.DirectionalLight(0xfff1e6, 1.1); rim.position.set(6, 2, -4); scene.add(rim);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: .14 }));
-  ground.rotation.x = -Math.PI / 2; ground.position.y = -1.3; ground.receiveShadow = true; scene.add(ground);
+  ground.rotation.x = -Math.PI / 2; ground.position.y = -1.98; ground.receiveShadow = true; scene.add(ground);
 
   const roundRectShape = (w, h, r, cx = 0, cy = 0) => {
     const s = new THREE.Shape(), x = cx - w / 2, y = cy - h / 2;
@@ -387,7 +385,7 @@ if (renderer) {
   gr.addColorStop(0, 'rgba(0,0,0,.42)'); gr.addColorStop(.55, 'rgba(0,0,0,.12)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
   sg.fillStyle = gr; sg.fillRect(0, 0, 256, 256);
   blob = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
-  blob.rotation.x = -Math.PI / 2; blob.position.y = -1.29; scene.add(blob);
+  blob.rotation.x = -Math.PI / 2; blob.position.y = -1.97; scene.add(blob);
 
   const resize = () => {
     renderer.setSize(innerWidth, innerHeight, false);
@@ -412,7 +410,8 @@ if (renderer) {
     door.rotation.x = S.door;
     playKey.position.y = 1.03 - S.key * .06;
     led.material.emissiveIntensity = S.led * (A.on ? 4 + A.level * 8 : 3);
-    const lift = Math.max(0, S.y + 1.29);
+    ground.position.y = S.gy; blob.position.y = S.gy + .01;
+    const lift = Math.max(0, S.y - S.gy);
     blob.material.opacity = Math.max(0, Math.min(1, 1.25 - lift * .35)) * (1 - Math.min(1, (S.py + 6) / 6));
     blob.scale.setScalar(1 + lift * .12);
     cam.position.set(0, S.camY, baseZ * S.zf); cam.lookAt(0, S.lookY, 0);
@@ -455,7 +454,6 @@ function pauseSong() {
 function syncUI() {
   sndBtn.setAttribute('aria-pressed', String(A.on));
   sndBtn.setAttribute('aria-label', A.on ? 'Pause music' : 'Play music');
-  sndBtn.querySelector('.tx').textContent = A.on ? '恋人へ' : 'Sound off';
 }
 sndBtn.addEventListener('click', e => {
   e.stopPropagation();
@@ -487,7 +485,7 @@ const setScrolled = () => document.body.classList.toggle('scrolled', scrollY > 2
 addEventListener('scroll', setScrolled, { passive: true }); setScrolled();
 
 // ---------- Boot: counter rolls to 007 while the label maker punches the name (about 2s) ----------
-const REST = { rx: .1, ry: -.4, rz: .05, y: .15 };
+const REST = { rx: .1, ry: -.4, rz: .05, y: innerWidth / innerHeight < 1 ? -.45 : -.78 };
 const dy = document.getElementById('dy');
 function boot() {
   return new Promise(res => {
@@ -507,7 +505,7 @@ function boot() {
 function startScroll() {
   gsap.registerPlugin(ScrollTrigger);
   const tl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: .9 } });
-  tl.to(S, { rx: 0, ry: 0, rz: 0, free: 0, y: .2, z: 1.4, s: .92, py: -.3, door: .95, camY: .9, lookY: -.2, play: 0, duration: .35, ease: 'power2.inOut' }, 0)
+  tl.to(S, { gy: -1.3, rx: 0, ry: 0, rz: 0, free: 0, y: .2, z: 1.4, s: .92, py: -.3, door: .95, camY: .9, lookY: -.2, play: 0, duration: .35, ease: 'power2.inOut' }, 0)
     .to('.w1', { xPercent: -60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)
     .to('.w1', { opacity: 0, duration: .15, ease: 'none' }, .36)
     .to('.w2', { xPercent: 60, opacity: .1, duration: .35, ease: 'power2.in' }, 0)

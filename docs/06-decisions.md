@@ -4,6 +4,7 @@ Newest first.
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10-03 | Hero layout: the name sits at the top and the cassette below it, so nothing overlaps. Nav is just a PG monogram, the section links and a sound icon (no full name, role or years) | Pema's feedback |
 | 2026-10-03 | Nav: frosted solid bar (nothing shows through), shrinks on scroll, no dot before the name; the giant name fully fades out once the tape is inserted | Pema's feedback: text overlapped the player, name still visible behind it |
 | 2026-10-03 | Back to the earlier player design (smoked dark cassette, aluminium-face landscape player, flat insert). The blue reference-style Walkman is kept as an alternative in `docs/prototypes/mixtape-blue-walkman.html` | Pema preferred the earlier look |
 | 2026-10-03 | Player turned landscape again: the cassette slides in flat through a door that flips down (Pema liked the earlier sideways insert); keeps the reference styling (blue body, silver strip, yellow key) | Pema's feedback |

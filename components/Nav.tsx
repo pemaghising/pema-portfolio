@@ -1,18 +1,13 @@
 import Link from "next/link";
-import { experience, nav, site } from "@/data/site";
+import { nav, site } from "@/data/site";
 
-/** Device strip: power LED, name, links as hardware buttons. No timecode, no section label. */
+/** Slim device strip: monogram on the left, links as hardware buttons. No timecode, no section label. */
 export function Nav() {
-  const now = experience[0];
   return (
-    <header className="label fixed inset-x-0 top-0 z-50 grid grid-cols-[1fr_auto] items-center gap-4 px-(--gutter) pt-[calc(16px+env(safe-area-inset-top,0px))] pb-4 md:grid-cols-[1.2fr_1fr_1fr_auto]">
-      <Link href="/" className="no-underline">
-        {site.name}
+    <header className="label fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-4 px-(--gutter) pt-[calc(16px+env(safe-area-inset-top,0px))] pb-4">
+      <Link href="/" aria-label={`${site.name}, home`} className="font-display text-[15px] tracking-[0.04em] no-underline normal-case">
+        PG
       </Link>
-      <span className="hidden text-ink-2 md:block">{site.role}</span>
-      <span className="hidden text-ink-2 md:block">
-        {site.years} years{now ? ` · ${now.company}` : ""}
-      </span>
       <nav aria-label="Primary">
         <ul className="flex gap-1.5">
           {nav.map((n) => (

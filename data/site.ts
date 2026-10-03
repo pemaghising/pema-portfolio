@@ -63,19 +63,25 @@ export type Role = {
   title: string;
   start: number;
   end?: number; // omit for "Present"
-  disciplines: string[];
-  text: string;
+  disciplines?: string[];
+  /** Only where Pema has written a description; otherwise the role shows title, company and dates. */
+  text?: string;
 };
 
-/** Newest first. Add earlier roles here — the timeline ruler extends itself. */
+/** Newest first. Source: Pema's LinkedIn (Oct 2026). */
 export const experience: Role[] = [
   {
     company: "Leapfrog Technology",
     title: "Lead Graphic Designer",
-    start: 2021,
+    start: 2025,
     disciplines: ["Graphic", "Motion", "Brand", "Digital"],
     text: "Leading visual communication at Leapfrog Technology — setting direction, keeping a consistent design language across teams, and turning strategy into things people actually see.",
   },
+  { company: "Leapfrog Technology", title: "Senior Graphic Designer", start: 2022, end: 2025 },
+  { company: "Bikas Udhyami", title: "Motion Graphic Designer", start: 2021, end: 2022 },
+  { company: "Freelance", title: "Video Editor, Motion Designer and Graphic Designer", start: 2019, end: 2022 },
+  { company: "Arbitrary Digital Marketing", title: "Video Editor and Motion Designer", start: 2017, end: 2019 },
+  { company: "TechLekh", title: "Video Editor / Cinematographer, 2D Animator, Graphic Designer", start: 2017, end: 2017 },
 ];
 
 /** Derived word-for-word from the role description above, plus mentoring. */

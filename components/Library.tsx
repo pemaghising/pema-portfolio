@@ -130,7 +130,10 @@ export function Library({ projects, kana }: Props) {
       const pos = items().indexOf(d.el) + 1;
       setLive(`${bySlug.get(d.slug)?.p.title} moved to position ${pos} of ${projects.length}.`);
       // the click that ends a drag should not open the project
-      addEventListener("click", (ev) => (ev.preventDefault(), ev.stopPropagation()), { capture: true, once: true });
+      // (removed shortly after, so a click that never comes can't swallow the next real one)
+      const block = (ev: Event) => (ev.preventDefault(), ev.stopPropagation());
+      addEventListener("click", block, { capture: true, once: true });
+      setTimeout(() => removeEventListener("click", block, { capture: true }), 100);
     };
     addEventListener("pointermove", onMove, { passive: false });
     addEventListener("pointerup", onUp);
